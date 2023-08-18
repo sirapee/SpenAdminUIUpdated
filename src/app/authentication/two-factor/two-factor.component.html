@@ -1,0 +1,48 @@
+<ngx-spinner bdColor="rgba(0,0,0,0.5)" size="medium" color="#d81616" type="ball-clip-rotate" [fullScreen]="true"></ngx-spinner>
+
+<div class="wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="login-bg">
+                <div class="login-overlay"></div>
+                <div class="login-left">
+                    <!-- <img src="assets/images/logo-login.svg" alt="Logo">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tellus elit.</p>
+                    <a href="javascript:void(0);" class="btn btn-primary">Learn More</a> -->
+                </div>
+                <!--login-left-->
+            </div>
+            <!--login-bg-->
+
+            <div class="login-form">
+                <form [formGroup]="factorForm">
+                    <div class="login-form-body">
+                        <div class="">
+                            <h4 class="mb-1">Token</h4>
+                            <p class="mb-4">Enter your token to access Dashboard</p>
+                        </div>
+                        <div class="form-gp">
+                            <label for="exampleInputEmail1">Token</label>
+                            <input [style.border-color]=" factorForm.get('token')?.errors && (factorForm.get('token')?.touched || factorForm.get('token')?.dirty) ? '#D81616' : ''" type="text" formControlName="token">
+                            <span class="text-danger fs-13" *ngIf="factorForm.get('token')?.errors && (factorForm.get('token')?.touched || factorForm.get('token')?.dirty)">
+                              <span *ngIf="factorForm.get('token')?.errors?.['required']">Token is required</span>
+                            <span *ngIf="factorForm.get('token')?.errors?.['pattern']">Acccept numbers only !!</span>
+                            <span *ngIf="factorForm.get('token')?.errors?.['minlength']">Token cannot be less than 6 numbers !!</span>
+                            <span *ngIf="factorForm.get('token')?.errors?.['maxlength']">Token cannot be more than 6 numbers !!</span>
+                            </span>
+                        </div>
+                        <div class="row mb-4 rmber-area">
+                        </div>
+                        <div class="submit-btn-area">
+                            <button (click)="submit()" type="submit" class="btn btn-primary" [disabled]="!factorForm.valid">Submit <i class="ti-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!--login-form-->
+
+        </div>
+        <!--row-->
+    </div>
+    <!--container-fluid-->
+</div>
