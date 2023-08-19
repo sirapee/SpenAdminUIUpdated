@@ -8,6 +8,7 @@ import { Injectable } from '@angular/core';
 export class JarwisService {
 
   private storedOtp: string = '';
+  
   constructor(private http: HttpClient) {}
 
   // signupuser(data: any) {
@@ -64,6 +65,11 @@ export class JarwisService {
     return this.http.get(url, { params });
   }
 
+  resendOtp(username: any) {
+    const url = `${environment.baseUrl}/resend-otp/${username}`;
+    return this.http.get(url);
+  }
+
   passwordReset(payload: any) {
     return this.http.post(`${environment.baseUrl}/password-reset/update-password`, payload);
   }
@@ -75,6 +81,8 @@ export class JarwisService {
   setOtp(otp: string) {
     this.storedOtp = otp;
   }
+
+  
 
   // Retrieve the stored OTP
   getStoredOtp() {

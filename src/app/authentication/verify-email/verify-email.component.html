@@ -1,3 +1,11 @@
+<ngx-spinner
+  bdColor="rgba(0,0,0,0.5)"
+  size="medium"
+  color="#d81616"
+  type="ball-clip-rotate"
+  [fullScreen]="true"
+></ngx-spinner>
+
 <section class="h-100 gradient-form">
     <div class="container py-5">
       <div class="row d-flex justify-content-center align-items-center h-100">
@@ -15,38 +23,80 @@
   
                   </div>
   
-                  <form [formGroup]="OtpForm" class="mt-3">
+                  <form [formGroup]="otpForm" class="mt-3">
                     <h4>Verify OTP</h4>
-                    <p>We sent a 4-digit code to your verified email address, please enter below.</p>
+                    <p>We sent a 6-digit code to your verified email address, please enter below.</p>
   
-                    <div class="form-outline mb-4">
-                      <label class="form-label" for="form2Example11"
-                        >OTP</label
-                      >
+                    <div class="otp-inputs justify-content-center">
                       <input
-                      
-                        id="form2Example11"
-                        class="form-control"
-                        placeholder="Enter Otp"
-                        [style.border-color]=" OtpForm.get('otp')?.errors && (OtpForm.get('otp')?.touched || OtpForm.get('otp')?.dirty) ? '#D81616' : ''" type="text" formControlName="otp"
+                        class="otp-input"
+                        type="text"
+                        formControlName="digit1"
+                        maxlength="1"
+                        placeholder=" _ "
+                        #input1 (keyup)="(input1.value.length == 1) ? input2.focus() : ''"
+                        pattern="[0-9]*"
                       />
-                      <span class="text-danger fs-13" *ngIf="OtpForm.get('otp')?.errors && (OtpForm.get('otp')?.touched || OtpForm.get('otp')?.dirty)">
-                        <!-- <span *ngIf="OtpForm.get('otp')?.errors?.['required']">Email is required</span>
-                      <span *ngIf="OtpForm.get('otp')?.errors?.['pattern']">Invalid email address</span> -->
-                      </span>
+                      <input
+                        class="otp-input"
+                        type="text"
+                        formControlName="digit2"
+                        maxlength="1"
+                        placeholder=" _ "
+                        #input2 (keyup)="(input2.value.length == 1) ? input3.focus() : ''"
+                        pattern="[0-9]*"
+                      />
+                      <input
+                        class="otp-input"
+                        type="text"
+                        formControlName="digit3"
+                        maxlength="1"
+                        placeholder=" _ "
+                        #input3 (keyup)="(input3.value.length == 1) ? input4.focus() : ''"
+                        pattern="[0-9]*"
+                      />
+                      <input
+                        class="otp-input"
+                        type="text"
+                        formControlName="digit4"
+                        maxlength="1"
+                        placeholder=" _ "
+                        #input4 (keyup)="(input4.value.length == 1) ? input5.focus() : ''"
+                        pattern="[0-9]*"
+                      />
+                      <input
+                        class="otp-input"
+                        type="text"
+                        formControlName="digit5"
+                        maxlength="1"
+                        placeholder=" _ "
+                        #input5 (keyup)="(input5.value.length == 1) ? input6.focus() : ''"
+                        pattern="[0-9]*"
+                      />
+                      <input
+                        class="otp-input"
+                        type="text"
+                        formControlName="digit6"
+                        maxlength="1"
+                        placeholder=" _ "
+                        #input6
+                        pattern="[0-9]*"
+                      />
                     </div>
   
   
-                    <div class="text-center pt-1 mb-5 pb-1">
+                    <div class="text-center pt-1 mt-2 pb-1">
                       <button
                         class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
                         type="button"
-                        (click)="confirmEmail()" type="submit"  [disabled]="!OtpForm.valid"
+                        (click)="confirmEmail()" type="submit"  [disabled]="!otpForm.valid"
                       >
-                       Verify Otp
+                       Proceed
                       </button>
                       <!-- <a class="text-muted" routerLink="/forgot-password">Forgot password?</a> -->
                       <div class="text-muted">Time remaining: {{ countdown }}</div>
+
+                      <a style="cursor: pointer; font-size: 12px; font-style: initial;" class="text-mute mt-5" >didn't receive Otp?<b (click)="resendOtp()" class="text-danger"> click to Resend</b></a>
                     </div>
   
            

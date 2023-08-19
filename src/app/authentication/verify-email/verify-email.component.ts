@@ -22,9 +22,9 @@ export class VerifyEmailComponent {
   countdownDuration: number | null = null;
   remainingSeconds: number = 0; // Initialize with 0
 
-  OtpForm!: FormGroup;
+  otpForm!: FormGroup;
 
-
+  otpDigitsArray: any[] = new Array(6);
 
   constructor(
     private router: Router,
@@ -37,8 +37,14 @@ export class VerifyEmailComponent {
 
 
   ngOnInit(): void {
-    this.OtpForm = this.formBuilder.group({
-      otp: [ '', [ Validators.required, Validators.pattern(/^[a-zA-Z0-9]{1,12}$/) ]],
+    this.otpForm = this.formBuilder.group({
+      digit1: ['', Validators.required],
+      digit2: ['', Validators.required],
+      digit3: ['', Validators.required],
+      digit4: ['', Validators.required],
+      digit5: ['', Validators.required],
+      digit6: ['', Validators.required]
+    
     });
    
 
@@ -61,10 +67,9 @@ export class VerifyEmailComponent {
     }
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.isMobileScreen = window.innerWidth < 992; // Adjust breakpoint as needed
-  }
+  
+
+
 
   startCountdown(initialSeconds: number) {
     this.countdownStartTime = Date.now();
@@ -96,9 +101,102 @@ export class VerifyEmailComponent {
     this.countdown = `${minutes}:${seconds.toString().padStart(2, '0')}`;
   }
 
-  submit() {
-    // Implement your form submission logic here
+  // onInput(value: string): void {
+  //   this.otpForm.get('otp').setValue(value);
+  // }
+  
+  // getOtpDigit(index: number): string {
+  //   const digit = this.otpForm.get('otp').value[index];
+  //   return digit || 'X';
+  // }
+
+
+
+  async resendOtp() {
+    const email = sessionStorage.getItem('email');
+  
+    try {
+      // Check if the initial OTP has expired
+      const currentTime = Date.now();
+      const timerStart = localStorage.getItem('timerStart');
+      
+      if (timerStart) {
+        const elapsed = currentTime - +timerStart;
+        const remainingTimeString = localStorage.getItem('remainingTime');
+        const remainingSeconds = remainingTimeString ? +remainingTimeString - Math.floor(elapsed / 1000) : 0;
+  
+        if (remainingSeconds > 0) {
+
+          this.notification.error(`Please wait until the initial OTP expires before resending. Time remaining: ${this.formatTime(remainingSeconds)}`);
+        } else {
+          // Proceed with resending OTP
+          const result: any = await this.jarwisService.resendOtp(email).toPromise();
+  
+          if (result.isSuccessful) {
+            this.notification.success(result.responseMessage);
+            this.startCountdown(5 * 60); // Start a new countdown timer
+          } else {
+            this.notification.error('Otp resend failed.');
+          }
+        }
+      } else {
+       
+      }
+    } catch (error: any) {
+      this.notification.error(error.error.responseMessage || error.error.message);
+    }
   }
+  
+  
+
+  formatTime(seconds: number): string {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+  
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  }
+  
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.isMobileScreen = window.innerWidth < 992; // Adjust breakpoint as needed
+  }
+
+  // confirmEmail() {
+  //    this.otpForm.value.otp = `${this.otpForm.value.digit1}${this.otpForm.value.digit2}${this.otpForm.value.digit3}${this.otpForm.value.digit4}${this.otpForm.value.digit5}${this.otpForm.value.digit6}`
+  //    this.jarwisService.setOtp(this.otpForm.value.otp);
+  //    this.router.navigate(['/password-reset']);
+  //  }
+
+  confirmEmail() {
+    this.spinner.show();
+    if (this.otpForm.valid) {
+      const digitControls = [
+        'digit1',
+        'digit2',
+        'digit3',
+        'digit4',
+        'digit5',
+        'digit6'
+      ];
+  
+      const otpDigits = digitControls.map(controlName =>
+        this.otpForm.get(controlName)?.value || ''
+      );
+  
+      const otp = otpDigits.join('');
+      this.jarwisService.setOtp(otp);
+      this.spinner.hide();
+      // this.notification.success('Proceed to reset password.');
+      this.router.navigate(['/password-reset']);
+    } else {
+      this.spinner.hide();
+      this.notification.error('invalid.');
+    }
+  }
+  
+  
+  
 
   ngOnDestroy() {
     clearInterval(this.countdownInterval);
@@ -106,17 +204,9 @@ export class VerifyEmailComponent {
     // Clear timer state from localStorage
     localStorage.removeItem('timerStart');
     localStorage.removeItem('remainingTime');
+    sessionStorage.removeItem('email');
   }
 
-  confirmEmail() {
-    // Perform email confirmation logic here
-    // ...
 
-    // Store the email in the service
-    this.jarwisService.setOtp(this.OtpForm.value.otp);
-
-    // Navigate to the next step
-    this.router.navigate(['/password-reset']);
-  }
 
 }

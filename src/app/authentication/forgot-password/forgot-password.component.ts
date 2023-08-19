@@ -40,22 +40,24 @@ export class ForgotPasswordComponent {
 
 
   async confirmEmail() {
+    this.spinner.show();
+
     try {
-      // Perform email confirmation logic here
-      // Call the API to verify the email
-      const response = await this.jarwisService.verifyEmail(this.forgotPasswordForm.value.email, true).toPromise();
-
-      // Assuming the API returns a successful response
-      
-      // Store the email in the service
-      // this.registrationService.setEmail(this.email);
-
-      // Navigate to the next step (e.g., OTP page)
-      this.router.navigate(['/otp']);
-    } catch (error) {
-      // Handle error response from the API
-      console.error('Email verification error:', error);
-      // Implement error handling, such as showing an error message to the user
+      const result: any = await this.jarwisService.verifyEmail(this.forgotPasswordForm.value.email, true).toPromise();
+  
+      if (result.isSuccessful) {
+        this.spinner.hide();
+        this.notification.success(result.responseMessage);
+        sessionStorage.setItem('email', this.forgotPasswordForm.value.email);
+        this.router.navigate(['/otp']);
+     
+      } else {
+        this.notification.error('Verification failed.');
+      }
+    } catch (error:any) {
+      this.notification.error(error.error.responseMessage || error.error.message);
+    } finally {
+      this.spinner.hide();
     }
   }
 

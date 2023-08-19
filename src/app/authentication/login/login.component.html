@@ -91,13 +91,13 @@
 
                   <div class="form-outline mb-4">
                     <label class="form-label" for="form2Example11"
-                      >Username</label
+                      >Email</label
                     >
                     <input
                     
                       id="form2Example11"
                       class="form-control"
-                      placeholder="Phone number or email address"
+                      placeholder=" email address"
                       [style.border-color]=" loginForm.get('username')?.errors && (loginForm.get('username')?.touched || loginForm.get('username')?.dirty) ? '#D81616' : ''" type="text" formControlName="username"
                     />
                     <span class="text-danger fs-13" *ngIf="loginForm.get('username')?.errors && (loginForm.get('username')?.touched || loginForm.get('username')?.dirty)">
@@ -115,7 +115,7 @@
                       
                       id="form2Example22"
                       class="form-control"
-                      placeholder="Phone number or email address"
+                      placeholder="password"
                       [style.border-color]=" loginForm.get('password')?.errors && (loginForm.get('password')?.touched || loginForm.get('password')?.dirty) ? '#D81616' : ''" type="password" formControlName="password"
                     />
                     <span class="text-danger fs-13" *ngIf="loginForm.get('password')?.errors && (loginForm.get('password')?.touched || loginForm.get('password')?.dirty)">

@@ -14,15 +14,27 @@
     border-bottom-right-radius: .3rem;
   }
   
-  /* Adjusted media queries */
-  @media (min-width: 768px) {
+
+  /* @media (min-width: 768px) {
     .gradient-form {
       height: 100vh;
-      overflow: hidden; /* Prevent scrollbar */
+      overflow: hidden;
       display: flex;
       align-items: center;
     }
+  } */
+
+  .otp-inputs {
+    display: flex;
+    gap: 5px; /* Adjust the gap as needed */
   }
+  
+  .otp-input {
+    width: 40px; /* Adjust the width as needed */
+    text-align: center;
+    font-size: 25px;
+    border: 1px solid red;
+  }  
   
 
 
