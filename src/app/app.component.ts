@@ -18,7 +18,7 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    // this.initialIdleSettings();
+    this.initialIdleSettings();
   }
 
   loadScripts() {
@@ -56,12 +56,12 @@ export class AppComponent {
     }
  }
 
-  // private initialIdleSettings() {
-  //   const idleTimeoutInSeconds: number = environment.idleTimeInMinutes * 60;
-  //   this.idleService.startWatching(idleTimeoutInSeconds).subscribe((isTimeOut: boolean) => {
-  //     if (isTimeOut) {
-  //         this.tokenService.logout()
-  //     }
-  //   });
-  // }
+  private initialIdleSettings() {
+    const idleTimeoutInSeconds: number = environment.idleTimeInMinutes * 60;
+    this.idleService.startWatching(idleTimeoutInSeconds).subscribe((isTimeOut: boolean) => {
+      if (isTimeOut) {
+          this.tokenService.logout()
+      }
+    });
+  }
 }
