@@ -16,6 +16,9 @@ export class LoginComponent {
 
   loginForm!: FormGroup;
 
+  failedLoginAttempts = 0;
+  maxFailedAttempts = 3; 
+
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -33,77 +36,68 @@ export class LoginComponent {
   }
   
 
-  // async submit(): Promise<void> {
-  //   this.spinner.show()
-  //   await this.jarwisService.login(this.loginForm.value).toPromise().then((result: any) => {
-  //     if(result.loginSuccessful) {
-  //       if(result.twoFactorRequired) {
-  //         this.spinner.hide()
-  //         this.router.navigateByUrl('2factor')
-  //         sessionStorage.setItem('token', result.token.accessToken)
-  //       } else {
-  //         this.notification.success('User logged in successfully !!');
-  //         sessionStorage.setItem('token', result.token.accessToken)
-  //         this.router.navigateByUrl('main/dashboard').then(() => {
-  //           window.location.reload();
-  //         });
-  //       }
-  //       this.spinner.hide()
-  //     } else {
-  //       this.spinner.hide()
-  //     }
-  //   }, error => {
-  //     this.spinner.hide()
-  //     this.notification.error(error.error.respMessage || error.error.message);
-  //   })
+
+
+  // @HostListener('window:resize', ['$event'])
+  // onResize(event: any) {
+  //   this.isMobileScreen = window.innerWidth < 992; 
   // }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.isMobileScreen = window.innerWidth < 992; 
-  }
 
-  async submit(): Promise<void> {
-    this.spinner.show();
-  
-    const payload = {
-      username: this.loginForm.value.username,
-      password: this.loginForm.value.password,
-      rememberMe: this.loginForm.value.rememberMe 
-    };
-  
-    try {
-      const result: any = await this.jarwisService.login(payload).toPromise();
-  
-      if (result.loginSuccessful) {
-        
-        if (result.twoFactorRequired) {
-          this.spinner.hide();
-          this.router.navigateByUrl('2factor');
-        } else {
-          sessionStorage.setItem('token', result.token.accessToken);
-  
-          // Check user type
-          if (result.user.userType === 'AdminUser') {
-            this.notification.success('logged in successfully !!');
-            this.router.navigateByUrl('main/dashboard').then(() => {
-              location.reload();
-            });
-          } else if (result.user.userType !== 'AdminUser') {
-            this.notification.error('Access denied: Admin users only.');
-          } else {
-            this.notification.error('Login failed: User type not recognized.');
-          }
-        }
+async submit(): Promise<void> {
+  this.spinner.show();
+
+  const payload = {
+    username: this.loginForm.value.username,
+    password: this.loginForm.value.password,
+    rememberMe: this.loginForm.value.rememberMe 
+  };
+
+  try {
+    const result: any = await this.jarwisService.login(payload).toPromise();
+
+    if (result.loginSuccessful) {
+      
+      if (result.signInResult.requiresTwoFactor) {
+        this.spinner.hide();
+        this.router.navigateByUrl('2factor');
       } else {
-        this.notification.error('Login failed.');
+        sessionStorage.setItem('token', result.token.accessToken);
+
+        // Check user type
+        if (result.user.userType === 'AdminUser') {
+          this.notification.success('Admin user logged in successfully !!');
+          this.router.navigateByUrl('main/dashboard').then(() => {
+            location.reload();
+          });
+        } else if (result.user.userType !== 'AdminUser') {
+          this.notification.error('Not an admin user','Access denied.');
+        } else {
+          this.notification.error('Login failed: User type not recognized.');
+        }
+        
+        // Reset the failed login attempts upon successful login
+        this.failedLoginAttempts = 0;
       }
-    } catch (error:any) {
-      this.notification.error(error.error.responseMessage || error.error.message);
-    } finally {
-      this.spinner.hide();
+    } else {
+      this.failedLoginAttempts++;
+
+      // Calculate remaining attempts
+      const remainingAttempts = this.maxFailedAttempts - this.failedLoginAttempts;
+
+      if (this.failedLoginAttempts >= this.maxFailedAttempts) {
+        this.notification.error('You have exceeded the maximum number of login attempts. Your account has been locked.');
+
+      } else {
+        this.notification.error(`Login failed. ${remainingAttempts} ${remainingAttempts === 1 ? 'attempt' : 'attempts'} remaining.`);
+      }
     }
+  } catch (error: any) {
+    this.notification.error(error.error.responseMessage || error.error.message);
+  } finally {
+    this.spinner.hide();
   }
-  
+}
+
   
 }
