@@ -76,15 +76,24 @@ export class LoginComponent {
       const result: any = await this.jarwisService.login(payload).toPromise();
   
       if (result.loginSuccessful) {
+        
         if (result.twoFactorRequired) {
           this.spinner.hide();
           this.router.navigateByUrl('2factor');
         } else {
-          this.notification.success('User logged in successfully !!');
           sessionStorage.setItem('token', result.token.accessToken);
-          this.router.navigateByUrl('main/dashboard').then(() => {
-            window.location.reload();
-          });
+  
+          // Check user type
+          if (result.user.userType === 'AdminUser') {
+            this.notification.success('logged in successfully !!');
+            this.router.navigateByUrl('main/dashboard').then(() => {
+              location.reload();
+            });
+          } else if (result.user.userType !== 'AdminUser') {
+            this.notification.error('Access denied: Admin users only.');
+          } else {
+            this.notification.error('Login failed: User type not recognized.');
+          }
         }
       } else {
         this.notification.error('Login failed.');
@@ -95,5 +104,6 @@ export class LoginComponent {
       this.spinner.hide();
     }
   }
+  
   
 }
