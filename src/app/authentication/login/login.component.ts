@@ -60,7 +60,7 @@ async submit(): Promise<void> {
       
       if (result.signInResult.requiresTwoFactor) {
         this.spinner.hide();
-        this.router.navigateByUrl('2factor');
+        this.router.navigateByUrl('two-factor');
       } else {
         sessionStorage.setItem('token', result.token.accessToken);
 
