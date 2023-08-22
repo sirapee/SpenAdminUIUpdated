@@ -49,7 +49,7 @@ export class ForgotPasswordComponent {
         this.spinner.hide();
         this.notification.success(result.responseMessage);
         sessionStorage.setItem('email', this.forgotPasswordForm.value.email);
-        this.router.navigate(['/otp']);
+        this.router.navigate(['auth/otp']);
      
       } else {
         this.notification.error('Verification failed.');

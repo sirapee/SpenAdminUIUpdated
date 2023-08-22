@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { TokenService } from 'src/app/authentication/services/token.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-header',
@@ -23,8 +24,22 @@ export class HeaderComponent {
   ngOnInit(): void {
   }
 
-logout(): void {
-  this.tokenService.logout();
-}
+  logout(): void {
+    Swal.fire({
+      title: 'Logout',
+      text: 'Are you sure you want to logout?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Logout',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.tokenService.logout();
+        // You can also navigate to the login page or perform any other action after logging out.
+      }
+    });
+
+  }
+  
 
 }

@@ -1,0 +1,28 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .display-1 {
+    color: #343a40;
+    font-weight: bold;
+  }
+  
+  .lead {
+    color: #6c757d;
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+  }
+  
+  .btn-primary {
+    background-color: #D81616;
+    border-color: #D81616;
+  }
+  
+  .btn-primary:hover {
+    background-color: #D81616;
+    border-color: #D81616;
+  }
+  

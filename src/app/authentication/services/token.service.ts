@@ -27,7 +27,7 @@ export class TokenService {
   }
 
   logout() {
-    this.router.navigateByUrl('/login');
+    this.router.navigateByUrl('auth/login');
     sessionStorage.removeItem('username');
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('email');

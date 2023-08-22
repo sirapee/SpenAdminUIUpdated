@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { environment } from 'src/environments/environment.prod';
 import { IdleService } from './authentication/services/idle.service';
 import { TokenService } from './authentication/services/token.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,9 @@ import { TokenService } from './authentication/services/token.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  private idleTimeoutInSeconds = 300; // 5 minutes
+  private idleTimer: any;
+  
   title = 'sidePro';
   constructor(
     private idleService: IdleService,
@@ -18,7 +22,12 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    this.initialIdleSettings();
+    // this.initialIdleSettings();
+    this.startIdleTimer();
+
+    // Listen for user interactions to reset the timer
+    window.addEventListener('mousemove', this.resetIdleTimer);
+    window.addEventListener('keydown', this.resetIdleTimer);
   }
 
   loadScripts() {
@@ -56,12 +65,40 @@ export class AppComponent {
     }
  }
 
-  private initialIdleSettings() {
-    const idleTimeoutInSeconds: number = environment.idleTimeInMinutes * 60;
-    this.idleService.startWatching(idleTimeoutInSeconds).subscribe((isTimeOut: boolean) => {
-      if (isTimeOut) {
-          this.tokenService.logout()
-      }
-    });
-  }
+ private startIdleTimer(): void {
+  this.idleTimer = setTimeout(() => {
+    this.showIdleTimeoutAlert();
+  }, this.idleTimeoutInSeconds * 1000);
+}
+
+private resetIdleTimer = () => {
+  clearTimeout(this.idleTimer);
+  this.startIdleTimer();
+};
+
+//  import Swal from 'sweetalert2';
+
+private showIdleTimeoutAlert(): void {
+  Swal.fire({
+    title: 'Idle Timeout',
+    text: 'You have been idle for a while. Do you want to continue using the app?',
+    icon: 'info',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, keep me logged in',
+    cancelButtonText: 'Logout',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.resetIdleTimer();
+    } else {
+      this.tokenService.logout();
+    }
+  });
+}
+ngOnDestroy(): void {
+  // Clean up event listeners when the component is destroyed
+  window.removeEventListener('mousemove', this.resetIdleTimer);
+  window.removeEventListener('keydown', this.resetIdleTimer);
+  clearTimeout(this.idleTimer);
+}
+
 }
