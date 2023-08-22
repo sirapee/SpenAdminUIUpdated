@@ -188,7 +188,7 @@ export class VerifyEmailComponent {
       this.jarwisService.setOtp(otp);
       this.spinner.hide();
       // this.notification.success('Proceed to reset password.');
-      this.router.navigate(['/password-reset']);
+      this.router.navigate(['auth/password-reset']);
     } else {
       this.spinner.hide();
       this.notification.error('invalid.');

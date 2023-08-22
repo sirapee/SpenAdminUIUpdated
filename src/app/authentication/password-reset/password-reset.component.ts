@@ -62,7 +62,7 @@ export class PasswordResetComponent {
       if (result.isSuccessful) {
         this.spinner.hide();
         this.notification.success(result.responseMessage);
-        this.router.navigate(['/login']);
+        this.router.navigate(['auth/login']);
      
       } else {
         this.notification.error('Reset unsuccessful.');

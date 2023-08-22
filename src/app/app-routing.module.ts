@@ -1,39 +1,38 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MainComponent } from './components/layout/main/main.component';
-import { DashboardComponent } from './components/pages/dashboard/dashboard.component';
 import { AuthGuard } from './authentication/services/auth.guard';
+import { PreventLoginGuard } from './authentication/services/login-guard.guard';
 import { AuthenticationModule } from './authentication/authentication.module';
+import { MainRoutingModule } from './components/layout/main/main-routing.module';
+import { PageNotFoundComponent } from './components/layout/page-not-found/page-not-found.component';
+
+
 const routes: Routes = [
   {
     path: '',
     redirectTo: 'auth/login',
     pathMatch: 'full',
   },
-  { path: 'auth', loadChildren: () => AuthenticationModule },
 
-
+  { path: 'auth', 
+  loadChildren: () => AuthenticationModule ,
+  canActivate: [PreventLoginGuard]
+},
 
   {
     path: 'main',
-    component: MainComponent,
+    loadChildren: () => import('./components/layout/main/main.module').then(m => m.MainModule),
     canActivate: [AuthGuard],
-    children: [
-      {
-        path: '',
-        redirectTo: 'dashboard',
-        pathMatch: 'full',
-      },
-      {
-        path: 'dashboard',
-        component: DashboardComponent,
-      },
-    ]
   },
 
   {
     path: '**',
+    component: PageNotFoundComponent,
+  },
+  {
+    path: '',
     redirectTo: '',
+    pathMatch: 'full',
   },
 ];
 

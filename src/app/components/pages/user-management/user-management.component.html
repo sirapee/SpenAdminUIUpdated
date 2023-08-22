@@ -1,0 +1,210 @@
+<div class="main-content-inner">
+    
+    <div class="header">
+        <div class="">
+          <!-- Body -->
+          <div class="header-body align-items-center">
+            <div class="row align-items-end">
+              <div class="col">
+                <!-- Pretitle -->
+                <h6 class="header-pretitle">Overview</h6>
+      
+                <!-- Title -->
+                <h1 class="header-title">user-management</h1>
+              </div>
+             
+              <div class="col-auto">
+                <!-- Button -->
+                <!--<a href="#!" class="btn btn-primary lift">
+                  Create Report
+                </a>-->
+              </div>
+            </div>
+            <!-- / .row -->
+          </div>
+          <!-- / .header-body -->
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search">
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="button"><i class="fa fa-search"></i></button>
+                </div>
+              </div>
+        </div>
+        <div class="col-md-6 text-md-right mt-md-0 mt-3">
+         
+          <button class="btn btn-success"><i class="fa fa-user-plus"></i> Create User</button>
+          <button class="btn btn-info ml-2"><i class="fa fa-building"></i> Create Organization</button>
+        </div>
+      </div>
+     
+      <div class="row">
+        <!-- Progress Table start -->
+        <div class="col-12 mt-4">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card_title">
+                User Table
+              </h4>
+              <div class="card-body" *ngIf="!userData?.length && !loading">
+                <div class="alert alert-dark text-center">
+                  No data to display at the moment
+                </div>
+              </div>
+              <div class="single-table">
+                <div class="table-responsive">
+                  <!-- Table contents here -->
+                 
+                  <table class="table table-hover progress-table text-center">
+                    <thead class="text-uppercase">
+                        <tr>
+                            <th>S/N</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">FirstName</th>
+                            <th scope="col">LastName</th>
+                            <th scope="col">Merchant</th>
+                            <th scope="col">Roles</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                 
+                    <tbody class="list fs-base" *ngIf="loading && userData?.length > 0">
+                        <tr *ngFor="let loop of [1, 2, 3, 4]">
+                          <td>
+                            <ngx-skeleton-loader
+                              count="1"
+                              [theme]="{ width: '25px' }"
+                              appearance="line"
+                            ></ngx-skeleton-loader>
+                          </td>
+                          <td>
+                            <ngx-skeleton-loader
+                              count="1"
+                              appearance="circle"
+                            ></ngx-skeleton-loader>
+                            <span style="display: inline-block; top: -13px; position: relative"
+                              ><ngx-skeleton-loader
+                                count="1"
+                                [theme]="{ width: '150px' }"
+                                appearance="line"
+                              ></ngx-skeleton-loader
+                            ></span>
+                          </td>
+                          <td>
+                            <ngx-skeleton-loader
+                              count="1"
+                              [theme]="{ width: '100px' }"
+                              appearance="line"
+                            ></ngx-skeleton-loader>
+                          </td>
+                          <td>
+                            <ngx-skeleton-loader
+                              count="1"
+                              [theme]="{ width: '25px' }"
+                              appearance="line"
+                            ></ngx-skeleton-loader>
+                          </td>
+                          <td>
+                            <ngx-skeleton-loader
+                              count="1"
+                              [theme]="{ width: '50px' }"
+                              appearance="line"
+                            ></ngx-skeleton-loader>
+                            <br />
+                            <ngx-skeleton-loader
+                              count="1"
+                              [theme]="{ width: '70px' }"
+                              appearance="line"
+                            ></ngx-skeleton-loader>
+                          </td>
+                          <td>
+                            <ngx-skeleton-loader
+                              count="1"
+                              [theme]="{ width: '50px' }"
+                              appearance="line"
+                            ></ngx-skeleton-loader>
+                            <br />
+                            <ngx-skeleton-loader
+                              count="1"
+                              [theme]="{ width: '70px' }"
+                              appearance="line"
+                            ></ngx-skeleton-loader>
+                          </td>
+                          <td>
+                            <ngx-skeleton-loader
+                              count="1"
+                              [theme]="{ width: '50px' }"
+                              appearance="line"
+                            ></ngx-skeleton-loader>
+                            <br />
+                            <ngx-skeleton-loader
+                              count="1"
+                              [theme]="{ width: '70px' }"
+                              appearance="line"
+                            ></ngx-skeleton-loader>
+                          </td>
+                          <td>
+                            <div class="dropdown">
+                              <a
+                                class="dropdown-ellipses dropdown-toggle"
+                                href="#"
+                                role="button"
+                                data-bs-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                              >
+                                <i class="fe fe-more-vertical"></i>
+                              </a>
+                            </div>
+                          </td>
+                          
+                        </tr>
+                      </tbody>
+                    
+                    <tbody >
+                        <tr *ngFor="let data of userData | paginate: { itemsPerPage: pageSize, currentPage: p, totalItems: totalItems }, let i = index">
+                            <td>{{ 20 * p - (19 - i) }}</td>
+                            <td style="font-size: 14px;">{{data.email}}</td>
+                            <td style="font-size: 14px;">{{data.firstName}}</td>
+                            <td style="font-size: 14px;">{{data.lastName}}</td>
+                            <td style="font-size: 14px;">{{data.merchantName}}</td>
+                            <td style="font-size: 14px;">{{data.roles}}</td>
+                            <!-- <td>500.00$</td> -->
+                            <td>
+                                <div class="dropdown">
+                                  <button class="dropdown-ellipsis dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <!-- <i class="fa fa-ellipsis-v"></i> -->
+                                  </button>
+                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item text-" href="#"><i class="fa fa-eye"></i>View details</a>
+                                    <a class="dropdown-item" href="#"><i class="fa fa-edit"></i> Update</a>
+                                    <a class="dropdown-item text-danger" href="#"><i class="ti-trash"></i> Delete</a>
+                                    <hr class="dropdown-divider" />
+                                    <a class="dropdown-item text-success" href="#"><i class="ti-check"></i> Enable</a>
+                                  </div>
+                                 
+                                </div>
+                              </td>
+                              
+                        </tr>
+                  
+                    </tbody>
+                </table>
+                <pagination-controls (pageChange)="p = $event" 
+                previousLabel="Prev"
+                nextLabel="Next"></pagination-controls>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Progress Table end -->
+      </div>
+      
+
+    
+</div>
+
