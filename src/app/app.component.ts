@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  private idleTimeoutInSeconds = 300; // 5 minutes
+  private idleTimeoutInSeconds = 600; // 5 minutes
   private idleTimer: any;
   
   title = 'sidePro';

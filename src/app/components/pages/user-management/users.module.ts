@@ -6,11 +6,12 @@ import { SharedModule } from '../sharedmodule/shared.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { ViewUsersComponent } from './update-users/view-users/view-users.component';
 
 
 
 @NgModule({
-  declarations: [UserManagementComponent],
+  declarations: [UserManagementComponent, ViewUsersComponent],
   imports: [
     CommonModule,
     UsersRoutingModule,
