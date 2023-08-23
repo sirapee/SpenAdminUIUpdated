@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.prod';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 
@@ -8,6 +8,9 @@ import { DatePipe } from '@angular/common';
   providedIn: 'root'
 })
 export class UsersService {
+
+  private selectedDetailsSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  public selectedDetails$: Observable<any> = this.selectedDetailsSubject.asObservable();
 
   constructor(private http: HttpClient, private datePipe : DatePipe) {}
 
@@ -87,4 +90,49 @@ export class UsersService {
   private dateToString(date: Date): string {
     return this.datePipe.transform(date, 'MM-dd-yyyy') || '';
   }
+
+
+  getUserDetails(userId: any) {
+    return this.http.get(`${environment.baseUrl}/user-management/user/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    }).pipe(
+      tap((res: any) => {
+        this.selectedDetailsSubject.next(res.data); // Emit the fetched user details
+      })
+    );
+  }
+
+
+  searchUsers(
+    pageNumber: number,
+    pageSize: number,
+    filters: {
+      searchTerm?: string;
+    }
+  ): Observable<any> {
+    // Filter out undefined and null values from filters
+    const filteredFilters = Object.fromEntries(
+      Object.entries(filters).filter(([_, v]) => v !== undefined && v !== null)
+    );
+  
+    // Build queryParams based on the filtered filters
+    let queryParams = new HttpParams()
+      .set('page', pageNumber.toString())
+      .set('pageSize', pageSize.toString());
+  
+    if (filteredFilters['searchTerm']) {
+      queryParams = queryParams.set('SearchTerm', filteredFilters['searchTerm']);
+    }
+  
+    // Make the HTTP request with the constructed queryParams
+    return this.http.get(`${environment.baseUrl}/user-management/users`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+      params: queryParams,
+    });
+  }
+  
 }

@@ -28,10 +28,12 @@
       <div class="row mt-4">
         <div class="col-md-6">
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search">
+            
+                <input type="text" name="searchTerm" [(ngModel)] ="searchTerm" class="form-control" placeholder="Search" (input)="search()">
                 <div class="input-group-append">
                   <button class="btn btn-primary" type="button"><i class="fa fa-search"></i></button>
                 </div>
+        
               </div>
         </div>
         <div class="col-md-6 text-md-right mt-md-0 mt-3">
@@ -49,7 +51,7 @@
               <h4 class="card_title">
                 User Table
               </h4>
-              <div class="card-body" *ngIf="!userData?.length && !loading">
+              <div class="card-body" *ngIf="!filteredUserData?.length && !loading">
                 <div class="alert alert-dark text-center">
                   No data to display at the moment
                 </div>
@@ -61,17 +63,24 @@
                   <table class="table table-hover progress-table text-center">
                     <thead class="text-uppercase">
                         <tr>
-                            <th>S/N</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">FirstName</th>
-                            <th scope="col">LastName</th>
-                            <th scope="col">Merchant</th>
-                            <th scope="col">Roles</th>
-                            <th scope="col">Action</th>
+                          <th>S/N</th>
+                          <th scope="col" class="sortable-header" (click)="sort('email')">Email <i [ngClass]="getSortIcon('email')"></i></th>
+                          <th scope="col" class="sortable-header" (click)="sort('firstName')">FirstName <i [ngClass]="getSortIcon('firstName')"></i></th>
+                          <th scope="col" class="sortable-header" (click)="sort('lastName')">LastName <i [ngClass]="getSortIcon('lastName')"></i></th>
+                          <th scope="col" class="sortable-header" (click)="sort('merchantName')">Merchant <i [ngClass]="getSortIcon('merchantName')"></i></th>
+                          <th scope="col" class="sortable-header" (click)="sort('roles')">Roles <i [ngClass]="getSortIcon('roles')"></i></th>
+                          <th scope="col">Action</th>
                         </tr>
-                    </thead>
+                      </thead>
+                      
+                      
+                      
+                      
+                      
+                      
+                      
                  
-                    <tbody class="list fs-base" *ngIf="loading && userData?.length > 0">
+                    <tbody class="list fs-base" *ngIf="loading && filteredUserData?.length > 0">
                         <tr *ngFor="let loop of [1, 2, 3, 4]">
                           <td>
                             <ngx-skeleton-loader
@@ -165,7 +174,7 @@
                       </tbody>
                     
                     <tbody >
-                        <tr *ngFor="let data of userData | paginate: { itemsPerPage: pageSize, currentPage: p, totalItems: totalItems }, let i = index">
+                        <tr *ngFor="let data of filteredUserData |  paginate: { itemsPerPage: pageSize, currentPage: p, totalItems: totalItems }, let i = index">
                             <td>{{ 20 * p - (19 - i) }}</td>
                             <td style="font-size: 14px;">{{data.email}}</td>
                             <td style="font-size: 14px;">{{data.firstName}}</td>
@@ -179,8 +188,10 @@
                                     <!-- <i class="fa fa-ellipsis-v"></i> -->
                                   </button>
                                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item text-" href="#"><i class="fa fa-eye"></i>View details</a>
+                                    <a class="dropdown-item text-" href="#exampleModalLong" data-toggle="modal" data-target="#exampleModalLong" (click)="viewDetails(data)"><i class="fa fa-eye"></i>View details</a>
+                                    <hr class="dropdown-divider" />
                                     <a class="dropdown-item" href="#"><i class="fa fa-edit"></i> Update</a>
+                                    <hr class="dropdown-divider" />
                                     <a class="dropdown-item text-danger" href="#"><i class="ti-trash"></i> Delete</a>
                                     <hr class="dropdown-divider" />
                                     <a class="dropdown-item text-success" href="#"><i class="ti-check"></i> Enable</a>
@@ -203,8 +214,7 @@
         </div>
         <!-- Progress Table end -->
       </div>
-      
-
-    
 </div>
+
+<app-view-users [selected]="selectedDetails"></app-view-users>
 

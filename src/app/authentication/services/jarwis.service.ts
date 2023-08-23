@@ -74,6 +74,10 @@ export class JarwisService {
     return this.http.post(`${environment.baseUrl}/password-reset/update-password`, payload);
   }
 
+  screenUnlock(payload: any) {
+    return this.http.post(`${environment.baseUrl}/screen-unlock`, payload);
+  }
+
 
  
 
