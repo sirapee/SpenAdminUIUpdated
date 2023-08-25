@@ -1,0 +1,48 @@
+.custom-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    /* border: 0.5px solid #ddd; */
+    border-radius: 5px;
+    background-color: #FAFAFA;
+  }
+  
+  .custom-form label {
+    font-weight: bold;
+  }
+  
+  .form-row {
+    display: flex;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  /* Center the role dropdown */
+  #role {
+    text-align: center;
+  }
+  
+  /* Add some spacing between the form controls */
+  .form-control {
+    margin-top: 5px;
+  }
+  
+  /* Style the submit button */
+  /* .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+  } */
+
+  /* Center the radio buttons and add spacing between them */
+
+  
+
+  
+  

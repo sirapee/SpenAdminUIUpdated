@@ -4,6 +4,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 // import { ViewUsersComponent } from '../user-management/update-users/view-users/view-users.component';
+import { passwordMatchValidator } from 'src/app/authentication/validator/confirm.validator';
 
 
 

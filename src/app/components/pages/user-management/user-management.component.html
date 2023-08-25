@@ -38,8 +38,8 @@
         </div>
         <div class="col-md-6 text-md-right mt-md-0 mt-3">
          
-          <button class="btn btn-success"><i class="fa fa-user-plus"></i> Create User</button>
-          <button class="btn btn-info ml-2"><i class="fa fa-building"></i> Create Organization</button>
+          <button class="btn btn-success"  data-toggle="modal" data-target="#exampleLongModalLong2"><i class="fa fa-user-plus" ></i> Create User</button>
+          <button class="btn btn-info ml-2" data-toggle="modal" data-target="#exampleLongModalLong3"><i class="fa fa-building"></i> Create Organization</button>
         </div>
       </div>
      
@@ -72,14 +72,6 @@
                           <th scope="col">Action</th>
                         </tr>
                       </thead>
-                      
-                      
-                      
-                      
-                      
-                      
-                      
-                 
                     <tbody class="list fs-base" *ngIf="loading && filteredUserData?.length > 0">
                         <tr *ngFor="let loop of [1, 2, 3, 4]">
                           <td>
@@ -168,11 +160,9 @@
                                 <i class="fe fe-more-vertical"></i>
                               </a>
                             </div>
-                          </td>
-                          
+                          </td> 
                         </tr>
                       </tbody>
-                    
                     <tbody >
                         <tr *ngFor="let data of filteredUserData |  paginate: { itemsPerPage: pageSize, currentPage: p, totalItems: totalItems }, let i = index">
                             <td>{{ 20 * p - (19 - i) }}</td>
@@ -185,23 +175,22 @@
                             <td>
                                 <div class="dropdown">
                                   <button class="dropdown-ellipsis dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <!-- <i class="fa fa-ellipsis-v"></i> -->
                                   </button>
                                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item text-" href="#exampleModalLong" data-toggle="modal" data-target="#exampleModalLong" (click)="viewDetails(data)"><i class="fa fa-eye"></i>View details</a>
+                                    <a class="dropdown-item text-" href="javascript:;" data-toggle="modal" data-target="#exampleModalLong" (click)="viewDetails(data)"><i class="fa fa-eye"></i>View details</a>
+                                    <hr class="dropdown-divider"/>
+                                    <a class="dropdown-item"  href="javascript:;" data-toggle="modal" data-target="#exampleModalLong2" (click)="viewDetails(data)"><i class="fa fa-edit"></i> Update</a>
                                     <hr class="dropdown-divider" />
-                                    <a class="dropdown-item" href="#"><i class="fa fa-edit"></i> Update</a>
+                                    <a class="dropdown-item text-danger"  href="javascript:;" (click)="confirmDeleteUser(data.username)"><i class="ti-trash"></i> Delete</a>
                                     <hr class="dropdown-divider" />
-                                    <a class="dropdown-item text-danger" href="#"><i class="ti-trash"></i> Delete</a>
+                                    <a class="dropdown-item text-success"  href="javascript:;" *ngIf="!data.isEnabled" (click)="confirmEnableUser(data.username)"><i class="ti-check"></i> Enable</a>
+                                    <a class="dropdown-item text-danger"  href="javascript:;" *ngIf="data.isEnabled" (click)="confirmDisableUser(data.username)"><i class="ti-close"></i>Disable</a>
                                     <hr class="dropdown-divider" />
-                                    <a class="dropdown-item text-success" href="#"><i class="ti-check"></i> Enable</a>
+                                    <!-- <a class="dropdown-item"  href="javascript:;" data-toggle="modal" data-target="#exampleModalLong2"  (click)="viewDetails(data.id)"><i class="fa fa-edit"></i> Reset Password</a> -->
                                   </div>
-                                 
                                 </div>
-                              </td>
-                              
+                              </td>   
                         </tr>
-                  
                     </tbody>
                 </table>
                 <pagination-controls (pageChange)="p = $event" 
@@ -217,4 +206,7 @@
 </div>
 
 <app-view-users [selected]="selectedDetails"></app-view-users>
+<app-create-users></app-create-users>
+<app-create-organization></app-create-organization>
+<app-change-password></app-change-password>
 

@@ -7,11 +7,15 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { ViewUsersComponent } from './update-users/view-users/view-users.component';
+import { CreateUsersComponent } from './create-users/create-users/create-users.component';
+import { CreateOrganizationComponent } from './create-organization/create-organization/create-organization.component';
+import { ChangePasswordComponent } from './change-password/change-password/change-password.component';
+// import { passwordMatchValidator } from 'src/app/authenticationvalidator/confirm.validator';
 
 
 
 @NgModule({
-  declarations: [UserManagementComponent, ViewUsersComponent],
+  declarations: [UserManagementComponent, ViewUsersComponent, CreateUsersComponent, CreateOrganizationComponent, ChangePasswordComponent],
   imports: [
     CommonModule,
     UsersRoutingModule,
