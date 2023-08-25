@@ -1,0 +1,179 @@
+<div class="col-lg-6 stretched_card mt-mob-4">
+    <div class="">
+        <div class="">
+            <div class="modal fade" id="exampleLongModalLong3">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Create Organization</h5>
+                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <form [formGroup]="addOrganizationform"  class="custom-form">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                      <div class="form-group">
+                                        <label>First Name</label>
+                                        <input type="text" class="form-control" formControlName="firstname">
+                                      </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                      <div class="form-group">
+                                        <label>Last Name</label>
+                                        <input type="text" class="form-control" formControlName="lastname">
+                                      </div>
+                                    </div>
+                                  </div>
+                                <div class="form-row">
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label>Phone Number</label>
+                                      <input type="text" class="form-control" formControlName="phoneNumber">
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label>RC Number</label>
+                                      <input type="text" class="form-control" formControlName="rcNumber">
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-row">
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label>Merchant Name</label>
+                                      <input type="text" class="form-control" formControlName="merchantName">
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                       
+                                            <label class="form-label" for="form2Example11"
+                                              >Email</label
+                                            >
+                                            <input
+                                            
+                                              id="form2Example11"
+                                              class="form-control"
+
+                                              [style.border-color]=" addOrganizationform.get('email')?.errors && (addOrganizationform.get('email')?.touched || addOrganizationform.get('email')?.dirty) ? '#D81616' : ''" type="text" formControlName="email"
+                                            />
+                                            <span class="text-danger fs-13" *ngIf="addOrganizationform.get('email')?.errors && (addOrganizationform.get('email')?.touched || addOrganizationform.get('email')?.dirty)">
+                                              <span *ngIf="addOrganizationform.get('email')?.errors?.['required']">Email is required</span>
+                                            <span *ngIf="addOrganizationform.get('email')?.errors?.['pattern']">Invalid email address</span>
+                                            </span>
+                                         
+                                      
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-row">
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label>Username</label>
+                                      <input type="text" class="form-control" formControlName="username">
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label>State</label>
+                                      <input type="text" class="form-control" formControlName="state">
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-row">
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label>Employee ID</label>
+                                      <input type="text" class="form-control" formControlName="employeeId">
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label>Business Category</label>
+                                      <input type="text" class="form-control" formControlName="businessCategory">
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-row">
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label>Business Type</label>
+                                      <input type="text" class="form-control" formControlName="businessType">
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label>Address</label>
+                                      <input type="text" class="form-control" formControlName="address">
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-row">
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                        
+                                            <label class="form-label" for="newPasswordInput">New Password</label>
+                                            <input
+                                              id="newPasswordInput"
+                                              class="form-control"
+                                             
+                                              [style.border-color]=" addOrganizationform.get('password')?.errors && (addOrganizationform.get('password')?.touched || addOrganizationform.get('password')?.dirty) ? '#D81616' : ''"
+                                              type="password"
+                                              formControlName="password"
+                                            />
+                                            <span class="text-danger fs-13" *ngIf="addOrganizationform.get('password')?.errors && (addOrganizationform.get('password')?.touched || addOrganizationform.get('password')?.dirty)">
+                                              <span *ngIf="addOrganizationform.get('password')?.errors?.['required']">Password is required</span>
+                                              <span *ngIf="addOrganizationform.get('password')?.errors?.['pattern']">Accept numbers, alphabet (Upper & Lower Case), and symbols only.</span>
+                                              <span *ngIf="addOrganizationform.get('password')?.errors?.['minlength']">Minimum of 8 characters only.</span>
+                                            </span>
+                                        
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                  <div class="form-group">
+                                    <label class="form-label" for="confirmPasswordInput">Confirm Password</label>
+                                    <input
+                                      id="confirmPasswordInput"
+                                      class="form-control"
+                                     
+                                      [style.border-color]=" addOrganizationform.get('confirmPassword')?.errors && (addOrganizationform.get('confirmPassword')?.touched || addOrganizationform.get('confirmPassword')?.dirty) ? '#D81616' : ''"
+                                      type="password"
+                                      formControlName="confirmPassword"
+                                    />
+                                    <span class="text-danger fs-13" *ngIf="addOrganizationform.get('confirmPassword')?.errors && (addOrganizationform.get('confirmPassword')?.touched || addOrganizationform.get('confirmPassword')?.dirty)">
+                                      <span *ngIf="addOrganizationform.get('confirmPassword')?.errors?.['required']">Confirm Password is required</span>
+                                      <span *ngIf="addOrganizationform.hasError('passwordMismatch')">Passwords do not match.</span>
+                                      <!-- <span *ngIf="resetForm.get('confirmPassword')?.errors?.['confirmedValidator']">Passwords must match.</span> -->
+                                    </span>
+                                  </div>
+                                </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="role">Role</label>
+                                        <select id="role" class="form-control" formControlName="role">
+                                          <option value="">Select a role</option>
+                                          <option *ngFor="let role of role?.roles" [value]="role.name">{{ role.name }}</option>
+                                        </select>
+                                      </div>
+                                </div>
+                                <!-- <button type="submit" class="btn btn-primasry">Submit</button> -->
+                              </form>
+                              
+                              
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" (click)="submit()" class="btn btn-primary">Create Organization</button>
+                            <button type="button" class="btn btn-light btn-close" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

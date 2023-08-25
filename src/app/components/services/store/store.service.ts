@@ -7,6 +7,8 @@ export class StoreService {
 
   constructor() { }
 
+  
+
 
   setUserDetails(userDetails: any): void {
     sessionStorage.setItem('user', JSON.stringify(userDetails));

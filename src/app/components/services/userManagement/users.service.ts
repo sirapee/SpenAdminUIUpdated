@@ -12,6 +12,13 @@ export class UsersService {
   private selectedDetailsSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public selectedDetails$: Observable<any> = this.selectedDetailsSubject.asObservable();
 
+  private userDataSubject = new BehaviorSubject<any[]>([]);
+  userData$ = this.userDataSubject.asObservable();
+
+  updateUserData(data: any) {
+    this.userDataSubject.next(data);
+  }
+
   constructor(private http: HttpClient, private datePipe : DatePipe) {}
 
   getAllUsers(
@@ -105,34 +112,130 @@ export class UsersService {
   }
 
 
-  searchUsers(
-    pageNumber: number,
-    pageSize: number,
+
+
+  createUser(payload: any) {
+    return this.http.post(`${environment.baseUrl}/user-management/users`, payload , {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    })
+  }
+
+  createAdmin(payload: any) {
+    return this.http.post(`${environment.baseUrl}/user-management/admins`, payload , {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    })
+  }
+
+  createOrganization(payload: any) {
+    return this.http.post(`${environment.baseUrl}/user-management/organizations`, payload , {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    })
+  }
+
+  updateUser(id:any,payload: any) {
+    return this.http.patch(`${environment.baseUrl}/user-management/users/${id}`, payload , {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    })
+  }
+
+  closeModal() {
+    let el: any = document.getElementsByClassName('btn-close');
+    for (let i = 0; i < el.length; i++) {
+      el[i].click();
+    }
+  }
+  
+  getAllMerchants(
+    PageNumber: number,
+    PageSize: number,
+    // PageNumber: number,
+    // PageSize: number,
     filters: {
-      searchTerm?: string;
+      MerchantId?: number;
+      MerchantName?: string;
+      PhoneNumber?: number; // Make it optional
+      Email?: string;
+      state?: string;
+      CreatedAt?: Date;
     }
   ): Observable<any> {
-    // Filter out undefined and null values from filters
-    const filteredFilters = Object.fromEntries(
-      Object.entries(filters).filter(([_, v]) => v !== undefined && v !== null)
-    );
-  
-    // Build queryParams based on the filtered filters
     let queryParams = new HttpParams()
-      .set('page', pageNumber.toString())
-      .set('pageSize', pageSize.toString());
-  
-    if (filteredFilters['searchTerm']) {
-      queryParams = queryParams.set('SearchTerm', filteredFilters['searchTerm']);
+      .set('page', PageNumber.toString())
+      .set('pageSize', PageSize.toString());
+
+    if (filters.MerchantId !== undefined) {
+      queryParams = queryParams.set('MerchantId', filters.MerchantId.toString());
+    }
+
+    if (filters.MerchantName) {
+      queryParams = queryParams.set('MerchantName', filters.MerchantName);
+    }
+
+    if (filters.PhoneNumber !== undefined) {
+      queryParams = queryParams.set('PhoneNumber', filters.PhoneNumber.toString());
     }
   
-    // Make the HTTP request with the constructed queryParams
-    return this.http.get(`${environment.baseUrl}/user-management/users`, {
+
+    if (filters.Email) {
+      queryParams = queryParams.set('Email', filters.Email);
+    }
+
+    if (filters.state) {
+      queryParams = queryParams.set('State', filters.state);
+    }
+
+    if (filters.CreatedAt) {
+      queryParams = queryParams.set('CreatedAt', this.dateToString(filters.CreatedAt));
+    }
+
+    return this.http.get(`${environment.baseUrl}/merchants`, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem('token')}`,
       },
       params: queryParams,
     });
+  }
+
+
+  getRoles() {
+    return this.http.get(`${environment.baseUrl}/roles`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    })
+  }
+
+
+  enable(username: any) {
+    return this.http.get(`${environment.baseUrl}/user-management/enable/${username}`,{
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    })
+  }
+
+  disable(username: any) {
+    return this.http.get(`${environment.baseUrl}/user-management/disable/${username}`,{
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    })
+  }
+
+  delete(username: any) {
+    return this.http.delete(`${environment.baseUrl}/user-management/user/${username}`,{
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    })
   }
   
 }
