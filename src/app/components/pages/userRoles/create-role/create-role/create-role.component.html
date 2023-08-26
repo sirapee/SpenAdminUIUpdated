@@ -1,0 +1,54 @@
+
+<ngx-spinner
+bdColor="rgba(0,0,0,0.5)"
+size="medium"
+color="#d81616"
+type="ball-clip-rotate"
+[fullScreen]="true"
+></ngx-spinner>
+
+
+<div class="col-lg-6 stretched_card mt-mob-4">
+    <div class="">
+        <div class="">
+            <div class="modal fade" id="exampleLongModalLong3">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Create new role</h5>
+                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            
+                            <form [formGroup]="rolesForm" class="custom-form">
+                                <div class="form-group">
+                                  <label>Role Name</label>
+                                  <input type="text" class="form-control" formControlName="roleName">
+                                </div>
+                                <div class="form-group">
+                                  <label>Role Category</label>
+                                  <input type="text" class="form-control" formControlName="roleCategory">
+                                </div>
+                                <div class="form-group">
+                                  <label>Role Description</label>
+                                  <textarea class="form-control" formControlName="roleDescription" rows="4"></textarea>
+                                </div>
+                                <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+                              </form>
+                              
+                              
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" (click)="submit()" class="btn btn-primary">Create Role</button>
+                            <button type="button" class="btn btn-light btn-close" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

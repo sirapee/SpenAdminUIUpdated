@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { UsersService } from 'src/app/components/services/userManagement/users.service';
 import { passwordMatchValidator } from 'src/app/authentication/validator/confirm.validator';
+import {  NgxSpinnerService } from 'ngx-spinner';
+import { RoleService } from 'src/app/components/services/roleService/role.service';
 
 
 @Component({
@@ -19,7 +21,7 @@ export class CreateOrganizationComponent {
   // notification: any;
   role: any;
 
-  constructor(private fb: FormBuilder, private userService : UsersService, private notification: ToastrService) {
+  constructor(private fb: FormBuilder, private userService : UsersService, private notification: ToastrService, private spinner : NgxSpinnerService, private roleService : RoleService) {
 
   }
 
@@ -50,7 +52,7 @@ export class CreateOrganizationComponent {
 
   getRole() {
 
-    this.userService.getRoles().subscribe(
+    this.roleService.getRoles().subscribe(
       (res) => {
         this.role = res;
       },
@@ -62,25 +64,34 @@ export class CreateOrganizationComponent {
 
 
   submit() {
-    // Call the API for admin user
-    // let merchantIds = this.userData.map((organization: { id: any }) => organization.id);
-    // let payload = {
-    //   this.addOrganizationform.va
-    // };
-    this.userService.createOrganization(this.addOrganizationform.value).subscribe((res)=>{
-      this.adminData = res;
-      if(this.adminData.isSuccessful){
-        this.notification.success('Admin User Created');
-        // this.userService.updateUserData(res);
-        // Clear the form for the next entry
-        this.addOrganizationform.reset();
-        location.reload();
-      }else{
-        this.notification.error(this.adminData.responseMessage)
-      }
-      
-    })
-    // console.log('Submitting admin data:', adminData);
+    
+    if (this.addOrganizationform.valid) {
+      this.spinner.show();
+      this.userService.createOrganization(this.addOrganizationform.value).subscribe(
+        (response: any) => {
+          // this.spinner.show();
+          if (response.isSuccessful) {
+            this.notification.success(response.responseMessage);
+            this.addOrganizationform.reset();
+            this.spinner.hide();
+            location.reload();
+          } else {
+            this.notification.error(response.responseMessage);
+            this.spinner.hide();
+          }
+        },
+        (error) => {
+          this.notification.error('An error occurred while creating the organization.');
+          console.error('Organization creation error:', error);
+          this.spinner.hide();
+        }
+      );
+    } else {
+      this.notification.error('Please fill in all fields.');
+      this.spinner.hide();
+    }
   }
+  
+  
 
 }

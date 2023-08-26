@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsersService } from 'src/app/components/services/userManagement/users.service';
 import Swal from 'sweetalert2';
@@ -13,121 +13,105 @@ import { passwordMatchValidator } from 'src/app/authentication/validator/confirm
 })
 export class ChangePasswordComponent {
 
+
+  selectedDetails: any
   passwordForm! : FormGroup
+  adminPasswordForm! : FormGroup
   adminData: any;
   userData: any;
   usersData: any;
 
-  constructor(private fb: FormBuilder, private userService: UsersService,private notification: ToastrService,) {
+  constructor(private fb: FormBuilder, private userService: UsersService,private notification: ToastrService,private spinner: NgxSpinnerService,) {
 
   }
 
   ngOnInit(): void {
     this.passwordForm = this.fb.group({
-      currentPassword: ['',[ Validators.required, Validators.pattern(/[^A-Za-z0-9]+/), Validators.minLength(8) ]],
+      userType: ['user', Validators.required], // Default to 'user'
+      currentPassword: ['',[Validators.required]],
       newPassword: ['',[ Validators.required, Validators.pattern(/[^A-Za-z0-9]+/), Validators.minLength(8) ]],
-      // password: ['', [ Validators.required, Validators.pattern(/[^A-Za-z0-9]+/), Validators.minLength(8) ]],
-      userName : ['',[Validators.required]],
       confirmPassword: [ '', [ Validators.required]],
-      isAdmin: [ true ],
-      userType: ['user', Validators.required]
+
+      newPasswords: ['',[ Validators.required, Validators.pattern(/[^A-Za-z0-9]+/), Validators.minLength(8) ]],
+      confirmPasswords: [ '', [ Validators.required]],
+      isAdmin: [true] // Default to false
     },{
       validators: passwordMatchValidator()
     });
 
 
-
   }
 
-
-  submitForm() {
-    if (this.passwordForm.valid) {
-      const userData = {
-        ...this.passwordForm.value,
-        userType: this.passwordForm.value.userType
-      };
-  
-      if (userData.userType === 'user') {
-        this.submitUserApi(userData);
-      } else if (userData.userType === 'admin') {
-        this.submitAdminApi(userData);
-      } else {
-        this.notification.error('Complete missing fields for user type');
-      }
-    } else {
-      this.notification.error('Complete all fields');
+  @Input() set selected(data: any) {
+    if (data) {
+      this.selectedDetails = data;
     }
   }
 
 
+ 
 
-  submitUserApi(userData: any) {
 
-    // let payload = {
-    //   phoneNumber: this.addUserform.value.phoneNumber,
-    //   firstName: this.addUserform.value.firstName,
-    //   middleName: this.addUserform.value.middleName,
-    //   lastName: this.addUserform.value.lastName,
-    //   email: this.addUserform.value.email,
-    //   userName: this.addUserform.value.userName,
-    //   country: this.addUserform.value.country,
-    //   merchantName: this.addUserform.value.merchantName,
-    //   merchantId: this.addUserform.value.merchantId,
-    //   employeeId: this.addUserform.value.employeeId,
-    //   password: this.addUserform.value.password,
-    //   confirmPassword: this.addUserform.value.confirmPassword,
-    //   role: this.addUserform.value.role,
-    // };
-    this.userService.createUser(this.passwordForm.value).subscribe((res) => {
-      this.usersData = res;
-      if(this.userData.isSuccessful){
-        this.notification.success(this.userData.responseMessage);
-        // this.userService.updateUserData(res);
-        // Clear the form for the next entry
-        this.passwordForm.reset();
-        location.reload();
-      }else{
-        this.notification.error(this.userData.responseMessage)
-      }
-     
-    });
-    console.log('Submitting user data:', userData);
-    // Implement your HTTP request here
+
+  onSubmit() {
+    this.spinner.show();
+    const formValue = this.passwordForm.value;
+  
+    if (formValue.userType === 'user') {
+      const userPayload = {
+        username: this.selectedDetails.username,
+        newPassword: formValue.newPassword,
+        confirmPassword: formValue.confirmPassword
+      };
+  
+      this.userService.changeUserPassword(userPayload).subscribe(
+        (res: any) => {
+          if (res.isSuccessful) {
+            this.notification.success(res.responseMessage);
+            this.passwordForm.reset();
+            this.spinner.hide();
+            location.reload();
+          } else {
+            this.notification.error(res.responseMessage);
+            this.spinner.hide();
+          }
+        },
+        (error) => {
+          this.notification.error('An error occurred while processing your request.');
+          console.error('User password change error:', error);
+          this.spinner.hide();
+        }
+      );
+  
+    } else if (formValue.userType === 'admin') {
+      this.spinner.show();
+      const adminPayload = {
+        currentPassword: formValue.currentPassword,
+        newPasswords: formValue.newPassword,
+        confirmPasswords: formValue.confirmPassword,
+        isAdmin: formValue.isAdmin
+      };
+  
+      this.userService.changeAdminPassword(adminPayload).subscribe(
+        (res: any) => {
+          if (res.isSuccessful) {
+            this.notification.success(res.responseMessage);
+            this.passwordForm.reset();
+            this.spinner.hide();
+            location.reload();
+          } else {
+            this.notification.error(res.responseMessage);
+            this.spinner.hide();
+          }
+        },
+        (error) => {
+          this.notification.error(error.error.responseMessage || error.error.message);
+          console.error('Admin password change error:', error);
+          this.spinner.hide();
+        }
+      );
+    }
   }
   
   
-   submitAdminApi(userData: any) {
-    // Call the API for admin user
-    // let merchantIds = this.userData.map((organization: { id: any }) => organization.id);
-    // let payload = {
-    //   phoneNumber: this.addUserform.value.phoneNumber,
-    //   firstName: this.addUserform.value.firstName,
-    //   middleName: this.addUserform.value.middleName,
-    //   lastName: this.addUserform.value.lastName,
-    //   email: this.addUserform.value.email,
-    //   userName: this.addUserform.value.userName,
-    //   country: this.addUserform.value.country,
-    //   merchantName: this.addUserform.value.merchantName,
-    //   merchantId: this.addUserform.value.merchantId,
-    //   employeeId: this.addUserform.value.employeeId,
-    //   password: this.addUserform.value.password,
-    //   confirmPassword: this.addUserform.value.confirmPassword,
-    //   role: this.addUserform.value.role,
-    // };
-    this.userService.createAdmin(this.passwordForm.value).subscribe((res)=>{
-      this.adminData = res;
-      if(this.adminData.isSuccessful){
-        this.notification.success('Admin User Created');
-        // this.userService.updateUserData(res);
-        // Clear the form for the next entry
-        this.passwordForm.reset();
-        location.reload();
-      }else{
-        this.notification.error(this.adminData.responseMessage)
-      }
-      
-    })
-    console.log('Submitting admin data:', userData);
-  }
-
 }

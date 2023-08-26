@@ -205,13 +205,7 @@ export class UsersService {
   }
 
 
-  getRoles() {
-    return this.http.get(`${environment.baseUrl}/roles`, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
-      },
-    })
-  }
+
 
 
   enable(username: any) {
@@ -232,6 +226,23 @@ export class UsersService {
 
   delete(username: any) {
     return this.http.delete(`${environment.baseUrl}/user-management/user/${username}`,{
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    })
+  }
+
+
+  changeAdminPassword(payload:any) {
+    return this.http.post(`${environment.baseUrl}/user-management/change-password`,payload,{
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    })
+  }
+
+  changeUserPassword(payload:any) {
+    return this.http.post(`${environment.baseUrl}/user-management/change-user-password`,payload,{
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem('token')}`,
       },

@@ -1,4 +1,3 @@
-
 <ngx-spinner
 bdColor="rgba(0,0,0,0.5)"
 size="medium"
@@ -6,7 +5,6 @@ color="#d81616"
 type="ball-clip-rotate"
 [fullScreen]="true"
 ></ngx-spinner>
-
 
 <div class="main-content-inner">
     
@@ -20,7 +18,7 @@ type="ball-clip-rotate"
                 <h6 class="header-pretitle">Overview</h6>
       
                 <!-- Title -->
-                <h1 class="header-title">user-management</h1>
+                <h1 class="header-title">Role Management</h1>
               </div>
              
               <div class="col-auto">
@@ -37,19 +35,19 @@ type="ball-clip-rotate"
       </div>
       <div class="row mt-4">
         <div class="col-md-6">
-            <div class="input-group">
+            <!-- <div class="input-group">
             
                 <input type="text" name="searchTerm" [(ngModel)] ="searchTerm" class="form-control" placeholder="Search" (input)="search()">
                 <div class="input-group-append">
                   <button class="btn btn-primary" type="button"><i class="fa fa-search"></i></button>
                 </div>
         
-              </div>
+              </div> -->
         </div>
         <div class="col-md-6 text-md-right mt-md-0 mt-3">
          
-          <button class="btn btn-success"  data-toggle="modal" data-target="#exampleLongModalLong2"><i class="fa fa-user-plus" ></i> Create User</button>
-          <button class="btn btn-info ml-2" data-toggle="modal" data-target="#exampleLongModalLong3"><i class="fa fa-building"></i> Create Organization</button>
+          <!-- <button class="btn btn-success"  data-toggle="modal" data-target="#exampleLongModalLong2"><i class="fa fa-user-plus" ></i> Create User</button> -->
+          <button class="btn btn-info ml-2" data-toggle="modal" data-target="#exampleLongModalLong3"><i class="fa fa-building"></i> Create Role</button>
         </div>
       </div>
      
@@ -59,9 +57,9 @@ type="ball-clip-rotate"
           <div class="card">
             <div class="card-body">
               <h4 class="card_title">
-                User Table
+                Roles
               </h4>
-              <div class="card-body" *ngIf="!filteredUserData?.length && !loading">
+              <div class="card-body" *ngIf="!filteredUserData?.roles?.length && !loading">
                 <div class="alert alert-dark text-center">
                   No data to display at the moment
                 </div>
@@ -74,18 +72,15 @@ type="ball-clip-rotate"
                     <thead class="text-uppercase">
                         <tr>
                           <th>S/N</th>
-                          <th scope="col" class="sortable-header" (click)="sort('email')">Email <i [ngClass]="getSortIcon('email')"></i></th>
-                          <th scope="col" class="sortable-header" (click)="sort('firstName')">FirstName <i [ngClass]="getSortIcon('firstName')"></i></th>
-                          <th scope="col" class="sortable-header" (click)="sort('lastName')">LastName <i [ngClass]="getSortIcon('lastName')"></i></th>
-                          <th scope="col" class="sortable-header" (click)="sort('isEnabled')">Status <i [ngClass]="getSortIcon('isEnabled')"></i></th>
-                          <th scope="col" class="sortable-header" (click)="sort('merchantName')">Merchant <i [ngClass]="getSortIcon('merchantName')"></i></th>
-                          <th scope="col" class="sortable-header" (click)="sort('roles')">Roles <i [ngClass]="getSortIcon('roles')"></i></th>
-
-                          <th scope="col" class="sortable-header" (click)="sort('isLocked')">Account Status<i [ngClass]="getSortIcon('isLocked')"></i></th>
+                          <th scope="col" class="sortable-header" (click)="sort('name')">Role Name <i [ngClass]="getSortIcon('name')"></i></th>
+                          <th scope="col" class="sortable-header" (click)="sort('roleCategory')">Role Category <i [ngClass]="getSortIcon('roleCategory')"></i></th>
+                          <th scope="col" class="sortable-header" (click)="sort('roleDescription')">Role Description <i [ngClass]="getSortIcon('roleDescription')"></i></th>
+                          <!-- <th scope="col" class="sortable-header" (click)="sort('merchantName')">Merchant <i [ngClass]="getSortIcon('merchantName')"></i></th>
+                          <th scope="col" class="sortable-header" (click)="sort('roles')">Roles <i [ngClass]="getSortIcon('roles')"></i></th> -->
                           <th scope="col">Action</th>
                         </tr>
                       </thead>
-                    <tbody class="list fs-base" *ngIf="loading && filteredUserData?.length > 0">
+                    <tbody class="list fs-base" *ngIf="loading && filteredUserData?.roles?.length > 0">
                         <tr *ngFor="let loop of [1, 2, 3, 4]">
                           <td>
                             <ngx-skeleton-loader
@@ -134,32 +129,8 @@ type="ball-clip-rotate"
                               appearance="line"
                             ></ngx-skeleton-loader>
                           </td>
-                          <td>
-                            <ngx-skeleton-loader
-                              count="1"
-                              [theme]="{ width: '50px' }"
-                              appearance="line"
-                            ></ngx-skeleton-loader>
-                            <br />
-                            <ngx-skeleton-loader
-                              count="1"
-                              [theme]="{ width: '70px' }"
-                              appearance="line"
-                            ></ngx-skeleton-loader>
-                          </td>
-                          <td>
-                            <ngx-skeleton-loader
-                              count="1"
-                              [theme]="{ width: '50px' }"
-                              appearance="line"
-                            ></ngx-skeleton-loader>
-                            <br />
-                            <ngx-skeleton-loader
-                              count="1"
-                              [theme]="{ width: '70px' }"
-                              appearance="line"
-                            ></ngx-skeleton-loader>
-                          </td>
+                        
+                       
                           <td>
                             <div class="dropdown">
                               <a
@@ -177,35 +148,21 @@ type="ball-clip-rotate"
                         </tr>
                       </tbody>
                     <tbody >
-                        <tr *ngFor="let data of filteredUserData |  paginate: { itemsPerPage: pageSize, currentPage: p, totalItems: totalItems }, let i = index">
+                        <tr *ngFor="let data of filteredUserData?.roles |  paginate: { itemsPerPage: pageSize, currentPage: p, totalItems: totalItems }, let i = index">
                             <td>{{ 20 * p - (19 - i) }}</td>
-                            <td style="font-size: 14px;">{{data.email}}</td>
-                            <td style="font-size: 14px;">{{data.firstName}}</td>
-                            <td style="font-size: 14px;">{{data.lastName}}</td>
-                            <td [ngClass]="{ 'active-status': data.isEnabled, 'inactive-status': !data.isEnabled }" style="font-size: 14px;">{{data.isEnabled ? 'Active' : 'Inactive'}}</td>
-                            <td style="font-size: 14px;">{{data.merchantName}}</td>
-                            <td style="font-size: 14px;">{{data.roles}}</td>
-
-                            <td  [ngClass]="{ 'active-status': !data.isLocked, 'inactive-status': data.isLocked }" style="font-size: 14px;">{{data.isLocked ? 'Locked' : 'Unlocked'}}</td>
+                            <td style="font-size: 14px;">{{data?.name}}</td>
+                            <td style="font-size: 14px;">{{data?.roleCategory}}</td>
+                            <td style="font-size: 14px;">{{data?.roleDescription}}</td>
+                           
                             <!-- <td>500.00$</td> -->
                             <td>
                                 <div class="dropdown">
                                   <button class="dropdown-ellipsis dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                   </button>
                                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="javascript:;" data-toggle="modal" data-target="#exampleModalLong" (click)="viewDetails(data)"><i class="fa fa-eye"></i>View details</a>
-                                    <hr class="dropdown-divider"/>
-                                    <a class="dropdown-item text-warning"  href="javascript:;" data-toggle="modal" data-target="#exampleModalLong2" (click)="viewDetails(data)"><i class="fa fa-edit"></i> Update</a>
+                                    
                                     <hr class="dropdown-divider" />
-                                    <a class="dropdown-item text-primary"  href="javascript:;" (click)="confirmDeleteUser(data.username)"><i class="ti-trash"></i> Delete</a>
-                                    <hr class="dropdown-divider" />
-                                    <!-- <a class="dropdown-item"  href="javascript:;"  (click)="confirmEnableUser(data.username)"><i class="ti-lock"></i> Lock</a> -->
-                                    <hr class="dropdown-divider" />
-                                    <a class="dropdown-item text-success"  href="javascript:;" *ngIf="!data.isEnabled" (click)="confirmEnableUser(data.username)"><i class="ti-check"></i> Enable</a>
-                                    <a class="dropdown-item text-danger"  href="javascript:;" *ngIf="data.isEnabled" (click)="confirmDisableUser(data.username)"><i class="ti-close"></i>Disable</a>
-                                    <hr class="dropdown-divider" />
-
-                                    <a class="dropdown-item"  href="javascript:;" class="btn btn-primary" data-toggle="modal" data-target="#passwordModal"  (click)="viewDetails(data)"><i class="fa fa-edit"></i> Reset Password</a>
+                                    <a class="dropdown-item text-primary" (click)="confirmDeleteUser(data.name)"  href="javascript:;" ><i class="ti-trash"></i> Delete</a>
                                   </div>
                                 </div>
                               </td>   
@@ -224,8 +181,13 @@ type="ball-clip-rotate"
       </div>
 </div>
 
-<app-view-users [selected]="selectedDetails"></app-view-users>
+<!-- <app-view-users [selected]="selectedDetails"></app-view-users>
 <app-create-users></app-create-users>
 <app-create-organization></app-create-organization>
-<app-change-password [selected]="selectedDetails"></app-change-password>
+<app-change-password [selected]="selectedDetails"></app-change-password> -->
+
+<app-create-role></app-create-role>
+
+
+
 

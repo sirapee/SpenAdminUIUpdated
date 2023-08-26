@@ -22,6 +22,11 @@ const routes: Routes = [
       },
 
       {
+        path: 'roles',
+        loadChildren: () => import('../../pages/userRoles/user-role.module').then(m => m.UserRoleModule)
+      },
+
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',

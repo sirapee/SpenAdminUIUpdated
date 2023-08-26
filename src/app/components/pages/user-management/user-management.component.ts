@@ -3,6 +3,7 @@ import { UsersService } from '../../services/userManagement/users.service';
 import * as _ from 'lodash';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
+import {  NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -29,7 +30,7 @@ export class UserManagementComponent {
   activeSortBy: string = ''; // Initialize activeSortBy property
 
   constructor(
-    private usersService: UsersService, private notification: ToastrService
+    private usersService: UsersService, private notification: ToastrService, private spinner: NgxSpinnerService
  
   ) {}
 
@@ -44,6 +45,8 @@ export class UserManagementComponent {
 
 
  async loadData() {
+ this.spinner.show();
+  
     const filters = {};
 
   await this.usersService.getAllUsers(this.p, this.pageSize, filters).subscribe(
@@ -52,11 +55,13 @@ export class UserManagementComponent {
         this.userData = response.users;
         this.filteredUserData = this.userData;
         this.usersService.updateUserData(this.userData);
+        this.spinner.hide();
         this.totalItems = response.total;
       },
       (error) => {
         console.error('Error fetching reports:', error);
         this.loading = false;
+        this.spinner.hide();
       }
     );
   }
@@ -186,7 +191,6 @@ export class UserManagementComponent {
       (res: any) => {
         this.notification['success'](res.message, 'disabled User');
         location.reload();
-        // You can update your data source or perform other necessary actions here
       },
       (error) => {
         console.error('Error disabling user:', error);

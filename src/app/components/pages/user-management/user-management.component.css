@@ -2,3 +2,19 @@
     cursor: pointer;
   }
   
+  .active-status {
+    color: green; 
+  }
+  
+  .inactive-status {
+    color: red; 
+  }
+  
+  .unlocked-status {
+    color: green; 
+  }
+  
+  .locked-status {
+    color: red; 
+  }
+  
