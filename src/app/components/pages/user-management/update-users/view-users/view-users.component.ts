@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { UsersService } from 'src/app/components/services/userManagement/users.service';
 import { ToastrService } from 'ngx-toastr';
+import { RoleService } from 'src/app/components/services/roleService/role.service';
 
 @Component({
   selector: 'app-view-users',
@@ -15,7 +16,7 @@ export class ViewUsersComponent {
 
 
 constructor(
-  private userService: UsersService, private notification: ToastrService
+  private userService: UsersService, private notification: ToastrService, private roleService: RoleService
 ){}
 
 ngOnInit(): void {
@@ -45,7 +46,9 @@ ngOnInit(): void {
       merchantName: this.selectedDetails.merchantName,
       merchantId: this.selectedDetails.merchantId,
       employeeId: this.selectedDetails.employeeId,
-      role: this.selectedDetails.roles, 
+      roles:[
+        this.selectedDetails.roles, 
+      ] 
     }
     this.userService.updateUser(this.selectedDetails.id,payload).subscribe((res) => {
       this.usersData = res;
@@ -63,7 +66,7 @@ ngOnInit(): void {
 
   getRole() {
 
-    this.userService.getRoles().subscribe(
+    this.roleService.getRoles().subscribe(
       (res) => {
         this.role = res;
       },

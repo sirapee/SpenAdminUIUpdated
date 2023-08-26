@@ -10,12 +10,15 @@ import { ViewUsersComponent } from './update-users/view-users/view-users.compone
 import { CreateUsersComponent } from './create-users/create-users/create-users.component';
 import { CreateOrganizationComponent } from './create-organization/create-organization/create-organization.component';
 import { ChangePasswordComponent } from './change-password/change-password/change-password.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+// import { RolesComponent } from './roles/allroles/roles/roles.component';
+// import { AddRolesComponent } from './roles/addroles/add-roles/add-roles.component';
 // import { passwordMatchValidator } from 'src/app/authenticationvalidator/confirm.validator';
 
 
 
 @NgModule({
-  declarations: [UserManagementComponent, ViewUsersComponent, CreateUsersComponent, CreateOrganizationComponent, ChangePasswordComponent],
+  declarations: [UserManagementComponent, ViewUsersComponent, CreateUsersComponent, CreateOrganizationComponent, ChangePasswordComponent,],
   imports: [
     CommonModule,
     UsersRoutingModule,
@@ -23,7 +26,8 @@ import { ChangePasswordComponent } from './change-password/change-password/chang
     NgxPaginationModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxSkeletonLoaderModule
+    NgxSkeletonLoaderModule,
+    NgxSpinnerModule
   ]
 })
 export class UsersModule { }

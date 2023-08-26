@@ -5,6 +5,8 @@ import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { passwordMatchValidator } from 'src/app/authentication/validator/confirm.validator';
+import { RoleService } from 'src/app/components/services/roleService/role.service';
+
 
 
 @Component({
@@ -25,8 +27,10 @@ export class CreateUsersComponent {
   adminData: any;
   usersData: any;
   newUserData!: any[];
+  filteredUserData: any;
+  userssData: any;
 
-  constructor(private fb: FormBuilder, private userService: UsersService,private notification: ToastrService,) {
+  constructor(private fb: FormBuilder, private userService: UsersService,private notification: ToastrService, private spinner : NgxSpinnerService, private roleService: RoleService) {
 
   }
 
@@ -52,6 +56,7 @@ export class CreateUsersComponent {
 
     this.loadData();
     this.getRole();
+    this.loadAllData();
 
     this.addUserform.get('merchantName')?.valueChanges.subscribe((selectedMerchantName) => {
       const selectedMerchant = this.userData.find(
@@ -92,6 +97,7 @@ export class CreateUsersComponent {
 
 
   submitForm() {
+   
     if (this.addUserform.valid) {
       const userData = {
         ...this.addUserform.value,
@@ -106,94 +112,130 @@ export class CreateUsersComponent {
         this.notification.error('Complete missing fields for user type');
       }
     } else {
-      this.notification.error('Complete all fields');
+      this.notification.error('Please fill in all required fields');
     }
   }
   
   
 
-  
 
   submitUserApi(userData: any) {
-
+    this.spinner.show();
     let payload = {
-      phoneNumber: this.addUserform.value.phoneNumber,
-      firstName: this.addUserform.value.firstName,
-      middleName: this.addUserform.value.middleName,
-      lastName: this.addUserform.value.lastName,
-      email: this.addUserform.value.email,
-      userName: this.addUserform.value.userName,
-      country: this.addUserform.value.country,
-      merchantName: this.addUserform.value.merchantName,
-      merchantId: this.addUserform.value.merchantId,
-      employeeId: this.addUserform.value.employeeId,
-      password: this.addUserform.value.password,
-      confirmPassword: this.addUserform.value.confirmPassword,
-      role: this.addUserform.value.role,
-    };
-    this.userService.createUser(payload).subscribe((res) => {
-      this.usersData = res;
-      if(this.usersData.isSuccessful){
-        this.notification.success(this.userData.responseMessage);
-        // this.userService.updateUserData(res);
-        // Clear the form for the next entry
-        this.addUserform.reset();
-        location.reload();
-      }else{
-        this.notification.error(this.userData.responseMessage)
-      }
-     
-    });
-    console.log('Submitting user data:', userData);
-    // Implement your HTTP request here
-  }
-  
-  
-   submitAdminApi(userData: any) {
-    // Call the API for admin user
-    // let merchantIds = this.userData.map((organization: { id: any }) => organization.id);
-    let payload = {
-      phoneNumber: this.addUserform.value.phoneNumber,
-      firstName: this.addUserform.value.firstName,
-      middleName: this.addUserform.value.middleName,
-      lastName: this.addUserform.value.lastName,
-      email: this.addUserform.value.email,
-      userName: this.addUserform.value.userName,
-      country: this.addUserform.value.country,
-      merchantName: this.addUserform.value.merchantName,
-      merchantId: this.addUserform.value.merchantId,
-      employeeId: this.addUserform.value.employeeId,
-      password: this.addUserform.value.password,
-      confirmPassword: this.addUserform.value.confirmPassword,
-      role: this.addUserform.value.role,
-    };
-    this.userService.createAdmin(payload).subscribe((res)=>{
-      this.adminData = res;
-      if(this.adminData.isSuccessful){
-        this.notification.success('Admin User Created');
-        // this.userService.updateUserData(res);
-        // Clear the form for the next entry
-        this.addUserform.reset();
-        location.reload();
-      }else{
-        this.notification.error(this.adminData.responseMessage)
-      }
       
-    })
-    console.log('Submitting admin data:', userData);
+        phoneNumber: this.addUserform.value.phoneNumber,
+        firstName: this.addUserform.value.firstName,
+        middleName: this.addUserform.value.middleName,
+        lastName: this.addUserform.value.lastName,
+        email: this.addUserform.value.email,
+        userName: this.addUserform.value.userName,
+        country: this.addUserform.value.country,
+        merchantName: this.addUserform.value.merchantName,
+        merchantId: this.addUserform.value.merchantId,
+        employeeId: this.addUserform.value.employeeId,
+        password: this.addUserform.value.password,
+        confirmPassword: this.addUserform.value.confirmPassword,
+        role: this.addUserform.value.role,
+ 
+    };
+  
+    this.userService.createUser(payload).subscribe(
+      (response: any) => {
+        if (response.isSuccessful) {
+          this.notification.success(response.responseMessage);
+          this.spinner.hide();
+          this.addUserform.reset();
+          this.loadAllData();
+          this.userService.closeModal();
+          location.reload();
+        } else {
+          this.spinner.hide();
+          this.notification.error(response.responseMessage);
+         
+        }
+      },
+      (error) => {
+        this.spinner.hide();
+        this.notification.error(error.error.responseMessage || error.error.message);
+        console.error('User creation error:', error);
+      }
+    );
   }
+  
+  submitAdminApi(userData: any) {
+    this.spinner.show();
+    let payload = {
+   
+        phoneNumber: this.addUserform.value.phoneNumber,
+        firstName: this.addUserform.value.firstName,
+        middleName: this.addUserform.value.middleName,
+        lastName: this.addUserform.value.lastName,
+        email: this.addUserform.value.email,
+        userName: this.addUserform.value.userName,
+        country: this.addUserform.value.country,
+        merchantName: this.addUserform.value.merchantName,
+        merchantId: this.addUserform.value.merchantId,
+        employeeId: this.addUserform.value.employeeId,
+        password: this.addUserform.value.password,
+        confirmPassword: this.addUserform.value.confirmPassword,
+        role: this.addUserform.value.role,
+
+    };
+  
+    this.userService.createAdmin(payload).subscribe(
+      (response: any) => {
+        if (response.isSuccessful) {
+          this.notification.success(response.responseMessage);
+          this.addUserform.reset();
+          this.spinner.hide();
+          this.loadAllData();
+          this.userService.closeModal();
+          location.reload();
+        } else {
+          this.spinner.hide();
+          this.notification.error(response.responseMessage);
+        }
+      },
+      (error) => {
+        this.spinner.hide();
+        this.notification.error(error.error.responseMessage || error.error.message);
+        console.error('Admin user creation error:', error);
+      }
+    );
+  }
+  
 
 
 
 
   getRole() {
 
-    this.userService.getRoles().subscribe(
+    this.roleService.getRoles().subscribe(
       (res) => {
         this.role = res;
       },
       (error) => {
         console.error('Error fetching roles:', error);
+      }
+    );
+  }
+
+
+  async loadAllData() {
+    const filters = {};
+
+  await this.userService.getAllUsers(this.p, this.pageSize, filters).subscribe(
+      (response) => {
+        this.loading = false;
+        this.userssData = response.users;
+        this.filteredUserData = this.userData;
+        this.userService.updateUserData(this.userData);
+        this.totalItems = response.total;
+        // this.submitForm();
+      },
+      (error) => {
+        console.error('Error fetching reports:', error);
+        this.loading = false;
       }
     );
   }
