@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { UsersService } from '../../services/userManagement/users.service';
+// import { UsersService } from '../../services/userManagement/users.service';
 import * as _ from 'lodash';
 // import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { RoleService } from '../../services/roleService/role.service';
-import { NgxSpinnerService, Spinner } from 'ngx-spinner';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-user-roles',
@@ -33,7 +33,7 @@ export class UserRolesComponent {
   role: any;
 
   constructor(
-    private roleService: RoleService, private notification: ToastrService, private usersService: UsersService, private spinner: NgxSpinnerService
+    private roleService: RoleService, private notification: ToastrService, private spinner: NgxSpinnerService
  
   ) {}
 
@@ -112,24 +112,7 @@ export class UserRolesComponent {
   }
   
 
-  userDetails() {
-    // const filters = {}; 
-    const userId = this.userData.id
-    this.usersService
-      .getUserDetails(userId)
-      .subscribe(
-        (response) => {
-          // this.loading = false;
-          this.userDetail = response.user;
-          this.usersService.getUserDetails(this.userDetail);
-          // this.totalItems = response.total; 
-        },
-        (error) => {
-          console.error('Error fetching reports:', error);
-          // this.loading = false;
-        }
-      );
-  }
+
 
 
   confirmDeleteUser(username: string) {
@@ -149,25 +132,27 @@ export class UserRolesComponent {
   }
 
   deleteUser(username: string) {
+    console.log('Deleting user:', username);
     this.roleService.delete(username).subscribe(
       (res: any) => {
-        if (res.isSuccessful) {
+        console.log('API Response:', res); // Log the entire response for debugging
+        if (res && res.issucessFul) {
+          console.log('User deleted successfully. Displaying success notification.');
           this.notification.success(res.responseMessage);
+          console.log('Notification displayed. Reloading...');
           location.reload();
-          // this.getRole();
-          // this.rolesForm.reset();
-          // this.spinner.hide();
-         
         } else {
+          console.log('Response indicates an error. Displaying error notification.');
           this.notification.error(res.responseMessage);
-          // this.spinner.hide();
         }
       },
       (error) => {
         console.error('Error deleting user:', error);
-        this.notification['error']('An error occurred while deleting the user.');
+        this.notification['error'](error.error.responseMessage || error.error.message);
       }
     );
   }
+  
+  
 
 }

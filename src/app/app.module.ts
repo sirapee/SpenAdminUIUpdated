@@ -28,6 +28,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 // import { UserRolesComponent } from './components/pages/userRoles/user-roles/user-roles.component';
 // import { CreateOrganizationComponent } from './create-organization/create-organization.component';
 // import { NgxPaginationModule } from 'ngx-pagination/public-api';
+// import { ElModule } from 'element-angular';
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,6 +62,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
       animation: 'pulse',
       loadingText: 'This item is actually loading...',
     }),
+    
     ToastrModule.forRoot({
       timeOut: 5000,
       closeButton: true,

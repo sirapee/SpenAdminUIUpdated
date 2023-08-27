@@ -11,6 +11,7 @@ import { CreateUsersComponent } from './create-users/create-users/create-users.c
 import { CreateOrganizationComponent } from './create-organization/create-organization/create-organization.component';
 import { ChangePasswordComponent } from './change-password/change-password/change-password.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { LockAccountComponent } from './lock-account/lock-account/lock-account.component';
 // import { RolesComponent } from './roles/allroles/roles/roles.component';
 // import { AddRolesComponent } from './roles/addroles/add-roles/add-roles.component';
 // import { passwordMatchValidator } from 'src/app/authenticationvalidator/confirm.validator';
@@ -18,7 +19,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
-  declarations: [UserManagementComponent, ViewUsersComponent, CreateUsersComponent, CreateOrganizationComponent, ChangePasswordComponent,],
+  declarations: [UserManagementComponent, ViewUsersComponent, CreateUsersComponent, CreateOrganizationComponent, ChangePasswordComponent, LockAccountComponent,],
   imports: [
     CommonModule,
     UsersRoutingModule,

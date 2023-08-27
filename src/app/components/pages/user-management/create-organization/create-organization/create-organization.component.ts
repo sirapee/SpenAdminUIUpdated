@@ -81,7 +81,7 @@ export class CreateOrganizationComponent {
           }
         },
         (error) => {
-          this.notification.error('An error occurred while creating the organization.');
+          this.notification.error(error.error.responseMessage || error.error.message);
           console.error('Organization creation error:', error);
           this.spinner.hide();
         }

@@ -220,11 +220,40 @@ export class UserManagementComponent {
       (res: any) => {
         this.notification['success'](res.message, 'User deleted');
         location.reload();
-        // You can update your data source or perform other necessary actions here
+       
       },
       (error) => {
         console.error('Error deleting user:', error);
         this.notification['error']('An error occurred while deleting the user.');
+      }
+    );
+  }
+
+
+  confirmUnlockUser(email: string) {
+    Swal.fire({
+      title: 'Unlock User',
+      text: `You are about to unlock this user, do you want to continue?`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Unlock',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.unlockUser(email);
+      }
+    });
+  }
+  
+  unlockUser(email: string) {
+    this.usersService.unlock(email).subscribe(
+      (res: any) => {
+        this.notification['success'](res.responseMessage, 'User Unlocked ');
+        location.reload();
+      },
+      (error) => {
+        console.error('Error unlocking user:', error);
+        this.notification.error(error.error.responseMessage || error.error.message);
       }
     );
   }

@@ -199,12 +199,12 @@ type="ball-clip-rotate"
                                     <hr class="dropdown-divider" />
                                     <a class="dropdown-item text-primary"  href="javascript:;" (click)="confirmDeleteUser(data.username)"><i class="ti-trash"></i> Delete</a>
                                     <hr class="dropdown-divider" />
-                                    <!-- <a class="dropdown-item"  href="javascript:;"  (click)="confirmEnableUser(data.username)"><i class="ti-lock"></i> Lock</a> -->
+                                    <a class="dropdown-item"  href="javascript:;"  data-toggle="modal" data-target="#myModal" *ngIf="!data.isLocked" (click)="viewDetails(data)" ><i class="ti-lock"></i>Lock account</a>
+                                    <a class="dropdown-item"  href="javascript:;"  *ngIf="data.isLocked" (click)="confirmUnlockUser(data.email)" ><i class="ti-unlock"></i>unlock account</a>
                                     <hr class="dropdown-divider" />
                                     <a class="dropdown-item text-success"  href="javascript:;" *ngIf="!data.isEnabled" (click)="confirmEnableUser(data.username)"><i class="ti-check"></i> Enable</a>
                                     <a class="dropdown-item text-danger"  href="javascript:;" *ngIf="data.isEnabled" (click)="confirmDisableUser(data.username)"><i class="ti-close"></i>Disable</a>
                                     <hr class="dropdown-divider" />
-
                                     <a class="dropdown-item"  href="javascript:;" class="btn btn-primary" data-toggle="modal" data-target="#passwordModal"  (click)="viewDetails(data)"><i class="fa fa-edit"></i> Reset Password</a>
                                   </div>
                                 </div>
@@ -228,4 +228,5 @@ type="ball-clip-rotate"
 <app-create-users></app-create-users>
 <app-create-organization></app-create-organization>
 <app-change-password [selected]="selectedDetails"></app-change-password>
+<app-lock-account [selected]="selectedDetails"></app-lock-account>
 
