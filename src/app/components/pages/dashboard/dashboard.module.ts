@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
+import { NgChartsModule, NgChartsConfiguration } from 'ng2-charts';
 
 
 @NgModule({
@@ -10,7 +11,11 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
   ],
   imports: [
     CommonModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,
+    NgChartsModule
+  ],
+  providers: [
+    { provide: NgChartsConfiguration, useValue: { generateColors: true }}
   ]
 })
 export class DashboardModule { }

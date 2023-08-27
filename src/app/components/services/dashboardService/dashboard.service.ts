@@ -13,7 +13,7 @@ export class DashboardService {
 
   
 
-  dasboard(): Observable<any> {
+  dashboard(): Observable<any> {
     const url = `${environment.baseUrl}/user-management/dashboard`;
     const token = sessionStorage.getItem('token');
     const headers = new HttpHeaders({

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { RoleService } from 'src/app/components/services/roleService/role.service';
+// import { ElNotificationService } from 'element-angular';
 
 @Component({
   selector: 'app-create-role',
@@ -24,33 +25,69 @@ export class CreateRoleComponent {
 
   ngOnInit(): void {}
 
-  submit() {
+  // async submit() {
+  //   if (this.rolesForm.valid) {
+  //     this.spinner.show();
+  //     try {
+  //       const response: any = await this.roleService.createRole(this.rolesForm.value).toPromise();
+  
+  //       if (response.isSuccessful) {
+  //         this.notification.success(response.responseMessage);
+       
+  //         setTimeout(() => {
+  //           this.rolesForm.reset();
+  //           this.spinner.hide();
+  //           window.location.reload();
+  //         }, 0);
+  //       } else {
+  //         this.notification.error(response.responseMessage);
+  //         this.spinner.hide();
+  //       }
+  //     } catch (error:any) {
+  //       this.notification.error(error.error.responseMessage || error.error.message);
+  //       console.error('Role creation error:', error);
+  //       this.spinner.hide();
+  //     }
+  //   } else {
+  //     this.notification.error('Please fill in all fields.');
+  //     this.spinner.hide();
+  //   }
+  // }
+
+
+
+
+
+    submit() {
     
-    if (this.rolesForm.valid) {
-      this.spinner.show();
-      this.roleService.createRole(this.rolesForm.value).subscribe(
-        (response: any) => {
-          // this.spinner.show();
-          if (response.isSuccessful) {
-            this.notification.success(response.responseMessage);
-            this.rolesForm.reset();
-            this.spinner.hide();
-            window.location.reload();
-          } else {
-            this.notification.error(response.responseMessage);
+      if (this.rolesForm.valid) {
+        this.spinner.show();
+        this.roleService.createRole(this.rolesForm.value).subscribe(
+          (response: any) => {
+            // this.spinner.show();
+            if (response.issucessFul) {
+              this.notification.success(response.responseMessage);
+              this.rolesForm.reset();
+              this.spinner.hide();
+              location.reload();
+            } else {
+              this.notification.error(response.responseMessage);
+              this.spinner.hide();
+            }
+          },
+          (error) => {
+            this.notification.error(error.error.responseMessage || error.error.message);
+            console.error('Organization creation error:', error);
             this.spinner.hide();
           }
-        },
-        (error) => {
-          this.notification.error('An error occurred while creating the organization.');
-          console.error('Role creation error:', error);
-          this.spinner.hide();
-        }
-      );
-    } else {
-      this.notification.error('Please fill in all fields.');
-      this.spinner.hide();
+        );
+      } else {
+        this.notification.error('Please fill in all fields.');
+        this.spinner.hide();
+      }
     }
   }
+  
+  
 
-}
+

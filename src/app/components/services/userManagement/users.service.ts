@@ -248,5 +248,21 @@ export class UsersService {
       },
     })
   }
+
+  lockAccount(payload:any) {
+    return this.http.post(`${environment.baseUrl}/user-management/lock-user-account`,payload,{
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    })
+  }
+
+  unlock(email: any) {
+    return this.http.get(`${environment.baseUrl}/user-management/unlock-user-account/${email}`,{
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    })
+  }
   
 }

@@ -192,17 +192,17 @@
                     <li class="user-dropdown">
                         <div class="dropdown">
                             <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="d_none_sm">Darlington <i class="feather ft-chevron-down"></i></span>
-                            <img src="assets/images/user.jpg" alt="" class="img-fluid">
+                            <span class="d_none_sm">{{firstname}} {{lastname}} <i class="feather ft-chevron-down"></i></span>
+                            <!-- <img src="assets/images/user.jpg" alt="" class="img-fluid"> -->
                         </button>
                             <div class="dropdown-menu dropdown_user" aria-labelledby="dropdownMenuButton">
                                 <div class="dropdown-header d-flex flex-column align-items-center">
                                     <div class="user_img mb-3">
-                                        <img src="assets/images/user.jpg" alt="User Image">
+                                        <!-- <img src="assets/images/user.jpg" alt="User Image"> -->
                                     </div>
                                     <div class="user_bio text-center">
-                                        <p class="name font-weight-bold mb-0">Monica Jhonson</p>
-                                        <p class="email text-muted mb-3">monica@jhon.co.uk</p>
+                                        <p class="name font-weight-bold mb-0">{{firstname}} {{lastname}}</p>
+                                        <p class="email text-muted mb-3">{{email}}</p>
                                     </div>
                                 </div>
                                 <!-- <a class="dropdown-item" href="#"><i class="ti-user"></i> Profile</a>

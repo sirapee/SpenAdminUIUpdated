@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { TokenService } from 'src/app/authentication/services/token.service';
 import Swal from 'sweetalert2';
+import { StoreService } from '../../services/store/store.service';
 
 @Component({
   selector: 'app-header',
@@ -12,6 +13,9 @@ import Swal from 'sweetalert2';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  email: any;
+  firstname: any;
+  lastname: any;
 
   constructor(
     private router: Router,
@@ -19,9 +23,14 @@ export class HeaderComponent {
     private spinner: NgxSpinnerService,
     private tokenService: TokenService,
     private notification: ToastrService,
+    private store: StoreService
   ) {}
 
   ngOnInit(): void {
+    this.email = this.store.getUserDetails().username;
+    this.firstname = this.store.getUserDetails().firstName;
+    this.lastname = this.store.getUserDetails().lastName;
+    console.log(this.email);
   }
 
   logout(): void {
