@@ -28,22 +28,24 @@ export class CreateOrganizationComponent {
   ngOnInit(): void {
     this.addOrganizationform = this.fb.group({
       phoneNumber: ['', Validators.required],
-      rcNumber: ['', Validators.required],
-      merchantName: ['', Validators.required],
+      // rcNumber: ['', Validators.required],
+      // merchantName: ['', Validators.required],
       email: [ '', [ Validators.required, Validators.pattern(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/) ]],
-      username: ['', Validators.required],
-      state: ['', Validators.required],
-      employeeId: [''],
-      firstname: ['', Validators.required],
+      merchantName: ['', Validators.required],
       businessCategory: ['', Validators.required],
       businessType: ['', Validators.required],
-      lastname: ['', Validators.required],
-      address: ['', Validators.required],
-      password: ['', [ Validators.required, Validators.pattern(/[^A-Za-z0-9]+/), Validators.minLength(8) ]],
-      confirmPassword: [ '', [ Validators.required]],
+      rcnumber: ['',[Validators.required]],
+
+      // Merchant User Details
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      // email: ['', [Validators.required, Validators.email]],
+      // phoneNumber: ['', Validators.required],
+      // password: ['', [ Validators.required, Validators.pattern(/[^A-Za-z0-9]+/), Validators.minLength(8) ]],
+      // confirmPassword: [ '', [ Validators.required]],
       role: ['', Validators.required]
     },{
-      validators: passwordMatchValidator()
+      // validators: passwordMatchValidator()
     });
 
     this.getRole();
@@ -64,12 +66,28 @@ export class CreateOrganizationComponent {
 
 
   submit() {
-    
     if (this.addOrganizationform.valid) {
       this.spinner.show();
-      this.userService.createOrganization(this.addOrganizationform.value).subscribe(
+  
+      const payload = {
+        phoneNumber: this.addOrganizationform.value.phoneNumber,
+        rcNumber: this.addOrganizationform.value.rcnumber,
+        merchantName: this.addOrganizationform.value.merchantName,
+        email: this.addOrganizationform.value.email,
+        // username: this.addOrganizationform.value.email,
+        // state: this.addOrganizationform.value.state,
+        // employeeId: this.addOrganizationform.value.employeeId,
+        firstname: this.addOrganizationform.value.firstname,
+        businessCategory: this.addOrganizationform.value.businessCategory,
+        businessType: this.addOrganizationform.value.businessType,
+        lastname: this.addOrganizationform.value.lastname,
+        role: this.addOrganizationform.value.role
+        
+        // address: this.addOrganizationform.value.address
+      };
+  
+      this.userService.createOrganization(payload).subscribe(
         (response: any) => {
-          // this.spinner.show();
           if (response.isSuccessful) {
             this.notification.success(response.responseMessage);
             this.addOrganizationform.reset();
@@ -87,10 +105,11 @@ export class CreateOrganizationComponent {
         }
       );
     } else {
-      this.notification.error('Please fill in all fields.');
+      this.notification.error('Please fill in all required fields.');
       this.spinner.hide();
     }
   }
+  
   
   
 
