@@ -131,7 +131,7 @@ export class UsersService {
   }
 
   createOrganization(payload: any) {
-    return this.http.post(`${environment.baseUrl}/user-management/organizations`, payload , {
+    return this.http.post(`${environment.baseUrl}/user-management/merchants`, payload , {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem('token')}`,
       },

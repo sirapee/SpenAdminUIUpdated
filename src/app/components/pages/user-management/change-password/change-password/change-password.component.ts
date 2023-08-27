@@ -27,13 +27,19 @@ export class ChangePasswordComponent {
 
   ngOnInit(): void {
     this.passwordForm = this.fb.group({
-      userType: ['user', Validators.required], // Default to 'user'
-      currentPassword: ['',[Validators.required]],
-      newPassword: ['',[ Validators.required, Validators.pattern(/[^A-Za-z0-9]+/), Validators.minLength(8) ]],
-      confirmPassword: [ '', [ Validators.required]],
+   
+      password: ['',[ Validators.required, Validators.pattern(/[^A-Za-z0-9]+/), Validators.minLength(8) ]],
+      confirmPassword: [ '',[Validators.required]],
 
-      newPasswords: ['',[ Validators.required, Validators.pattern(/[^A-Za-z0-9]+/), Validators.minLength(8) ]],
-      confirmPasswords: [ '', [ Validators.required]],
+    },{
+      validators: passwordMatchValidator()
+    });
+
+    this.adminPasswordForm = this.fb.group({
+   
+      currentPassword: ['',[Validators.required]],
+      password: ['',[ Validators.required, Validators.pattern(/[^A-Za-z0-9]+/), Validators.minLength(8) ]],
+      confirmPassword: [ '',[Validators.required]],
       isAdmin: [true] // Default to false
     },{
       validators: passwordMatchValidator()
@@ -50,67 +56,94 @@ export class ChangePasswordComponent {
 
 
  
-
+  selectedPasswordFormType: string = ''; 
 
 
   onSubmit() {
-    this.spinner.show();
-    const formValue = this.passwordForm.value;
-  
-    if (formValue.userType === 'user') {
-      const userPayload = {
-        username: this.selectedDetails.username,
-        newPassword: formValue.newPassword,
-        confirmPassword: formValue.confirmPassword
-      };
-  
-      this.userService.changeUserPassword(userPayload).subscribe(
-        (res: any) => {
-          if (res.isSuccessful) {
-            this.notification.success(res.responseMessage);
-            this.passwordForm.reset();
-            this.spinner.hide();
-            location.reload();
-          } else {
-            this.notification.error(res.responseMessage);
-            this.spinner.hide();
-          }
-        },
-        (error) => {
-          this.notification.error('An error occurred while processing your request.');
-          console.error('User password change error:', error);
-          this.spinner.hide();
-        }
-      );
-  
-    } else if (formValue.userType === 'admin') {
-      this.spinner.show();
-      const adminPayload = {
-        currentPassword: formValue.currentPassword,
-        newPasswords: formValue.newPassword,
-        confirmPasswords: formValue.confirmPassword,
-        isAdmin: formValue.isAdmin
-      };
-  
-      this.userService.changeAdminPassword(adminPayload).subscribe(
-        (res: any) => {
-          if (res.isSuccessful) {
-            this.notification.success(res.responseMessage);
-            this.passwordForm.reset();
-            this.spinner.hide();
-            location.reload();
-          } else {
-            this.notification.error(res.responseMessage);
-            this.spinner.hide();
-          }
-        },
-        (error) => {
-          this.notification.error(error.error.responseMessage || error.error.message);
-          console.error('Admin password change error:', error);
-          this.spinner.hide();
-        }
-      );
+    if (this.selectedPasswordFormType === 'user') {
+      if (this.passwordForm.valid) {
+        this.submitUserPasswordApi(this.passwordForm.value);
+      } else {
+        this.notification.error('Please correct password fields.');
+      }
+    } else if (this.selectedPasswordFormType === 'admin') {
+      if (this.adminPasswordForm.valid) {
+        this.submitAdminPasswordApi(this.adminPasswordForm.value);
+      } else {
+        this.notification.error('Please correct password fields.');
+      }
+    } else {
+      this.notification.error('Please select a password form type.');
     }
+  }
+  
+
+  
+
+  submitUserPasswordApi(passwordData: any) {
+    this.spinner.show();
+    let payload = {
+      
+      username: this.selectedDetails.username,
+      newPassword: this.passwordForm.value.password,
+      confirmPassword: this.passwordForm.value.confirmPassword
+ 
+    };
+  
+    this.userService.changeUserPassword(payload).subscribe(
+      (response: any) => {
+        if (response.isSuccessful) {
+          this.notification.success(response.responseMessage);
+          this.spinner.hide();
+          this.passwordForm.reset();
+          // this.loadAllData();
+          this.userService.closeModal();
+          location.reload();
+        } else {
+          this.spinner.hide();
+          this.notification.error(response.responseMessage);
+         
+        }
+      },
+      (error) => {
+        this.spinner.hide();
+        this.notification.error(error.error.responseMessage || error.error.message);
+        console.error('User password error:', error);
+      }
+    );
+  }
+  
+  submitAdminPasswordApi(passwordData: any) {
+    this.spinner.show();
+    let payload = {
+   
+      currentPassword: this.adminPasswordForm.value.currentPassword,
+      newPassword: this.adminPasswordForm.value.password,
+      confirmPassword: this.adminPasswordForm.value.confirmPassword,
+      isAdmin: this.adminPasswordForm.value.isAdmin
+
+    };
+  
+    this.userService.changeAdminPassword(payload).subscribe(
+      (response: any) => {
+        if (response.isSuccessful) {
+          this.notification.success(response.responseMessage);
+          this.adminPasswordForm.reset();
+          this.spinner.hide();
+          // this.loadAllData();
+          this.userService.closeModal();
+          location.reload();
+        } else {
+          this.spinner.hide();
+          this.notification.error(response.responseMessage);
+        }
+      },
+      (error) => {
+        this.spinner.hide();
+        this.notification.error(error.error.responseMessage || error.error.message);
+        console.error('Admin user password error:', error);
+      }
+    );
   }
   
   

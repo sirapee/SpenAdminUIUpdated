@@ -15,7 +15,7 @@ import { NgChartsModule, NgChartsConfiguration } from 'ng2-charts';
     NgChartsModule
   ],
   providers: [
-    { provide: NgChartsConfiguration, useValue: { generateColors: true }}
+    { provide: NgChartsConfiguration, useValue: { generateColors: false }}
   ]
 })
 export class DashboardModule { }

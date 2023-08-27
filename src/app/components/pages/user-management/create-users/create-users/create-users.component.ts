@@ -17,6 +17,7 @@ import { RoleService } from 'src/app/components/services/roleService/role.servic
 export class CreateUsersComponent {
 
   addUserform!: FormGroup;
+  adminUserform!: FormGroup;
   userData: any;
 
   p: number = 1; // Current page number
@@ -38,20 +39,31 @@ export class CreateUsersComponent {
     this.addUserform = this.fb.group({
       phoneNumber: ['', Validators.required],
       firstName: ['', Validators.required],
-      middleName: [''],
+ 
       lastName: ['', Validators.required],
       email: [ '', [ Validators.required, Validators.pattern(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/) ]],
-      userName: ['', Validators.required],
-      country: ['', Validators.required],
-      merchantName: ['', Validators.required],
+      userName: ['',],
+      // country: ['', Validators.required],
+      merchantName: ['',Validators.required],
       merchantId: ['', Validators.required],
-      employeeId: ['',],
-      password: ['', [ Validators.required, Validators.pattern(/[^A-Za-z0-9]+/), Validators.minLength(8) ]],
-      confirmPassword: [ '', [ Validators.required]],
+   
       role: ['', Validators.required],
-      userType: ['user', Validators.required]
-    },{
-      validators: passwordMatchValidator()
+    
+    });
+
+    this.adminUserform = this.fb.group({
+      phoneNumber: ['', Validators.required],
+      firstName: ['', Validators.required],
+ 
+      lastName: ['', Validators.required],
+      email: [ '', [ Validators.required, Validators.pattern(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/) ]],
+      userName: ['',],
+      // country: ['', Validators.required],
+      // merchantName: ['',],
+      // merchantId: ['', Validators.required],
+   
+      role: ['', Validators.required],
+     
     });
 
     this.loadData();
@@ -69,6 +81,7 @@ export class CreateUsersComponent {
     });
   }
 
+  selectedUserType: string = ''; // Default to 'user' form
 
   loadData() {
     const filters = {};
@@ -95,26 +108,26 @@ export class CreateUsersComponent {
   
 
 
-
   submitForm() {
-   
-    if (this.addUserform.valid) {
-      const userData = {
-        ...this.addUserform.value,
-        userType: this.addUserform.value.userType
-      };
-  
-      if (userData.userType === 'user') {
-        this.submitUserApi(userData);
-      } else if (userData.userType === 'admin') {
-        this.submitAdminApi(userData);
+    if (this.selectedUserType === 'user') {
+      if (this.addUserform.valid) {
+        this.submitUserApi(this.addUserform.value);
       } else {
-        this.notification.error('Complete missing fields for user type');
+        this.notification.error('Please fill in all required fields');
+      }
+    } else if (this.selectedUserType === 'admin') {
+      if (this.adminUserform.valid) {
+        this.submitAdminApi(this.adminUserform.value);
+      } else {
+        this.notification.error('Please fill in all required fields');
       }
     } else {
-      this.notification.error('Please fill in all required fields');
+      this.notification.error('Please select a user type');
     }
   }
+  
+
+  
   
   
 
@@ -125,16 +138,16 @@ export class CreateUsersComponent {
       
         phoneNumber: this.addUserform.value.phoneNumber,
         firstName: this.addUserform.value.firstName,
-        middleName: this.addUserform.value.middleName,
+        // middleName: this.addUserform.value.middleName,
         lastName: this.addUserform.value.lastName,
         email: this.addUserform.value.email,
-        userName: this.addUserform.value.userName,
-        country: this.addUserform.value.country,
+        userName: this.addUserform.value.email,
+        // country: this.addUserform.value.country,
         merchantName: this.addUserform.value.merchantName,
         merchantId: this.addUserform.value.merchantId,
-        employeeId: this.addUserform.value.employeeId,
-        password: this.addUserform.value.password,
-        confirmPassword: this.addUserform.value.confirmPassword,
+        // employeeId: this.addUserform.value.employeeId,
+        // password: this.addUserform.value.password,
+        // confirmPassword: this.addUserform.value.confirmPassword,
         role: this.addUserform.value.role,
  
     };
@@ -166,19 +179,19 @@ export class CreateUsersComponent {
     this.spinner.show();
     let payload = {
    
-        phoneNumber: this.addUserform.value.phoneNumber,
-        firstName: this.addUserform.value.firstName,
-        middleName: this.addUserform.value.middleName,
-        lastName: this.addUserform.value.lastName,
-        email: this.addUserform.value.email,
-        userName: this.addUserform.value.userName,
-        country: this.addUserform.value.country,
-        merchantName: this.addUserform.value.merchantName,
-        merchantId: this.addUserform.value.merchantId,
-        employeeId: this.addUserform.value.employeeId,
-        password: this.addUserform.value.password,
-        confirmPassword: this.addUserform.value.confirmPassword,
-        role: this.addUserform.value.role,
+        phoneNumber: this.adminUserform.value.phoneNumber,
+        firstName: this.adminUserform.value.firstName,
+        // middleName: this.addUserform.value.middleName,
+        lastName: this.adminUserform.value.lastName,
+        email: this.adminUserform.value.email,
+        userName: this.adminUserform.value.email,
+        // country: this.addUserform.value.country,
+        // merchantName: this.addUserform.value.merchantName,
+        // merchantId: this.addUserform.value.merchantId,
+        // employeeId: this.addUserform.value.employeeId,
+        // password: this.addUserform.value.password,
+        // confirmPassword: this.addUserform.value.confirmPassword,
+        role: this.adminUserform.value.role,
 
     };
   

@@ -44,7 +44,7 @@ export class DashboardComponent {
           {
             label: 'Metrics',
             data: data,
-            backgroundColor: 'blue'
+            backgroundColor: 'red'
           }
         ]
       },

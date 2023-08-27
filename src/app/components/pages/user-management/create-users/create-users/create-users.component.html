@@ -18,30 +18,30 @@ type="ball-clip-rotate"
                             <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                         </div>
                         <div class="modal-body">
-                            <form [formGroup]="addUserform" class="custom-form">
+                          <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="userTypeDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Select User Type
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="userTypeDropdown">
+                              <a class="dropdown-item" (click)="selectedUserType = 'user'">Merchant user</a>
+                              <a class="dropdown-item" (click)="selectedUserType = 'admin'">Admin user</a>
+                            </div>
+                          </div>
+                          <div *ngIf="selectedUserType === 'user'">
+                            <form [formGroup]="addUserform" class="custom-form" >
 
-                                <div class="form-group">
-                                    <label>User Type</label>
-                                    <div>
-                                      <label class="radio-label">
-                                        <input type="radio" formControlName="userType" value="user"> User
-                                      </label>
-                                      <label class="radio-label">
-                                        <input type="radio" formControlName="userType" value="admin"> Admin
-                                      </label>
-                                    </div>
-                                  </div>
+                           
                               
                                 <div class="form-row">
-                                  <div class="form-group col-md-4">
+                                  <div class="form-group col-md-6">
                                     <label for="firstName">First Name</label>
                                     <input type="text" id="firstName" class="form-control" formControlName="firstName">
                                   </div>
-                                  <div class="form-group col-md-4">
+                                  <!-- <div class="form-group col-md-4">
                                     <label for="middleName">Middle Name</label>
                                     <input type="text" id="middleName" class="form-control" formControlName="middleName" >
-                                  </div>
-                                  <div class="form-group col-md-4">
+                                  </div> -->
+                                  <div class="form-group col-md-6">
                                     <label for="lastName">Last Name</label>
                                     <input type="text" id="lastName" class="form-control" formControlName="lastName" >
                                   </div>
@@ -73,16 +73,13 @@ type="ball-clip-rotate"
                                     </div>
                                   </div>
                                 </div>
-                                <div class="form-row">
-                                <div class="form-group col-md-6">
-                                  <label for="userName">Username</label>
-                                  <input type="text" id="userName" class="form-control" formControlName="userName" >
-                                </div>
-                                <div class="form-group col-md-6">
+                                <!-- <div class="form-row">
+                           
+                                <div class="form-group col-md-12">
                                     <label for="country">Country</label>
                                     <input type="text" id="country" class="form-control" formControlName="country" >
                                   </div>
-                                 </div>
+                                 </div> -->
                                  <div class="form-row">
                                     <div class="form-group col-md-12">
                                       <label for="role">Merchant Name</label>
@@ -94,60 +91,77 @@ type="ball-clip-rotate"
                                   </div>
                                   
                             <div class="form-row">
-                                <div class="form-group col-md-6">
-                                  <label for="employeeId">Employee ID</label>
-                                  <input type="text" id="employeeId" class="form-control" formControlName="employeeId">
-                                </div>
-                                <div class="form-group col-md-6">
+                             
+                                <div class="form-group col-md-12">
                                     <label for="role">Role</label>
                                     <select id="role" class="form-control" formControlName="role">
                                       <option value="">Select a role</option>
-                                      <option *ngFor="let role of role?.roles" [value]="role.name">{{ role.name }}</option>
+                                      <option *ngFor="let role of role?.roles" [value]="role.name">{{ role.roleDescription }}</option>
                                     </select>
                                   </div>
                                 </div>
-                                <div class="form-row">
+                          
+                              </form>
+                            </div>
+                              
+                            <div *ngIf="selectedUserType === 'admin'">
+                              <form [formGroup]="adminUserform" class="custom-form" >
+  
+                               
+                                
+                                  <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                      <label for="firstName">First Name</label>
+                                      <input type="text" id="firstName" class="form-control" formControlName="firstName">
+                                    </div>
+                                 
+                                    <div class="form-group col-md-6">
+                                      <label for="lastName">Last Name</label>
+                                      <input type="text" id="lastName" class="form-control" formControlName="lastName" >
+                                    </div>
+                                  </div>
+                                  <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                      <label for="phoneNumber">Phone Number</label>
+                                      <input type="number" id="phoneNumber" class="form-control" formControlName="phoneNumber" >
+                                    </div>
                                     <div class="col-md-6">
                                       <div class="form-group">
-                                          
-                                              <label class="form-label" for="newPasswordInput">New Password</label>
+                                         
+                                              <label class="form-label" for="form2Example11"
+                                                >Email</label
+                                              >
                                               <input
-                                                id="newPasswordInput"
+                                              
+                                                id="form2Example11"
                                                 class="form-control"
-                                               
-                                                [style.border-color]=" addUserform.get('password')?.errors && (addUserform.get('password')?.touched || addUserform.get('password')?.dirty) ? '#D81616' : ''"
-                                                type="password"
-                                                formControlName="password"
+  
+                                                [style.border-color]=" addUserform.get('email')?.errors && (addUserform.get('email')?.touched || addUserform.get('email')?.dirty) ? '#D81616' : ''" type="text" formControlName="email"
                                               />
-                                              <span class="text-danger fs-13" *ngIf="addUserform.get('password')?.errors && (addUserform.get('password')?.touched || addUserform.get('password')?.dirty)">
-                                                <span *ngIf="addUserform.get('password')?.errors?.['required']">Password is required</span>
-                                                <span *ngIf="addUserform.get('password')?.errors?.['pattern']">Accept numbers, alphabet (Upper & Lower Case), and symbols only.</span>
-                                                <span *ngIf="addUserform.get('password')?.errors?.['minlength']">Minimum of 8 characters only.</span>
+                                              <span class="text-danger fs-13" *ngIf="addUserform.get('email')?.errors && (addUserform.get('email')?.touched || addUserform.get('email')?.dirty)">
+                                                <span *ngIf="addUserform.get('email')?.errors?.['required']">Email is required</span>
+                                              <span *ngIf="addUserform.get('email')?.errors?.['pattern']">Invalid email address</span>
                                               </span>
-                                          
+                                           
+                                        
                                       </div>
                                     </div>
-                                    <div class="col-md-6">
-                                    <div class="form-group">
-                                      <label class="form-label" for="confirmPasswordInput">Confirm Password</label>
-                                      <input
-                                        id="confirmPasswordInput"
-                                        class="form-control"
-                                        
-                                        [style.border-color]=" addUserform.get('confirmPassword')?.errors && (addUserform.get('confirmPassword')?.touched || addUserform.get('confirmPassword')?.dirty) ? '#D81616' : ''"
-                                        type="password"
-                                        formControlName="confirmPassword"
-                                      />
-                                      <span class="text-danger fs-13" *ngIf="addUserform.get('confirmPassword')?.errors && (addUserform.get('confirmPassword')?.touched || addUserform.get('confirmPassword')?.dirty)">
-                                        <span *ngIf="addUserform.get('confirmPassword')?.errors?.['required']">Confirm Password is required</span>
-                                        <span *ngIf="addUserform.hasError('passwordMismatch')">Passwords do not match.</span>
-                                        <!-- <span *ngIf="resetForm.get('confirmPassword')?.errors?.['confirmedValidator']">Passwords must match.</span> -->
-                                      </span>
+                                  </div>
+                               
+                                    
+                              <div class="form-row">
+                                
+                                  <div class="form-group col-md-12">
+                                      <label for="role">Role</label>
+                                      <select id="role" class="form-control" formControlName="role">
+                                        <option value="">Select a role</option>
+                                        <option *ngFor="let role of role?.roles" [value]="role.name">{{ role.roleDescription }}</option>
+                                      </select>
                                     </div>
                                   </div>
-                                  </div>
-                              </form>
-                              
+                               
+                                </form>
+                              </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" (click)="submitForm()" class="btn btn-primary">Create User</button>

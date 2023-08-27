@@ -43,6 +43,16 @@
   /* Center the radio buttons and add spacing between them */
 
   
-
+  .custom-form label::before {
+    content: '*';
+    color: red;
+    margin-right: 5px;
+  }
+  
+  /* Adjust the color of the asterisk when the field has an error */
+  .custom-form .form-control.ng-invalid {
+    border-color: #d81616;
+  }
+  
   
   
