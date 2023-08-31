@@ -121,6 +121,32 @@ export class AuthenticationService {
     );
   }
 
+  setup2fa(twoFactorType: string) {
+    const url = `${environment.baseUrl}/enable-2factor`;
+  
+    return this.http.get(url, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+      params: {
+        twoFactorType: twoFactorType,
+      },
+    });
+  }
+
+  enable2fa(payload: any) {
+    return this.http.post<any>(
+      `${environment.baseUrl}/enable-2factor`,
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        },
+      }
+    );
+  }
+  
+
   // disableTwofactor(payload: any) {
   //   return this.http.post<any>(
   //     `${environment.userUrl}/disable-2factor`,

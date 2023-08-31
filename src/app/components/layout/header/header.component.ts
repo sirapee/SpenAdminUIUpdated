@@ -16,6 +16,7 @@ export class HeaderComponent {
   email: any;
   firstname: any;
   lastname: any;
+  userDetails: any;
 
   constructor(
     private router: Router,
@@ -23,14 +24,25 @@ export class HeaderComponent {
     private spinner: NgxSpinnerService,
     private tokenService: TokenService,
     private notification: ToastrService,
-    private store: StoreService
+    private store: StoreService,
   ) {}
 
   ngOnInit(): void {
-    this.email = this.store.getUserDetails().username;
-    this.firstname = this.store.getUserDetails().firstName;
-    this.lastname = this.store.getUserDetails().lastName;
-    console.log(this.email);
+    // this.email = this.store.getUserDetails().username;
+    // this.firstname = this.store.getUserDetails().firstName;
+    // this.lastname = this.store.getUserDetails().lastName;
+    // console.log(this.email);
+
+    
+
+    const userDetailsString = this.store.getUserDetails(); 
+    this.userDetails = JSON.parse(userDetailsString); 
+    this.email = this.userDetails.email;
+    this.firstname = this.userDetails.firstName;
+    this.lastname = this.userDetails.lastName;
+
+
+    // console.log(this.userDetails.username);
   }
 
   logout(): void {
@@ -42,9 +54,11 @@ export class HeaderComponent {
       confirmButtonText: 'Logout',
       cancelButtonText: 'Cancel',
     }).then((result) => {
+      // this.spinner.show();
       if (result.isConfirmed) {
         this.tokenService.logout();
-        // You can also navigate to the login page or perform any other action after logging out.
+        this.spinner.hide();
+      
       }
     });
 

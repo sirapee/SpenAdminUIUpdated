@@ -24,6 +24,7 @@ import { PageNotFoundComponent } from './components/layout/page-not-found/page-n
 // import { UserManagementComponent } from './components/pages/user-management/user-management.component';
 import { SharedModule } from './components/pages/sharedmodule/shared.module';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+// import { KycDocumentsComponent } from './components/pages/kyc-documents/kyc-documents/kyc-documents.component';
 // import { RolesComponent } from './components/pages/roles/roles/roles.component';
 // import { UserRolesComponent } from './components/pages/userRoles/user-roles/user-roles.component';
 // import { CreateOrganizationComponent } from './create-organization/create-organization.component';
@@ -33,6 +34,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
   declarations: [
     AppComponent,
     PageNotFoundComponent,
+    // KycDocumentsComponent,
     // RolesComponent,
     // UserRolesComponent,
     // CreateOrganizationComponent,

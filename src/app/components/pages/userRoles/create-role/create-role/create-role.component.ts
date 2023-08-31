@@ -77,7 +77,7 @@ export class CreateRoleComponent {
           },
           (error) => {
             this.notification.error(error.error.responseMessage || error.error.message);
-            console.error('Organization creation error:', error);
+            // console.error('Organization creation error:', error);
             this.spinner.hide();
           }
         );

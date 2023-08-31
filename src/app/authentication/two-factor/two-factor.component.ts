@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { JarwisService } from '../services/jarwis.service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '../services/authentication.service';
+import { StoreService } from 'src/app/components/services/store/store.service';
 
 @Component({
   selector: 'app-two-factor',
@@ -23,54 +24,69 @@ export class TwoFactorComponent {
     private jarwisService: JarwisService,
     private notification: ToastrService,
     private authService: AuthenticationService,
+    private store : StoreService
   ) {}
 
   ngOnInit() {
     this.factorForm = this.formBuilder.group({
-      token: ['', [ Validators.required, Validators.pattern(/[0-9]+/), Validators.minLength(6), Validators.maxLength(6) ]],
+      digit1: ['', Validators.required],
+      digit2: ['', Validators.required],
+      digit3: ['', Validators.required],
+      digit4: ['', Validators.required],
+      digit5: ['', Validators.required],
+      digit6: ['', Validators.required]
     });
 
-    this.getCurrentUser()
+ 
+
+    const userDetailsString = this.store.getUserDetails(); 
+    this.userDetails = JSON.parse(userDetailsString); 
+
+    console.log(this.userDetails.username);
 
   }
 
-  async getCurrentUser(): Promise<void> {
-    this.spinner.show()
-    await this.authService.getCurrentUser().toPromise().then((result: any) => {
-      if(result.isSuccessful){
-        this.spinner.hide()
-        this.userDetails = result.user;
-        sessionStorage.removeItem('token');
-      }
-    }, error => {
-      this.spinner.hide()
-      this.notification.error(error.error.respMessage || error.error.message);
-    })
+
+  getOtpValue(): string {
+    const otpValues = Object.values(this.factorForm.value);
+    return otpValues.join('');
   }
+  
 
   async submit(): Promise<void> {
+
+    const otpValue = this.getOtpValue(); 
     const payload = {
       username: this.userDetails.username,
-      token: this.factorForm.value.token,
+      token: otpValue,
       twoFactorType: this.userDetails.twoFactorType
-    }
-    this.spinner.show()
-    await this.authService.validate2FactorToken(payload).toPromise().then((result: any) => {
-      if(result.loginSuccessful){
-        this.spinner.hide()
-        this.notification.success('User logged in successfully !!');
-        sessionStorage.setItem('token', result.token.accessToken)
-        this.router.navigateByUrl('main/dashboard').then(() => {
-          window.location.reload();
-        });
+    };
+  
+    this.spinner.show();
+  
+    try {
+      const result: any = await this.authService.validate2FactorToken(payload).toPromise();
+  
+      if (result.loginSuccessful) {
+        if (result.user.userType === 'AdminUser') {
+       
+          this.notification.success('Admin user logged in successfully !!');
+          sessionStorage.setItem('token', result.token.accessToken);
+          this.router.navigateByUrl('main/dashboard').then(() => {
+            location.reload();
+          });
+        } else {
+          this.notification.error('Access denied: Not an admin user');
+        }
       } else {
-        this.spinner.hide()
-        this.notification.success(result.responseMessage || result.message);
+        this.notification.error(result.responseMessage || result.message);
       }
-    }, error => {
-      this.spinner.hide()
+    } catch (error: any) {
       this.notification.error(error.error.responseMessage || error.error.message);
-    })
+    } finally {
+      this.spinner.hide();
+    }
   }
+  
 
 }

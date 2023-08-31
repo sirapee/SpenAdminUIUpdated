@@ -1,0 +1,217 @@
+
+<ngx-spinner
+bdColor="rgba(0,0,0,0.5)"
+size="medium"
+color="#d81616"
+type="ball-clip-rotate"
+[fullScreen]="true"
+></ngx-spinner>
+
+
+<div class="main-content-inner">
+    
+    <div class="header">
+        <div class="">
+          <!-- Body -->
+          <div class="header-body align-items-center">
+            <div class="row align-items-end">
+              <div class="col">
+                <!-- Pretitle -->
+                <h6 class="header-pretitle">Overview</h6>
+      
+                <!-- Title -->
+                <h1 class="header-title">Documents-management</h1>
+              </div>
+             
+              <div class="col-auto">
+                <!-- Button -->
+                <!--<a href="#!" class="btn btn-primary lift">
+                  Create Report
+                </a>-->
+              </div>
+            </div>
+            <!-- / .row -->
+          </div>
+          <!-- / .header-body -->
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="input-group">
+              <select [(ngModel)]="selectedOrganization" class="form-control">
+                <option value="">Select Organization</option>
+                <option *ngFor="let org of userData?.organizations" [value]="org.id">{{ org.email }}</option>
+              </select>
+              <div class="input-group-append">
+                <button class="btn btn-primary" (click)="selectedOrganization !== null && onSelectOrganization(selectedOrganization)">Apply</button>
+
+              </div>
+            </div>
+          </div>
+          
+          
+        <div class="col-md-6 text-md-right mt-md-0 mt-3">
+          <button class="btn btn-success"  data-toggle="modal" data-target="#exampleLongModalLong2"><i class="fa fa-user-plus" ></i>Upload Documents</button>
+          <button *ngIf="filteredDocuments?.length" class="btn btn-info ml-2" data-toggle="modal" data-target="#yourModal"><i class="fa fa-building"></i>Authorize documents</button>
+        </div>
+      </div>
+     
+      <div class="row">
+        <!-- Progress Table start -->
+        <div class="col-12 mt-4">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card_title">
+                Document Table
+              </h4>
+              <div class="card-body" *ngIf="!filteredDocuments?.length">
+                <div class="alert alert-dark text-center">
+                  No data to display at the moment
+                </div>
+              </div>
+              <div class="single-table">
+                <div class="table-responsive">
+                  <!-- Table contents here -->
+                 <!-- table for filtered documents -->
+                  <table  class="table table-hover progress-table text-center">
+                    <thead class="text-uppercase">
+                        <tr>
+                          <th>S/N</th>
+                          <th scope="col" class="sortable-header" >Filename</th>
+                          <th scope="col" class="sortable-header" >File type </th>
+                          <th scope="col" class="sortable-header" >Date uploaded</th>
+                       
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+              
+                    <tbody *ngFor="let data of filteredDocuments , let i = index">
+                        <tr>
+                            <td>{{ i + 1 }}</td>
+                            <td style="font-size: 14px;">{{data?.filename}}</td>
+                            <td style="font-size: 14px;">{{data?.fileType}}</td>
+                            <td style="font-size: 14px;">{{data?.createdAt | date : "MMM d, y"}}</td>
+             
+                            <td>
+                                <div class="dropdown">
+                                  <button class="dropdown-ellipsis dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  </button>
+                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a
+                                    class="dropdown-item"
+                                    href="{{ data.publicUrl }}"
+                                    target="_blank"
+                                    ><i class="fa fa-eye"></i>View File</a>
+                                    <hr class="dropdown-divider"/>
+                                    <a class="dropdown-item text-success" [href]="data.publicUrl" download="filename" (click)="downloadFile()">
+                                      <i class="fa fa-download"></i> Download File
+                                  </a>
+                                  
+                                  
+                                    <!-- <a class="dropdown-item text-warning"  href="javascript:;" data-toggle="modal" data-target="#exampleModalLong2" (click)="viewDetails(data)"><i class="fa fa-edit"></i> Update</a> -->
+                                    <hr class="dropdown-divider" />
+                                    <a class="dropdown-item text-primary"  href="javascript:;" (click)="confirmDeleteUser(data.id)"><i class="ti-trash"></i> Delete</a>
+                                    <hr class="dropdown-divider" />
+                                    <!-- <a class="dropdown-item"  href="javascript:;" class="btn btn-primary" data-toggle="modal" data-target="#passwordModal"  (click)="viewDetails(data)"><i class="fa fa-edit"></i> Reset Password</a> -->
+                                  </div>
+                                </div>
+                              </td>   
+                        </tr>
+                    </tbody>
+                </table>
+        <!-- table for all documents -->
+                <!-- <table class="table table-hover progress-table text-center" *ngIf="userData?.organizations?.length > 0">
+                    <thead class="text-uppercase">
+                        <tr>
+                          <th>S/N</th>
+                          <th scope="col" class="sortable-header" >Filename</th>
+                          <th scope="col" class="sortable-header" >File type </th>
+                          <th scope="col" class="sortable-header" >Date uploaded</th>
+                       
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+              
+                    <tbody *ngFor="let data of userData?.organizations , let i = index">
+                        <tr>
+                            <td>{{ i + 1 }}</td>
+                            <td style="font-size: 14px;">{{data?.filename}}</td>
+                            <td style="font-size: 14px;">{{data?.fileType}}</td>
+                            <td style="font-size: 14px;">{{data?.createdAt | date : "MMM d, y"}}</td>
+             
+                            <td>
+                                <div class="dropdown">
+                                  <button class="dropdown-ellipsis dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  </button>
+                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a
+                                    class="dropdown-item text-danger"
+                                    href="{{ data.publicUrl }}"
+                                    target="_blank"
+                                    ><i class="fa fa-eye"></i>View File</a>
+                                    <hr class="dropdown-divider"/>
+                                    <a class="dropdown-item text-warning"  href="javascript:;" data-toggle="modal" data-target="#exampleModalLong2" (click)="viewDetails(data)"><i class="fa fa-edit"></i> Update</a>
+                                    <hr class="dropdown-divider" />
+                                    <a class="dropdown-item text-primary"  href="javascript:;" (click)="confirmDeleteUser(data.username)"><i class="ti-trash"></i> Delete</a>
+                                    <hr class="dropdown-divider" />
+                                    <a class="dropdown-item"  href="javascript:;" class="btn btn-primary" data-toggle="modal" data-target="#passwordModal"  (click)="viewDetails(data)"><i class="fa fa-edit"></i> Reset Password</a>
+                                  </div>
+                                </div>
+                              </td>   
+                        </tr>
+                    </tbody>
+                </table> -->
+                <!-- <pagination-controls (pageChange)="p = $event" 
+                previousLabel="Prev"
+                nextLabel="Next"></pagination-controls> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Progress Table end -->
+      </div>
+</div>
+
+
+<!-- authorization modal -->
+
+
+
+<!-- The modal -->
+<div class="modal" id="yourModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Authorisation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form">
+          <div class="form-group">
+            <label for="approveOrReject">Approve or Reject</label>
+            <select class="form-control" id="approveOrReject" formControlName="approveOrReject" required>
+              <option value="approve">approve</option>
+              <option value="reject">reject</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="comment">Comment</label>
+            <textarea class="form-control" id="comment" formControlName="comment" required></textarea>
+            <div *ngIf="form.get('comment')?.hasError('pattern')" class="text-danger">
+              Only text characters are allowed.
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" (click)=" submit()">Submit</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

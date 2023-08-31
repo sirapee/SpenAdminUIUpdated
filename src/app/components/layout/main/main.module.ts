@@ -6,6 +6,7 @@ import { MainComponent } from './main.component';
 import { HeaderComponent } from '../header/header.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { UsersModule } from '../../pages/user-management/users.module';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { UsersModule } from '../../pages/user-management/users.module';
     CommonModule,
     MainRoutingModule,
     DashboardModule,
-    UsersModule
+    UsersModule,
+    NgxSpinnerModule
   ]
 })
 export class MainModule { }

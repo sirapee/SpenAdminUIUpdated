@@ -108,7 +108,7 @@ export class ChangePasswordComponent {
       (error) => {
         this.spinner.hide();
         this.notification.error(error.error.responseMessage || error.error.message);
-        console.error('User password error:', error);
+        // console.error('User password error:', error);
       }
     );
   }
@@ -141,7 +141,7 @@ export class ChangePasswordComponent {
       (error) => {
         this.spinner.hide();
         this.notification.error(error.error.responseMessage || error.error.message);
-        console.error('Admin user password error:', error);
+        // console.error('Admin user password error:', error);
       }
     );
   }

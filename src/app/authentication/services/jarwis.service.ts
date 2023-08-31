@@ -1,5 +1,5 @@
 import { environment } from 'src/environments/environment.prod';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -77,6 +77,10 @@ export class JarwisService {
   screenUnlock(payload: any) {
     return this.http.post(`${environment.baseUrl}/screen-unlock`, payload);
   }
+
+
+
+
 
 
  

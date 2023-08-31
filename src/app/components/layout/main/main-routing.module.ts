@@ -27,6 +27,11 @@ const routes: Routes = [
       },
 
       {
+        path: 'kyc-documents',
+        loadChildren: () => import('../../pages/kyc-documents/kyc-documents/kyc-documents.module').then(m => m.KycDocumentsModule)
+      },
+
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',
