@@ -15,7 +15,7 @@ export class KycDocumentsComponent {
   userData: any;
 
   filteredDocuments: any;
-  selectedOrganization: string | null = null;
+  selectedOrganization: "" | string = "";
 
 
 
@@ -36,6 +36,8 @@ export class KycDocumentsComponent {
       comment: ['', [Validators.required, Validators.pattern('[A-Za-z ]+')]],
     });
     this.loadData();
+
+    
   }
 
 

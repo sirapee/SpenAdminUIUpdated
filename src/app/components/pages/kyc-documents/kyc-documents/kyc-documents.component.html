@@ -39,7 +39,7 @@ type="ball-clip-rotate"
         <div class="col-md-6">
             <div class="input-group">
               <select [(ngModel)]="selectedOrganization" class="form-control">
-                <option value="">Select Organization</option>
+                <option value="">Select Merchant</option>
                 <option *ngFor="let org of userData?.organizations" [value]="org.id">{{ org.email }}</option>
               </select>
               <div class="input-group-append">
