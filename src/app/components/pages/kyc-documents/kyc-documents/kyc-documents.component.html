@@ -50,10 +50,15 @@ type="ball-clip-rotate"
           </div>
           
           
-        <div class="col-md-6 text-md-right mt-md-0 mt-3">
-          <button class="btn btn-success"  data-toggle="modal" data-target="#exampleLongModalLong2"><i class="fa fa-user-plus" ></i>Upload Documents</button>
-          <button *ngIf="filteredDocuments?.length" class="btn btn-info ml-2" data-toggle="modal" data-target="#yourModal"><i class="fa fa-building"></i>Authorize documents</button>
-        </div>
+          <div class="col-md-6 text-md-right mt-md-0 mt-3">
+            <button class="btn btn-success" data-toggle="modal" data-target="#yourModal1">
+              <i class="fa fa-user-plus"></i>Upload Documents
+            </button>
+            <button *ngIf="filteredDocuments?.length > 0 && !filteredDocuments[0].isApproved" class="btn btn-info ml-2" data-toggle="modal" data-target="#yourModal">
+              <i class="fa fa-building"></i>Authorize documents
+            </button>
+          </div>
+          
       </div>
      
       <div class="row">
@@ -183,7 +188,7 @@ type="ball-clip-rotate"
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Authorisation</h5>
+        <h5 class="modal-title">Authorize</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -193,14 +198,14 @@ type="ball-clip-rotate"
           <div class="form-group">
             <label for="approveOrReject">Approve or Reject</label>
             <select class="form-control" id="approveOrReject" formControlName="approveOrReject" required>
-              <option value="approve">approve</option>
-              <option value="reject">reject</option>
+              <option value="approved">approve</option>
+              <option value="rejected">reject</option>
             </select>
           </div>
           <div class="form-group">
             <label for="comment">Comment</label>
             <textarea class="form-control" id="comment" formControlName="comment" required></textarea>
-            <div *ngIf="form.get('comment')?.hasError('pattern')" class="text-danger">
+            <div *ngIf="form?.get('comment')?.hasError('pattern')" class="text-danger">
               Only text characters are allowed.
             </div>
           </div>
@@ -213,5 +218,55 @@ type="ball-clip-rotate"
   </div>
 </div>
 
+<!-- upload modal -->
+
+
+<div class="modal" id="yourModal1" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Upload</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="documentForm">
+          <div class="form-group row">
+            <div class="col-md-6">
+          <div class="form-group">
+            <label for="approveOrReject">Select Merchant</label>
+            <select [(ngModel)]="selectedOrganization" class="form-control">
+              <option value="">Select Merchant</option>
+              <option *ngFor="let org of userData?.organizations" [value]="org.id">{{ org.email }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="fileType">File Type</label>
+            <select class="form-control" formControlName="fileType">
+              <option value="">Select File Type</option>
+              <option value="pdf">PDF</option>
+              <option value="image">Image</option>
+              <!-- Add more options here -->
+            </select>
+          </div>
+        </div>
+        </div>
+        <div class="form-group">
+          <label for="merchantDocuments">Documents</label>
+          <input type="file" class="custom-file-input" id="fileInput" (change)="onFileChange($event)" multiple>
+          <label class="custom-file-label" for="fileInput">Choose files</label>
+
+        </div>
+          <button type="submit" class="btn btn-primary justify-content-end" (click)=" submit()">Submit</button>
+          <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+        </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
 
 

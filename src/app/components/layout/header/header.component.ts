@@ -28,10 +28,7 @@ export class HeaderComponent {
   ) {}
 
   ngOnInit(): void {
-    // this.email = this.store.getUserDetails().username;
-    // this.firstname = this.store.getUserDetails().firstName;
-    // this.lastname = this.store.getUserDetails().lastName;
-    // console.log(this.email);
+ 
 
     
 
