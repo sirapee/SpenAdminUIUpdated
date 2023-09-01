@@ -20,7 +20,7 @@ type="ball-clip-rotate"
                 <h6 class="header-pretitle">Overview</h6>
       
                 <!-- Title -->
-                <h1 class="header-title">user-management</h1>
+                <h1 class="header-title">User-management</h1>
               </div>
              
               <div class="col-auto">
@@ -179,14 +179,14 @@ type="ball-clip-rotate"
                     <tbody >
                         <tr *ngFor="let data of filteredUserData |  paginate: { itemsPerPage: pageSize, currentPage: p, totalItems: totalItems }, let i = index">
                             <td>{{ 20 * p - (19 - i) }}</td>
-                            <td style="font-size: 14px;">{{data.email}}</td>
-                            <td style="font-size: 14px;">{{data.firstName}}</td>
-                            <td style="font-size: 14px;">{{data.lastName}}</td>
-                            <td [ngClass]="{ 'active-status': data.isEnabled, 'inactive-status': !data.isEnabled }" style="font-size: 14px;">{{data.isEnabled ? 'Active' : 'Inactive'}}</td>
-                            <td style="font-size: 14px;">{{data.merchantName}}</td>
-                            <td style="font-size: 14px;">{{data.roles}}</td>
+                            <td style="font-size: 14px;">{{data?.email}}</td>
+                            <td style="font-size: 14px;">{{data?.firstName}}</td>
+                            <td style="font-size: 14px;">{{data?.lastName}}</td>
+                            <td [ngClass]="{ 'active-status': data?.isEnabled, 'inactive-status': !data?.isEnabled }" style="font-size: 14px;">{{data?.isEnabled ? 'Active' : 'Inactive'}}</td>
+                            <td style="font-size: 14px;">{{data?.merchantName}}</td>
+                            <td style="font-size: 14px;">{{data?.roles}}</td>
 
-                            <td  [ngClass]="{ 'active-status': !data.isLocked, 'inactive-status': data.isLocked }" style="font-size: 14px;">{{data.isLocked ? 'Locked' : 'Unlocked'}}</td>
+                            <td  [ngClass]="{ 'active-status': !data?.isLocked, 'inactive-status': data?.isLocked }" style="font-size: 14px;">{{data?.isLocked ? 'Locked' : 'Unlocked'}}</td>
                             <!-- <td>500.00$</td> -->
                             <td>
                                 <div class="dropdown">
@@ -199,11 +199,11 @@ type="ball-clip-rotate"
                                     <hr class="dropdown-divider" />
                                     <a class="dropdown-item text-primary"  href="javascript:;" (click)="confirmDeleteUser(data.username)"><i class="ti-trash"></i> Delete</a>
                                     <hr class="dropdown-divider" />
-                                    <a class="dropdown-item"  href="javascript:;"  data-toggle="modal" data-target="#myModal" *ngIf="!data.isLocked" (click)="viewDetails(data)" ><i class="ti-lock"></i>Lock account</a>
-                                    <a class="dropdown-item"  href="javascript:;"  *ngIf="data.isLocked" (click)="confirmUnlockUser(data.email)" ><i class="ti-unlock"></i>unlock account</a>
+                                    <a class="dropdown-item"  href="javascript:;"  data-toggle="modal" data-target="#myModal" *ngIf="!data?.isLocked" (click)="viewDetails(data)" ><i class="ti-lock"></i>Lock account</a>
+                                    <a class="dropdown-item"  href="javascript:;"  *ngIf="data?.isLocked" (click)="confirmUnlockUser(data.email)" ><i class="ti-unlock"></i>unlock account</a>
                                     <hr class="dropdown-divider" />
-                                    <a class="dropdown-item text-success"  href="javascript:;" *ngIf="!data.isEnabled" (click)="confirmEnableUser(data.username)"><i class="ti-check"></i> Enable</a>
-                                    <a class="dropdown-item text-danger"  href="javascript:;" *ngIf="data.isEnabled" (click)="confirmDisableUser(data.username)"><i class="ti-close"></i>Disable</a>
+                                    <a class="dropdown-item text-success"  href="javascript:;" *ngIf="!data?.isEnabled" (click)="confirmEnableUser(data.username)"><i class="ti-check"></i> Enable</a>
+                                    <a class="dropdown-item text-danger"  href="javascript:;" *ngIf="data?.isEnabled" (click)="confirmDisableUser(data.username)"><i class="ti-close"></i>Disable</a>
                                     <hr class="dropdown-divider" />
                                     <a class="dropdown-item"  href="javascript:;" class="btn btn-primary" data-toggle="modal" data-target="#passwordModal"  (click)="viewDetails(data)"><i class="fa fa-edit"></i> Reset Password</a>
                                   </div>

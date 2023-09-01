@@ -5,6 +5,7 @@ import { JarwisService } from '../services/jarwis.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { StoreService } from 'src/app/components/services/store/store.service';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,7 @@ export class LoginComponent {
 
   failedLoginAttempts = 0;
   maxFailedAttempts = 3; 
+  userDetails: any;
 
   constructor(
     private router: Router,
@@ -26,7 +28,8 @@ export class LoginComponent {
     private spinner: NgxSpinnerService,
     private jarwisService: JarwisService,
     private notification: ToastrService,
-    private store : StoreService
+    private store : StoreService,
+    private authService : AuthenticationService
   ) {}
 
   ngOnInit() {
@@ -35,6 +38,8 @@ export class LoginComponent {
       password: [ '', [ Validators.required, Validators.pattern(/[^A-Za-z0-9]+/), Validators.minLength(8) ]],
       rememberMe: [false]
     });
+
+    
   }
   
 
@@ -117,43 +122,26 @@ async submit(): Promise<void> {
     const result: any = await this.jarwisService.login(payload).toPromise();
 
     if (result.loginSuccessful) {
-      
-      if (result.signInResult.requiresTwoFactor) {
+  
+      if (result.user.twoFactorEnabled === false) {
         this.spinner.hide();
-        this.router.navigateByUrl('two-factor');
+        this.router.navigateByUrl('auth/setup-2fa');
+     
       } else {
-        sessionStorage.setItem('token', result.token.accessToken);
-        
-        // Set result.user in session storage
-        this.store.setUserDetails(result.user);
-
-        if (result.user.userType === 'AdminUser') {
-          this.notification.success('Admin user logged in successfully !!');
-          this.router.navigateByUrl('main/dashboard').then(() => {
-            location.reload();
-          });
-        } else if (result.user.userType !== 'AdminUser') {
-          this.notification.error('Not an admin user','Access denied.');
+        this.spinner.hide();
+        if (result.user.isFirstLogin) {
+          this.router.navigateByUrl('forgot-password');
         } else {
-          this.notification.error('Login failed: User type not recognized.');
+       
+          this.router.navigateByUrl('auth/two-factor');
         }
-        
-        // Reset the failed login attempts upon successful login
-        this.failedLoginAttempts = 0;
+        const userDetailsString = JSON.stringify(result.user);
+        this.store.setUserDetails(userDetailsString);
+
+        // sessionStorage.setItem('token', result.user);
+        // this.store.setUserDetails(JSON.stringify(result.user)); 
       }
-    } else {
-      this.failedLoginAttempts++;
-
-      // Calculate remaining attempts
-      const remainingAttempts = this.maxFailedAttempts - this.failedLoginAttempts;
-
-      if (this.failedLoginAttempts >= this.maxFailedAttempts) {
-        this.notification.error('You have exceeded the maximum number of login attempts. Your account has been locked.');
-
-      } else {
-        this.notification.error(`Login failed. ${remainingAttempts} ${remainingAttempts === 1 ? 'attempt' : 'attempts'} remaining.`);
-      }
-    }
+    } 
   } catch (error: any) {
     this.notification.error(error.error.responseMessage || error.error.message);
   } finally {
@@ -161,6 +149,25 @@ async submit(): Promise<void> {
   }
 }
 
+
+
+
+// async getCurrentUser(): Promise<void> {
+//   this.spinner.show();
+  
+//   try {
+//     const result: any = await this.authService.getCurrentUser().toPromise();
+    
+//     if (result.loginSuccessful) {
+//       sessionStorage.getItem('token',);
+//       this.spinner.hide();
+//       this.userDetails = result.user;
+//     }
+//   } catch (error: any) {
+//     this.spinner.hide();
+//     this.notification.error(error.error.responseMessage || error.error.message);
+//   }
+// }
 
   
 }

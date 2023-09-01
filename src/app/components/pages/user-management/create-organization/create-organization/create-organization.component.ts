@@ -15,10 +15,9 @@ import { RoleService } from 'src/app/components/services/roleService/role.servic
 export class CreateOrganizationComponent {
 
   addOrganizationform! : FormGroup;
-  // addUserform: any;
+
   adminData: any;
-  // notification: any;
-  // notification: any;
+
   role: any;
 
   constructor(private fb: FormBuilder, private userService : UsersService, private notification: ToastrService, private spinner : NgxSpinnerService, private roleService : RoleService) {
@@ -28,21 +27,17 @@ export class CreateOrganizationComponent {
   ngOnInit(): void {
     this.addOrganizationform = this.fb.group({
       phoneNumber: ['', Validators.required],
-      // rcNumber: ['', Validators.required],
-      // merchantName: ['', Validators.required],
+ 
       email: [ '', [ Validators.required, Validators.pattern(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/) ]],
       merchantName: ['', Validators.required],
       businessCategory: ['', Validators.required],
       businessType: ['', Validators.required],
       rcnumber: ['',[Validators.required]],
 
-      // Merchant User Details
+
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      // email: ['', [Validators.required, Validators.email]],
-      // phoneNumber: ['', Validators.required],
-      // password: ['', [ Validators.required, Validators.pattern(/[^A-Za-z0-9]+/), Validators.minLength(8) ]],
-      // confirmPassword: [ '', [ Validators.required]],
+   
       role: ['', Validators.required]
     },{
       // validators: passwordMatchValidator()
@@ -74,16 +69,14 @@ export class CreateOrganizationComponent {
         rcNumber: this.addOrganizationform.value.rcnumber,
         merchantName: this.addOrganizationform.value.merchantName,
         email: this.addOrganizationform.value.email,
-        // username: this.addOrganizationform.value.email,
-        // state: this.addOrganizationform.value.state,
-        // employeeId: this.addOrganizationform.value.employeeId,
+   
         firstname: this.addOrganizationform.value.firstname,
         businessCategory: this.addOrganizationform.value.businessCategory,
         businessType: this.addOrganizationform.value.businessType,
         lastname: this.addOrganizationform.value.lastname,
         role: this.addOrganizationform.value.role
         
-        // address: this.addOrganizationform.value.address
+
       };
   
       this.userService.createOrganization(payload).subscribe(
@@ -100,7 +93,7 @@ export class CreateOrganizationComponent {
         },
         (error) => {
           this.notification.error(error.error.responseMessage || error.error.message);
-          console.error('Organization creation error:', error);
+          // console.error('Organization creation error:', error);
           this.spinner.hide();
         }
       );

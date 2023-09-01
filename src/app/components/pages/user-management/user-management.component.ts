@@ -15,6 +15,9 @@ export class UserManagementComponent {
 
   searchTerm! : string;
 
+  sortTransaction!: string;
+
+
   userData: any;
   p: number = 1; // Current page number
   pageSize: number = 20; // Page size
@@ -23,7 +26,7 @@ export class UserManagementComponent {
   loading: boolean = true;
   userDetail: any;
   selectedDetails: any = null;
-  filteredUserData!: any;
+  filteredUserData: any;
 
   sortBy: string = '';
   sortOrder: string = 'asc';
@@ -35,26 +38,27 @@ export class UserManagementComponent {
   ) {}
 
   ngOnInit(): void {
-    this.usersService.userData$.subscribe((data) => {
-      this.userData = data;
-    });
+    // this.usersService.userData$.subscribe((data) => {
+    //   this.userData = data;
+    // });
     this.loadData();
   }
 
 
 
 
- async loadData() {
+ loadData() {
  this.spinner.show();
   
     const filters = {};
 
-  await this.usersService.getAllUsers(this.p, this.pageSize, filters).subscribe(
+  this.usersService.getAllUsers(this.p, this.pageSize, filters).subscribe(
       (response) => {
         this.loading = false;
         this.userData = response.users;
         this.filteredUserData = this.userData;
-        this.usersService.updateUserData(this.userData);
+        // this.userData.slice();
+        this.usersService.updateUserData(this.filteredUserData);
         this.spinner.hide();
         this.totalItems = response.total;
       },
@@ -66,44 +70,54 @@ export class UserManagementComponent {
     );
   }
 
+  // onSearchInputChange(): void {
+  //   this.search(this.searchTerm);
+  // }
 
 
 
   search(): void {
     if (this.searchTerm !== '') {
-      this.filteredUserData = _.chain(this.userData)
+      this.filteredUserData = this.userData
         .filter((result: any) => {
           // Add null checks before accessing properties for filtering
-          const username = result.username || '';
+          // const username = result.username || '';
           const email = result.email || '';
           const firstName = result.firstName || '';
           const lastName = result.lastName || '';
           const merchantName = result.merchantName || '';
           
           return (
-            username.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+            // username.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
             email.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
             firstName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
             lastName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
             merchantName.toLowerCase().includes(this.searchTerm.toLowerCase())
           );
         })
-        .sortBy((result: any) => result.username) // Sort based on username
-        .value();
+       this.sort();
     } else {
       this.filteredUserData = this.userData.slice();
     }
   }
   
-  sort(property: string): void {
-    if (this.activeSortBy === property) {
-      this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
-    } else {
-      this.activeSortBy = property; // Set active sort property
-      this.sortOrder = 'asc';
-    }
   
-    this.filteredUserData = _.orderBy(this.filteredUserData, [property], [this.sortOrder as 'asc' | 'desc']);
+  
+  
+   
+  // Sort function
+  sort(property?: string): void {
+    if (property) {
+      if (this.activeSortBy === property) {
+        this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+      } else {
+        this.activeSortBy = property;
+        this.sortOrder = 'asc';
+      }
+    }
+
+    // Use a cast to 'asc' | 'desc' to address the TypeScript type error
+    this.filteredUserData = _.orderBy(this.filteredUserData, [this.activeSortBy], [this.sortOrder as 'asc' | 'desc']);
   }
   
 
@@ -156,15 +170,19 @@ export class UserManagementComponent {
   }
   
   enableUser(username: string) {
+    this.spinner.show();
     this.usersService.enable(username).subscribe(
       (res: any) => {
-        this.notification['success'](res.message, 'Enabled User');
+        this.notification['success'](res.responseMessage, 'User Enabled');
+        this.spinner.hide();
         location.reload();
+        
         // You can update your data source or perform other necessary actions here
       },
       (error) => {
         console.error('Error enabling user:', error);
         this.notification['error']('An error occurred while enabling the user.');
+        this.spinner.hide();
       }
     );
   }
@@ -187,14 +205,17 @@ export class UserManagementComponent {
   }
   
   disableUser(username: string) {
+    this.spinner.show()
     this.usersService.disable(username).subscribe(
       (res: any) => {
-        this.notification['success'](res.message, 'disabled User');
+        this.notification['success'](res.responseMessage, 'User disabled');
+        this.spinner.hide();
         location.reload();
       },
       (error) => {
         console.error('Error disabling user:', error);
         this.notification['error']('An error occurred while disabling the user.');
+        this.spinner.hide();
       }
     );
   }
@@ -216,15 +237,18 @@ export class UserManagementComponent {
   }
   
   deleteUser(username: string) {
+    this.spinner.show()
     this.usersService.delete(username).subscribe(
       (res: any) => {
-        this.notification['success'](res.message, 'User deleted');
+        this.notification['success'](res.responseMessage, 'User deleted');
+        this.spinner.hide();
         location.reload();
        
       },
       (error) => {
         console.error('Error deleting user:', error);
         this.notification['error']('An error occurred while deleting the user.');
+        this.spinner.hide();
       }
     );
   }
@@ -246,14 +270,17 @@ export class UserManagementComponent {
   }
   
   unlockUser(email: string) {
+    this.spinner.show();
     this.usersService.unlock(email).subscribe(
       (res: any) => {
         this.notification['success'](res.responseMessage, 'User Unlocked ');
+        this.spinner.hide();
         location.reload();
       },
       (error) => {
         console.error('Error unlocking user:', error);
         this.notification.error(error.error.responseMessage || error.error.message);
+        this.spinner.hide();
       }
     );
   }

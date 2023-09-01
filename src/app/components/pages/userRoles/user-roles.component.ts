@@ -58,7 +58,7 @@ export class UserRolesComponent {
         this.spinner.hide();
       },
       (error) => {
-        console.error('Error fetching roles:', error);
+        // console.error('Error fetching roles:', error);
         this.loading = false;
         this.spinner.hide();
       }
@@ -132,22 +132,24 @@ export class UserRolesComponent {
   }
 
   deleteUser(username: string) {
-    console.log('Deleting user:', username);
+    // console.log('Deleting user:', username);
+    this.spinner.show();
     this.roleService.delete(username).subscribe(
       (res: any) => {
-        console.log('API Response:', res); // Log the entire response for debugging
+        // console.log('API Response:', res); // Log the entire response for debugging
         if (res && res.issucessFul) {
-          console.log('User deleted successfully. Displaying success notification.');
+          // console.log('User deleted successfully. Displaying success notification.');
           this.notification.success(res.responseMessage);
-          console.log('Notification displayed. Reloading...');
+          this.spinner.hide();
+          // console.log('Notification displayed. Reloading...');
           location.reload();
         } else {
-          console.log('Response indicates an error. Displaying error notification.');
+          // console.log('Response indicates an error. Displaying error notification.');
           this.notification.error(res.responseMessage);
         }
       },
       (error) => {
-        console.error('Error deleting user:', error);
+        // console.error('Error deleting user:', error);
         this.notification['error'](error.error.responseMessage || error.error.message);
       }
     );

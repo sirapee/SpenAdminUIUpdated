@@ -58,9 +58,7 @@ export class CreateUsersComponent {
       lastName: ['', Validators.required],
       email: [ '', [ Validators.required, Validators.pattern(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/) ]],
       userName: ['',],
-      // country: ['', Validators.required],
-      // merchantName: ['',],
-      // merchantId: ['', Validators.required],
+  
    
       role: ['', Validators.required],
      
@@ -81,18 +79,18 @@ export class CreateUsersComponent {
     });
   }
 
-  selectedUserType: string = ''; // Default to 'user' form
+  selectedUserType: string = ''; 
 
   loadData() {
     const filters = {};
-    this.loading = true; // Set loading to true
+    this.loading = true; 
   
     this.userService.getAllMerchants(this.p, this.pageSize, filters).subscribe(
       (response) => {
         this.userData = response.organizations;
         console.log('Organizations:', this.userData);
   
-        // Loop through organizations and access merchantName
+      
         let merchantIds = this.userData.map((organization: { id: any }) => organization.id);
         console.log ('zzdf', merchantIds)
   
@@ -138,16 +136,14 @@ export class CreateUsersComponent {
       
         phoneNumber: this.addUserform.value.phoneNumber,
         firstName: this.addUserform.value.firstName,
-        // middleName: this.addUserform.value.middleName,
+   
         lastName: this.addUserform.value.lastName,
         email: this.addUserform.value.email,
         userName: this.addUserform.value.email,
-        // country: this.addUserform.value.country,
+       
         merchantName: this.addUserform.value.merchantName,
         merchantId: this.addUserform.value.merchantId,
-        // employeeId: this.addUserform.value.employeeId,
-        // password: this.addUserform.value.password,
-        // confirmPassword: this.addUserform.value.confirmPassword,
+   
         role: this.addUserform.value.role,
  
     };
@@ -170,7 +166,7 @@ export class CreateUsersComponent {
       (error) => {
         this.spinner.hide();
         this.notification.error(error.error.responseMessage || error.error.message);
-        console.error('User creation error:', error);
+        // console.error('User creation error:', error);
       }
     );
   }
@@ -181,16 +177,11 @@ export class CreateUsersComponent {
    
         phoneNumber: this.adminUserform.value.phoneNumber,
         firstName: this.adminUserform.value.firstName,
-        // middleName: this.addUserform.value.middleName,
+      
         lastName: this.adminUserform.value.lastName,
         email: this.adminUserform.value.email,
         userName: this.adminUserform.value.email,
-        // country: this.addUserform.value.country,
-        // merchantName: this.addUserform.value.merchantName,
-        // merchantId: this.addUserform.value.merchantId,
-        // employeeId: this.addUserform.value.employeeId,
-        // password: this.addUserform.value.password,
-        // confirmPassword: this.addUserform.value.confirmPassword,
+      
         role: this.adminUserform.value.role,
 
     };

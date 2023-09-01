@@ -71,7 +71,7 @@ ngOnInit(): void {
         this.role = res;
       },
       (error) => {
-        console.error('Error fetching roles:', error);
+        // console.error('Error fetching roles:', error);
       }
     );
   }

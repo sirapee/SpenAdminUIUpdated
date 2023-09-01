@@ -12,6 +12,43 @@
         <div class="col-xl-10">
           <div class="card rounded-3 text-black">
             <div class="row g-0">
+                <div class="col-lg-6 d-flex align-items-center gradient-custom-2" >
+                    <div class="text-white p-md-5 mx-md-4">
+                        <h4>Setup authenticator app</h4>
+                        <p>Please use your authentication app (such as Duo or Google Authuthenticator) to scan this QR code.</p>
+                      <!-- <h4>Setup authenticator app</h4>
+                        <p>Please use your authentication app (such as Duo or Google Authuthenticator) to scan this QR code.</p> -->
+                        <hr>
+    
+                      <div class="text-center">
+                        <div class="qr-code-container">
+                            <img *ngIf="qrimg" [src]="qrimg" alt="QR Code for OTP setup">
+                            <div *ngIf="!qrimg">Loading QR code...</div>
+                            
+                          </div> 
+
+                         
+                      </div>
+                      <hr>
+                      <p style="font-size: 12px;">you can click to copy the setup key below to configure your app</p>
+                      <div class="mb-3">
+                        <div class="mb-3">
+                            <div class="white-container">
+                              <div (click)="copyToClipboard(authdata?.setupCode)" style="font-size: 9px; cursor: pointer;">{{ authdata?.setupCode }}
+                                <span *ngIf="isCopied" style="margin-left: 5px; color: green;">
+                                    (Copied)
+                                  </span></div>
+                            
+                            </div>
+                          </div>
+                          
+                        
+                      </div>
+                      
+                     
+                    </div>
+                   
+                  </div>
               <div class="col-lg-6">
                 <div class="card-body p-md-5 mx-md-4">
                   <div class="text-center">
@@ -23,9 +60,11 @@
   
                   </div>
   
-                  <form [formGroup]="factorForm" class="mt-3">
-                    <h4>Enter Two-factor</h4>
-                    <p>Enter your 6-digit two-factor code to gain access to the dashboard.</p>
+                  <form [formGroup]="otpForm" class="mt-3">
+                    <!-- <h4>Setup authenticator app</h4>
+                    <p>Please use your authentication app (such as Duo or Google Authuthenticator) to scan this QR code.</p> -->
+                    <hr>
+  
                     <div class="otp-inputs justify-content-center">
                       <input
                         class="otp-input"
@@ -86,33 +125,22 @@
   
                     <div class="text-center pt-1 mt-2 pb-1">
                       <button
+                      (click)="enable2fa()"
                         class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
                         type="button"
-                        (click)="submit()" type="submit"  [disabled]="!factorForm.valid"
+                        type="submit"  [disabled]="!otpForm.valid"
                       >
                        Proceed
                       </button>
                       <!-- <a class="text-muted" routerLink="/forgot-password">Forgot password?</a> -->
-                      <!-- <div class="text-muted">Time remaining: {{ countdown }}</div> -->
-
-                      <!-- <a style="cursor: pointer; font-size: 12px; font-style: initial;" class="text-mute mt-5" >didn't receive Otp?<b (click)="resendOtp()" class="text-danger"> click to Resend</b></a> -->
+                     
                     </div>
   
            
                   </form>
                 </div>
               </div>
-              <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
-                <div class="text-white px-3 py-4 p-md-5 mx-md-4">
-                  <h4 class="mb-4">We are more than just a company</h4>
-                  <p class="small mb-0">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut aliquip ex ea commodo consequat.
-                  </p>
-                </div>
-              </div>
+           
             </div>
           </div>
         </div>

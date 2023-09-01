@@ -34,7 +34,36 @@
     text-align: center;
     font-size: 25px;
     border: 1px solid red;
-  }  
+  }
+  
+  /* Example styles for the white container */
+.white-container {
+    display: flex;
+    align-items: center;
+    background-color: black;
+    border: 1px solid #ccc;
+    /* padding: 5px; */
+    border-radius: 4px;
+  }
+  
+  /* Example styles for the copy icon button */
+  .copy-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 5px;
+    color: white; /* Change this to your preferred color */
+  }
+
+
+  
+  /* Example styles for the Feather icon */
+  .icon {
+    width: 16px;
+    height: 16px;
+  }
+  
   
 
 
