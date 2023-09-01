@@ -42,4 +42,13 @@ export class KycDocumentService {
       },
     })
   }
+
+   
+  upload(payload: any) {
+    return this.http.post(`${environment.baseUrl}/merchant/uploads`, payload , {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    })
+  }
 }

@@ -2,9 +2,8 @@ import { Component } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { KycDocumentService } from 'src/app/components/services/kycdocumentService/kyc-document.service';
-// import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StoreService } from 'src/app/components/services/store/store.service';
 
 @Component({
@@ -13,8 +12,10 @@ import { StoreService } from 'src/app/components/services/store/store.service';
   styleUrls: ['./kyc-documents.component.css'],
 })
 export class KycDocumentsComponent {
+  selectedFile: File | null = null;
   userData: any;
   documentForm!: FormGroup;
+  isLoading: boolean = false;
 
   filteredDocuments: any;
   selectedOrganization: '' | string = '';
@@ -26,19 +27,14 @@ export class KycDocumentsComponent {
     private notification: ToastrService,
     private spinner: NgxSpinnerService,
     private formBuilder: FormBuilder,
-    private store : StoreService
+    private store: StoreService
   ) {}
 
   ngOnInit(): void {
-    // this.usersService.userData$.subscribe((data) => {
-    //   this.userData = data;
-    // });'
-   
- 
     this.documentForm = this.formBuilder.group({
-      merchantId: '',
-      merchantDocuments: [],
-      fileType: ''
+      merchantId: [''],
+      merchantDocuments: this.formBuilder.array([]),
+      fileType: ['', Validators.required],
     });
 
     this.form = this.formBuilder.group({
@@ -65,21 +61,6 @@ export class KycDocumentsComponent {
     );
   }
 
-  //  getDocumentsForOrganization(): void {
-  //   console.log('wprodgvf')
-  //   if (this.selectedOrganization) {
-
-  //     const userArray = this.userData.organizations || [];
-
-  //     const selectedOrg = userArray.find((org: any) => org.id === this.selectedOrganization);
-  //     this.filteredDocuments = selectedOrg.documents || [];
-  //     console.log('tysteztj')
-  //   } else {
-  //     this.filteredDocuments = [];
-  //     console.log('it worked')
-  //   }
-  // }
-
   async onSelectOrganization(orgId: string): Promise<void> {
     this.spinner.show();
     this.selectedOrganization = orgId;
@@ -95,14 +76,6 @@ export class KycDocumentsComponent {
     } finally {
       this.spinner.hide();
     }
-  }
-
-  areAllDocumentsApproved(): boolean {
-    return (
-      this.filteredDocuments &&
-      this.filteredDocuments.length > 0 &&
-      this.filteredDocuments.every((document: any) => document.isApproved)
-    );
   }
 
   downloadFile() {}
@@ -141,21 +114,21 @@ export class KycDocumentsComponent {
   }
 
   submit() {
-    const userDetailsString = this.store.getUserDetails(); 
-    const userId = JSON.parse(userDetailsString); 
+    const userDetailsString = this.store.getUserDetails();
+    const userId = JSON.parse(userDetailsString);
     const id = userId.id;
     console.log('grdr', id);
-  
+
     const merchantId = this.filteredDocuments[0].merchantId;
     console.log('merchantid', merchantId);
-  
+
     const formData = {
       merchantId: merchantId,
       approveOrReject: this.form.value.approveOrReject,
       comment: this.form.value.comment,
       userId: id,
     };
-  
+
     if (this.form.valid) {
       this.spinner.show();
       this.kycService.authorize(formData).subscribe(
@@ -176,7 +149,7 @@ export class KycDocumentsComponent {
               text: response.responseMessage,
             });
           }
-          this.spinner.hide(); // Move the spinner.hide() here
+          this.spinner.hide();
         },
         (error) => {
           Swal.fire({
@@ -184,7 +157,7 @@ export class KycDocumentsComponent {
             title: 'Error',
             text: error.error.responseMessage || error.error.message,
           });
-          this.spinner.hide(); // Move the spinner.hide() here
+          this.spinner.hide();
         }
       );
     } else {
@@ -197,30 +170,85 @@ export class KycDocumentsComponent {
     }
   }
 
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
 
-  onFileChange(event: any) {
-    const files = event.target.files;
-    if (files) {
-      const merchantDocuments: { filename: any; base64String: any; }[] = [];
-      for (const file of files) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          merchantDocuments.push({
-            filename: file.name,
-            base64String: e.target.result
-          });
-        };
-        reader.readAsDataURL(file);
-      }
-      this.documentForm.patchValue({
-        merchantDocuments: merchantDocuments
-      });
+    // Check if the file size exceeds 5MB
+    if (file && file.size > 5 * 1024 * 1024) {
+      console.error('File size exceeds 5MB. Please select a smaller file.');
+    } else {
+      this.isLoading = true;
+
+      setTimeout(() => {
+        this.selectedFile = file;
+        this.isLoading = false;
+      }, 2000);
     }
   }
 
-  onSubmit() {
-    console.log(this.documentForm.value);
-  
+  onSubmitFile(): void {
+    if (!this.selectedOrganization) {
+      this.notification['error']('Merchant is required!');
+      return;
+    }
+
+    if (this.documentForm.valid) {
+      if (this.selectedFile) {
+        if (this.selectedFile.size > 5 * 1024 * 1024) {
+          this.notification.info(
+            'File size exceeds the limit (5MB). Please select a smaller file.'
+          );
+          return;
+        }
+
+        this.isLoading = true;
+
+        this.getBase64StringFromFile(this.selectedFile, (base64String) => {
+          const merchantDocument = {
+            filename: this.selectedFile?.name,
+            base64String: base64String,
+          };
+
+          const requestData = {
+            merchantId: this.selectedOrganization,
+            merchantDocuments: [merchantDocument],
+          };
+          this.spinner.show();
+          this.kycService.upload(requestData).subscribe(
+            (response) => {
+              this.notification.success('Documents uploaded successfully:');
+              this.spinner.hide();
+              this.isLoading = false;
+              this.selectedFile = null;
+            },
+            (error) => {
+              this.notification.error('Error uploading documents:');
+              this.spinner.hide();
+              this.isLoading = false;
+            }
+          );
+        });
+      } else {
+        this.notification.error('No file selected.');
+      }
+    } else {
+      this.notification.info(
+        'Form is not valid. Please fill in all required fields.'
+      );
+    }
   }
-  
+
+  getBase64StringFromFile(
+    file: File,
+    callback: (base64String: string) => void
+  ): void {
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.result && typeof reader.result === 'string') {
+        const base64String = reader.result.split(',')[1];
+        callback(base64String);
+      }
+    };
+    reader.readAsDataURL(file);
+  }
 }
