@@ -125,6 +125,8 @@ async submit(): Promise<void> {
   
       if (result.user.twoFactorEnabled === false) {
         this.spinner.hide();
+        sessionStorage.setItem('token', result.token.accessToken);
+      
         this.router.navigateByUrl('auth/setup-2fa');
      
       } else {
@@ -135,10 +137,10 @@ async submit(): Promise<void> {
        
           this.router.navigateByUrl('auth/two-factor');
         }
+      
         const userDetailsString = JSON.stringify(result.user);
         this.store.setUserDetails(userDetailsString);
-
-        // sessionStorage.setItem('token', result.user);
+       
         // this.store.setUserDetails(JSON.stringify(result.user)); 
       }
     } 

@@ -56,6 +56,7 @@ export class EnableTwoFactorComponent {
       (response) => {
         this.authdata = response;
         this.qrimg = this.authdata.barcodeImageUrl
+        // sessionStorage.removeItem('token');
         console.log('Two-factor authentication setup successful', response);
  
       },
