@@ -58,11 +58,11 @@
       }
       
       .inactive-status {
-        color: red;
+        color: rgb(174, 174, 56);
       }
       
       .pending-approval {
-        color: yellow;
+        color: red;
       }
       
 
