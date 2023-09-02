@@ -23,6 +23,11 @@ export class AuthenticationService {
   loggedInUser() {
     return sessionStorage.getItem('token');
   }
+  
+
+  // loggedInUsers(){
+  //   return ;
+  // }
 
   // getSessionData(){
   //   const getToken: any = sessionStorage.getItem('token');

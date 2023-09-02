@@ -12,12 +12,12 @@ export class PreventLoginGuard implements CanActivate {
     const loggedInUser = this.authService.loggedInUser();
   
     if (loggedInUser) {
-      // User is logged in
+ 
       if (state.url.includes('auth/setup-2fa')) {
-        // Allow access to setup-2fa page
+
         return true;
       } else {
-        // Redirect to dashboard or any other route
+     
         this.router.navigate(['main/dashboard']);
         return false;
       }
