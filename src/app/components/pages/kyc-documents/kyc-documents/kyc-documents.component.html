@@ -123,15 +123,16 @@
                       {{ data?.createdAt | date : "MMM d, y" }}
                     </td>
                     <td
-
                     [ngClass]="{
                       'active-status': data?.isApproved,
-                      'inactive-status': !data?.isApproved && !data?.isRejected
+                      'inactive-status': !data?.isApproved && !data?.isRejected,
+                      'pending-approval': !data?.isApproved && data?.isRejected
                     }"
                     style="font-size: 14px"
                   >
                     {{ data?.isApproved ? "Approved" : (data?.isRejected ? "Rejected" : "Pending Approval") }}
                   </td>
+                  
                   
 
                     <td>
@@ -148,28 +149,34 @@
                           class="dropdown-menu"
                           aria-labelledby="dropdownMenuButton"
                         >
+                        <a
+                        class="dropdown-item text-success"
+                        href="{{ data.publicUrl }}"
+                        target="_blank"
+                        data-toggle="tooltip"
+                        data-placement="top" 
+                        title="View and Download File" 
+                      >
+                        <i class="fa" [ngClass]="{'fa-eye': isHovered, 'fa-download': !isHovered}" (mouseenter)="isHovered = true" (mouseleave)="isHovered = false"></i>
+                        <span>View & Download</span>
+                      </a>
+                      
+                          <!-- <hr class="dropdown-divider" />
                           <a
-                            class="dropdown-item"
-                            href="{{ data.publicUrl }}"
-                            target="_blank"
-                            ><i class="fa fa-eye"></i>View File</a
-                          >
-                          <hr class="dropdown-divider" />
-                          <a
-                            class="dropdown-item text-success"
-                            [href]="data.publicUrl"
-                            download="filename"
-                            (click)="downloadFile()"
-                          >
-                            <i class="fa fa-download"></i> Download File
-                          </a>
+                          class="dropdown-item text-success"
+                          [href]="data.publicUrl" 
+                          [download]="generateDynamicFileName(data)"
+                          download="download()"
+                        >
+                          <i class="fa fa-download"></i> Download File
+                        </a> -->
 
                           <!-- <a class="dropdown-item text-warning"  href="javascript:;" data-toggle="modal" data-target="#exampleModalLong2" (click)="viewDetails(data)"><i class="fa fa-edit"></i> Update</a> -->
                           <hr class="dropdown-divider" />
                           <a
                             class="dropdown-item text-primary"
                             href="javascript:;"
-                            (click)="confirmDeleteUser(data.id)"
+                            (click)="confirmDeleteFile(data.id)"
                             ><i class="ti-trash"></i> Delete</a
                           >
                           <hr class="dropdown-divider" />
@@ -356,7 +363,7 @@
                   <input
                     type="file"
                     id="reportFile"
-                    accept=".pdf"
+                    accept=".pdf,.jpg,.jpeg,.png"
                     (change)="onFileSelected($event)"
                     [disabled]="isLoading"
                   />

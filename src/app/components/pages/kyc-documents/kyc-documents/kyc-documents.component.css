@@ -54,11 +54,16 @@
       
 
       .active-status {
-        color: green; 
+        color: green;
       }
       
       .inactive-status {
-        color: red; 
+        color: red;
       }
+      
+      .pending-approval {
+        color: yellow;
+      }
+      
 
       

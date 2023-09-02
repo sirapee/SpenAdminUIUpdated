@@ -22,6 +22,8 @@ export class KycDocumentsComponent {
 
   form!: FormGroup;
 
+  isHovered = false;
+
   constructor(
     private kycService: KycDocumentService,
     private notification: ToastrService,
@@ -78,26 +80,33 @@ export class KycDocumentsComponent {
     }
   }
 
-  downloadFile() {}
+ 
+  generateDynamicFileName(document: any): string {
+   
+    return `document_${document.id}.${document.fileType}`;
+  }
+  
 
-  confirmDeleteUser(username: string) {
+
+
+  confirmDeleteFile(fileId: string) {
     Swal.fire({
-      title: 'Delete User',
-      text: `You are about to delete this user, do you want to continue?`,
+      title: 'Delete File',
+      text: `You are about to delete this file, do you want to continue?`,
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Delete',
       cancelButtonText: 'Cancel',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.deleteUser(username);
+        this.deleteFile(fileId);
       }
     });
   }
 
-  deleteUser(username: string) {
+  deleteFile(fileId: string) {
     this.spinner.show();
-    this.kycService.delete(username).subscribe(
+    this.kycService.delete(fileId).subscribe(
       (res: any) => {
         this.notification['success'](res.responseMessage, 'document deleted');
         this.spinner.hide();
@@ -106,7 +115,7 @@ export class KycDocumentsComponent {
       (error) => {
         console.error('Error deleting document:', error);
         this.notification['error'](
-          'An error occurred while deleting the user.'
+          'An error occurred while deleting the file.'
         );
         this.spinner.hide();
       }
