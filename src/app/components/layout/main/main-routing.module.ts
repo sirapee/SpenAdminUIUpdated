@@ -32,6 +32,11 @@ const routes: Routes = [
       },
 
       {
+        path: 'virtual-accounts',
+        loadChildren: () => import('../../pages/virtual-accounts/virtual-accounts/virtual-accounts.module').then(m => m.VirtualAccountsModule)
+      },
+
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',

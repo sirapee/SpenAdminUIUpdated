@@ -210,7 +210,7 @@ export class KycDocumentsComponent {
           return;
         }
 
-        this.isLoading = true;
+        // this.isLoading = true;
 
         this.getBase64StringFromFile(this.selectedFile, (base64String) => {
           const merchantDocument = {

@@ -1,0 +1,60 @@
+/* Custom styles for the Bootstrap datepicker */
+
+/* Change the background color of the input field when focused */
+.input-group.date .form-control:focus {
+    background-color: #fff;
+}
+
+/* Adjust the z-index to ensure the datepicker appears above other elements */
+.datepicker {
+    z-index: 1051;
+}
+
+/* Customize the appearance of the datepicker popup */
+.datepicker table {
+    background-color: #fff; /* Set the background color of the datepicker popup */
+    border-radius: 5px; /* Add rounded corners */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+}
+
+/* Customize the appearance of the datepicker header */
+.datepicker th {
+    background-color: #007bff; /* Set the background color of the header */
+    color: #fff; /* Set the text color of the header */
+}
+
+/* Customize the appearance of the datepicker navigation buttons */
+.datepicker th.prev,
+.datepicker th.next {
+    color: #fff; /* Set the text color of the navigation buttons */
+}
+
+/* Customize the appearance of the selected date */
+.datepicker table tbody tr td.day.active,
+.datepicker table tbody tr td.day.active:hover,
+.datepicker table tbody tr td.day.active.disabled,
+.datepicker table tbody tr td.day.active.disabled:hover {
+    background-color: #007bff; /* Set the background color of the selected date */
+    color: #fff; /* Set the text color of the selected date */
+}
+
+/* Customize the appearance of the today's date */
+.datepicker table tbody tr td.today {
+    background-color: #f0f0f0; /* Set the background color of today's date */
+    color: #333; /* Set the text color of today's date */
+}
+
+/* Adjust the color of the datepicker arrows */
+.datepicker table thead tr:first-child th {
+    color: #007bff; /* Set the color of the arrows */
+}
+
+/* Customize the appearance of the datepicker footer (clear button) */
+.datepicker table tfoot tr th.today,
+.datepicker table tfoot tr th.today:hover,
+.datepicker table tfoot tr th.clear,
+.datepicker table tfoot tr th.clear:hover {
+    background-color: #f0f0f0; /* Set the background color of the footer buttons */
+    color: #333; /* Set the text color of the footer buttons */
+    border-top: 1px solid #ccc; /* Add a border to separate footer buttons */
+}
