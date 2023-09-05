@@ -24,6 +24,8 @@ import { PageNotFoundComponent } from './components/layout/page-not-found/page-n
 // import { UserManagementComponent } from './components/pages/user-management/user-management.component';
 import { SharedModule } from './components/pages/sharedmodule/shared.module';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { TimeagoModule } from 'ngx-timeago';
+// import { VirtualAccountsComponent } from './components/pages/virtual-accounts/virtual-accounts/virtual-accounts.component';
 // import { KycDocumentsComponent } from './components/pages/kyc-documents/kyc-documents/kyc-documents.component';
 // import { RolesComponent } from './components/pages/roles/roles/roles.component';
 // import { UserRolesComponent } from './components/pages/userRoles/user-roles/user-roles.component';
@@ -34,6 +36,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
   declarations: [
     AppComponent,
     PageNotFoundComponent,
+    // VirtualAccountsComponent,
     // KycDocumentsComponent,
     // RolesComponent,
     // UserRolesComponent,
@@ -64,6 +67,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
       animation: 'pulse',
       loadingText: 'This item is actually loading...',
     }),
+    TimeagoModule.forRoot(),
     
     ToastrModule.forRoot({
       timeOut: 5000,
