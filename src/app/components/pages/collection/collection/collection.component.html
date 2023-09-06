@@ -1,0 +1,367 @@
+
+<ngx-spinner
+bdColor="rgba(0,0,0,0.5)"
+size="medium"
+color="#d81616"
+type="ball-clip-rotate"
+[fullScreen]="true"
+></ngx-spinner>
+
+
+<div class="main-content-inner">
+    
+    <div class="header">
+        <div class="">
+          <!-- Body -->
+          <div class="header-body align-items-center">
+            <div class="row align-items-end">
+              <div class="col">
+                <!-- Pretitle -->
+                <h6 class="header-pretitle">Overview</h6>
+      
+                <!-- Title -->
+                <h1 class="header-title">Collections</h1>
+              </div>
+             
+              <div class="col-auto">
+             
+              </div>
+            </div>
+    
+          </div>
+        
+        </div>
+      </div>
+  
+      <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="input-group">
+            
+                <input type="text" name="searchTerm" [(ngModel)] ="searchTerm" class="form-control" placeholder="Search" (input)="search()">
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="button"><i class="fa fa-search"></i></button>
+                </div>
+        
+              </div>
+        </div>
+        <div class="col-md-6 text-md-right mt-md-0 mt-3">
+         
+
+          <button class="btn btn-info ml-3" data-toggle="modal" data-target="#myModal"><i class="fa fa-filter"></i>Filter by Duration</button>
+          <button class="btn btn-success ml-2"  data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-filter" ></i>Filter by CreditPosted</button>
+          <button class="btn btn-primary ml-2" (click)="downloadData()"><i class="fa fa-download"></i>Download Collections Acc</button>
+          
+
+        </div>
+      </div>
+     
+      <div class="row">
+        <!-- Progress Table start -->
+        <div class="col-12 mt-4">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card_title">
+                Account Data
+              </h4>
+              <div class="card-body" *ngIf="!filteredUserData?.length && !loading">
+                <div class="alert alert-dark text-center">
+                  No data to display at the moment
+                </div>
+              </div>
+              <div class="single-table">
+                <div class="table-responsive">
+                  <!-- Table contents here -->
+                 
+                  <table class="table table-hover progress-table text-center">
+                    <thead class="text-uppercase">
+                        <tr>
+                          <th>S/N</th>
+                          <th scope="col" class="sortable-header" (click)="sort('sourceAccountName')">Account Name <i [ngClass]="getSortIcon('sourceAccountName')"></i></th>
+                          <th scope="col" class="sortable-header" (click)="sort('sourceAccountNumber')">Account Number <i [ngClass]="getSortIcon('sourceAccountNumber')"></i></th>
+                          <th scope="col" class="sortable-header" (click)="sort('virtualAccountNumber')">Virtual Account Number <i [ngClass]="getSortIcon('virtualAccountNumber')"></i></th>
+                          <th scope="col" class="sortable-header" (click)="sort('transactionAmount')">Amount <i [ngClass]="getSortIcon('transactionAmount')"></i></th>
+                          <th scope="col" class="sortable-header" (click)="sort('provider')">Provider <i [ngClass]="getSortIcon('provider')"></i></th>
+                          <th scope="col" class="sortable-header" (click)="sort('createdAt')">Transaction Date<i [ngClass]="getSortIcon('createdAt')"></i></th>
+
+                          <th scope="col" class="sortable-header" >Action<i></i></th>
+                         
+                        </tr>
+                      </thead>
+                    <tbody class="list fs-base" *ngIf="loading && filteredUserData?.length > 0">
+                        <tr *ngFor="let loop of [1, 2, 3, 4]">
+                          <td>
+                            <ngx-skeleton-loader
+                              count="1"
+                              [theme]="{ width: '25px' }"
+                              appearance="line"
+                            ></ngx-skeleton-loader>
+                          </td>
+                          <td>
+                            <ngx-skeleton-loader
+                              count="1"
+                              appearance="circle"
+                            ></ngx-skeleton-loader>
+                            <span style="display: inline-block; top: -13px; position: relative"
+                              ><ngx-skeleton-loader
+                                count="1"
+                                [theme]="{ width: '150px' }"
+                                appearance="line"
+                              ></ngx-skeleton-loader
+                            ></span>
+                          </td>
+                          <td>
+                            <ngx-skeleton-loader
+                              count="1"
+                              [theme]="{ width: '100px' }"
+                              appearance="line"
+                            ></ngx-skeleton-loader>
+                          </td>
+                          <td>
+                            <ngx-skeleton-loader
+                              count="1"
+                              [theme]="{ width: '25px' }"
+                              appearance="line"
+                            ></ngx-skeleton-loader>
+                          </td>
+                          <td>
+                            <ngx-skeleton-loader
+                              count="1"
+                              [theme]="{ width: '50px' }"
+                              appearance="line"
+                            ></ngx-skeleton-loader>
+                            <br />
+                            <ngx-skeleton-loader
+                              count="1"
+                              [theme]="{ width: '70px' }"
+                              appearance="line"
+                            ></ngx-skeleton-loader>
+                          </td>
+                          <td>
+                            <ngx-skeleton-loader
+                              count="1"
+                              [theme]="{ width: '50px' }"
+                              appearance="line"
+                            ></ngx-skeleton-loader>
+                            <br />
+                            <ngx-skeleton-loader
+                              count="1"
+                              [theme]="{ width: '70px' }"
+                              appearance="line"
+                            ></ngx-skeleton-loader>
+                          </td>
+                          <td>
+                            <ngx-skeleton-loader
+                              count="1"
+                              [theme]="{ width: '50px' }"
+                              appearance="line"
+                            ></ngx-skeleton-loader>
+                            <br />
+                            <ngx-skeleton-loader
+                              count="1"
+                              [theme]="{ width: '70px' }"
+                              appearance="line"
+                            ></ngx-skeleton-loader>
+                          </td>
+                          <td>
+                            <div class="dropdown">
+                              <a
+                                class="dropdown-ellipses dropdown-toggle"
+                                href="#"
+                                role="button"
+                                data-bs-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                              >
+                                <i class="fe fe-more-vertical"></i>
+                              </a>
+                            </div>
+                          </td> 
+                        </tr>
+                      </tbody>
+                    <tbody >
+                        <tr *ngFor="let data of filteredUserData |  paginate: { itemsPerPage: pageSize, currentPage: p, totalItems: totalItems }, let i = index">
+                            <td>{{ 20 * p - (19 - i) }}</td>
+                            <td style="font-size: 14px;">{{data?.sourceAccountName || 'N/A'}}</td>
+                            <td style="font-size: 14px;">{{data?.sourceAccountNumber || 'N/A'}}</td>
+                            <td style="font-size: 14px;">{{data?.virtualAccountNumber || 'N/A'}}</td>
+                            <td style="font-size: 14px;">{{data?.transactionAmount | currency: '#' : 'symbol': '1.2-2' || 'N/A'}}</td>
+                            <td style="font-size: 14px;">{{data?.provider || 'N/A'}}</td>
+                            <!-- <td style="font-size: 14px;">{{data?.provider || 'N/A'}}</td> -->
+                            <td style="font-size: 14px;">
+                                <span class="fs-4">{{data?.createdAt | date : 'medium'}}</span>
+                                <small class="d-block text-muted">{{data?.createdAt | timeago : live}}</small></td>
+                            <!-- <td>500.00$</td> -->
+                            <td>
+                                <div class="dropdown">
+                                  <button class="dropdown-ellipsis dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  </button>
+                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="javascript:;" data-toggle="modal" data-target=".bd-example-modal-lgg" (click)="viewDetails(data.id)"><i class="fa fa-eye"></i>View details</a>
+                                    <!-- <hr class="dropdown-divider"/>
+                                    <a class="dropdown-item text-warning"  href="javascript:;" data-toggle="modal" data-target="#exampleModalLong2" (click)="viewDetails(data)"><i class="fa fa-edit"></i> Update</a>
+                                    <hr class="dropdown-divider" />
+                                    <a class="dropdown-item text-primary"  href="javascript:;" (click)="confirmDeleteUser(data.username)"><i class="ti-trash"></i> Delete</a>
+                                    <hr class="dropdown-divider" />
+                                    <a class="dropdown-item"  href="javascript:;"  data-toggle="modal" data-target="#myModal" *ngIf="!data?.isLocked" (click)="viewDetails(data)" ><i class="ti-lock"></i>Lock account</a>
+                                    <a class="dropdown-item"  href="javascript:;"  *ngIf="data?.isLocked" (click)="confirmUnlockUser(data.email)" ><i class="ti-unlock"></i>unlock account</a>
+                                    <hr class="dropdown-divider" />
+                                    <a class="dropdown-item text-success"  href="javascript:;" *ngIf="!data?.isEnabled" (click)="confirmEnableUser(data.username)"><i class="ti-check"></i> Enable</a>
+                                    <a class="dropdown-item text-danger"  href="javascript:;" *ngIf="data?.isEnabled" (click)="confirmDisableUser(data.username)"><i class="ti-close"></i>Disable</a>
+                                    <hr class="dropdown-divider" />
+                                    <a class="dropdown-item"  href="javascript:;" class="btn btn-primary" data-toggle="modal" data-target="#passwordModal"  (click)="viewDetails(data)"><i class="fa fa-edit"></i> Reset Password</a> -->
+                                  </div>
+                                </div>
+                              </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <pagination-controls (pageChange)="p = $event" 
+                previousLabel="Prev"
+                nextLabel="Next"></pagination-controls>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Progress Table end -->
+      </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+              <h4 class="modal-title">Filter</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-5">
+                  <div class="form-group">
+                      <label for="startDate">Start Date</label>
+                      <input
+                          id="startDate"
+                          type="date"
+                          class="form-control"
+                          [(ngModel)]="selectedStartDate"
+                          placeholder="Select Start Date"
+                      />
+                  </div>
+              </div>
+              <div class="col-md-2 text-center align-self-center">
+                  <span class="arrow">&#8594;</span> <!-- Arrow symbol (→) -->
+              </div>
+              <div class="col-md-5">
+                  <div class="form-group">
+                      <label for="endDate">End Date</label>
+                      <input
+                          id="endDate"
+                          type="date"
+                          class="form-control"
+                          [(ngModel)]="selectedEndDate"
+                          placeholder="Select End Date"
+                      />
+                  </div>
+              </div>
+          </div>
+          
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="loadData()">Filter</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+      </div>
+  </div>
+ </div>
+</div>
+
+
+<!-- view by creditPosted modal -->
+
+
+<div class="col-lg-6">
+          <div class="modal fade bd-example-modal-lg">
+              <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title">Filter Collections by Credit Posted</h5>
+                          <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="form-group row">
+                            <div class="input-group" style="padding-left: 50px; padding-right: 50px;">
+                              <select name="searchTerm" [(ngModel)]="CreditPosted" class="form-control">
+                                <option value="" selected>Select status</option>
+                                <option value="true">True</option>
+                                <option value="false">False</option> 
+                              </select>
+                              <div class="input-group-append">
+                                <button class="btn btn-primary" type="button" (click)="loadData()"><i class="fa fa-search"></i></button>
+                              </div>
+                            </div>
+                          </div>
+                    
+                      </div>
+                      <div class="modal-footer">
+                        <!-- <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="loadData()">Filter</button> -->
+                          <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      
+<!-- view details modal -->
+
+<div class="col-lg-6">
+    <div class="modal fade bd-example-modal-lgg">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Transaction Details</h5>
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group row">
+                    <div class="containerr">
+                     
+                        <div class="row rowr">
+                          <div class="col coll">
+                            <p><strong>Virtual Account Number:</strong> {{ selectedItem?.virtualAccountNumber || 'N/A'}}</p>
+                            <p><strong>Transaction Amount:</strong> {{ selectedItem?.transactionAmount | currency:'NGN' || 'N/A' }}</p>
+                            <p><strong>Settled Amount:</strong> {{ selectedItem?.settledAmount | currency:'NGN' || 'N/A' }}</p>
+                            <p><strong>Transaction Reference:</strong> {{ selectedItem?.transactionReference || 'N/A'}}</p>
+                            <p><strong>Merchant Reference:</strong> {{ selectedItem?.merchantReference || 'N/A' }}</p>
+                            <p><strong>Source Account Number:</strong> {{ selectedItem?.sourceAccountNumber || 'N/A' }}</p>
+                            <p><strong>Source Account Name:</strong> {{ selectedItem?.sourceAccountName || 'N/A' }}</p>
+                            <p><strong>Source Bank Name:</strong> {{ selectedItem?.sourceBankName || 'N/A' }}</p>
+                          </div>
+                          <div class="col coll">
+                            <p><strong>Channel:</strong> {{ selectedItem?.channel || 'N/A' }}</p>
+                            <p><strong>Narration:</strong> {{ selectedItem?.narration || 'N/A' }}</p>
+                            <p><strong>Status:</strong> {{ selectedItem?.status || 'N/A' }}</p>
+                            <p><strong>Transaction Type:</strong> {{ selectedItem?.transactionType || 'N/A' }}</p>
+                            <p><strong>Credit Posted:</strong> {{ selectedItem?.creditPosted  || 'N/A' }}</p>
+                            <p><strong>Request Date:</strong> {{ selectedItem?.requestDate | date }}<p>
+                            <p><strong>Provider:</strong> {{ selectedItem?.provider || 'N/A' }}</p>
+                            <p><strong>Currency:</strong> {{ selectedItem?.currency || 'N/A' }}</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                    </div>
+              
+                </div>
+                <div class="modal-footer">
+                  <!-- <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="loadData()">Filter</button> -->
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

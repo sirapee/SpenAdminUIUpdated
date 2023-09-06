@@ -37,6 +37,11 @@ const routes: Routes = [
       },
 
       {
+        path: 'collections',
+        loadChildren: () => import('../../pages/collection/collection/collection.module').then(m => m.CollectionModule)
+      },
+
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',

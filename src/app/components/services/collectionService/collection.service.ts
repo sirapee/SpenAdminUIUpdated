@@ -4,67 +4,74 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 
-
-
 @Injectable({
   providedIn: 'root'
 })
-export class VirtualAccountService {
+export class CollectionService {
 
   constructor(private http: HttpClient, private datePipe : DatePipe) { }
 
- dateToString(date: Date): string {
+  dateToString(date: Date): string {
     return this.datePipe.transform(date, 'MM-dd-yyyy') || '';
   }
 
 
-  getAllVirtualAccounts(
+  getAllCollections(
     PageNumber: number,
     PageSize: number,
     filters: {
       Id?: number;
+      VirtualAccountNumber?: number;
+      SourceAccountNumber?: number;
+      MerchantReference?: string;
+      CreditPosted?: boolean;
       StartDate?: Date;
       EndDate?: Date;
-      AccountNumber?: number;
-      Bank?: string;
-      MerchantId?: number; // Make it optional
-      Provider?: string;
+      TransactionReference?: string;
+      MerchantId?: number;
     }
   ): Observable<any> {
     let queryParams = new HttpParams()
       .set('page', PageNumber.toString())
       .set('pageSize', PageSize.toString());
-
+  
     if (filters.Id !== undefined) {
       queryParams = queryParams.set('Id', filters.Id.toString());
     }
-
+  
     if (filters.StartDate) {
       queryParams = queryParams.set('StartDate', this.dateToString(filters.StartDate));
     }
-
+  
     if (filters.EndDate !== undefined) {
       queryParams = queryParams.set('EndDate', this.dateToString(filters.EndDate));
     }
   
-
-    if (filters.AccountNumber) {
-      queryParams = queryParams.set('AccountNumber', filters.AccountNumber.toString());
+    if (filters.SourceAccountNumber) {
+      queryParams = queryParams.set('SourceAccountNumber', filters.SourceAccountNumber.toString());
     }
-
-    if (filters.Bank) {
-      queryParams = queryParams.set('Bank', filters.Bank);
+  
+    if (filters.MerchantReference) {
+      queryParams = queryParams.set('MerchantReference', filters.MerchantReference);
     }
-
+  
+    if (filters.CreditPosted !== undefined) {
+      queryParams = queryParams.set('CreditPosted', filters.CreditPosted.toString());
+    }
+  
+    if (filters.TransactionReference) {
+      queryParams = queryParams.set('TransactionReference', filters.TransactionReference);
+    }
+  
+    if (filters.VirtualAccountNumber) {
+      queryParams = queryParams.set('VirtualAccountNumber', filters.VirtualAccountNumber.toString());
+    }
+  
     if (filters.MerchantId !== undefined) {
       queryParams = queryParams.set('MerchantId', filters.MerchantId.toString());
     }
-
-    if (filters.Provider) {
-      queryParams = queryParams.set('Provider', filters.Provider);
-    }
-
-    return this.http.get(`${environment.baseUrl}/virtual-accounts/all`, {
+  
+    return this.http.get(`${environment.baseUrl}/virtual-accounts/collections`, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem('token')}`,
       },
@@ -72,59 +79,70 @@ export class VirtualAccountService {
     });
   }
 
-
   
-  downloadAllVirtualAccounts(
+
+  downloadAllCollections(
     PageNumber: number,
     PageSize: number,
     filters: {
       Id?: number;
+      VirtualAccountNumber?: number;
+      SourceAccountNumber?: number;
+      MerchantReference?: string;
+      CreditPosted?: boolean;
       StartDate?: Date;
       EndDate?: Date;
-      AccountNumber?: number;
-      Bank?: string;
-      MerchantId?: number; // Make it optional
-      Provider?: string;
+      TransactionReference?: string;
+      MerchantId?: number;
     }
   ): Observable<any> {
     let queryParams = new HttpParams()
       .set('page', PageNumber.toString())
       .set('pageSize', PageSize.toString());
-
+  
     if (filters.Id !== undefined) {
       queryParams = queryParams.set('Id', filters.Id.toString());
     }
-
+  
     if (filters.StartDate) {
       queryParams = queryParams.set('StartDate', this.dateToString(filters.StartDate));
     }
-
+  
     if (filters.EndDate !== undefined) {
       queryParams = queryParams.set('EndDate', this.dateToString(filters.EndDate));
     }
   
-
-    if (filters.AccountNumber) {
-      queryParams = queryParams.set('AccountNumber', filters.AccountNumber.toString());
+    if (filters.SourceAccountNumber) {
+      queryParams = queryParams.set('SourceAccountNumber', filters.SourceAccountNumber.toString());
     }
-
-    if (filters.Bank) {
-      queryParams = queryParams.set('Bank', filters.Bank);
+  
+    if (filters.MerchantReference) {
+      queryParams = queryParams.set('MerchantReference', filters.MerchantReference);
     }
-
+  
+    if (filters.CreditPosted !== undefined) {
+      queryParams = queryParams.set('CreditPosted', filters.CreditPosted.toString());
+    }
+  
+    if (filters.TransactionReference) {
+      queryParams = queryParams.set('TransactionReference', filters.TransactionReference);
+    }
+  
+    if (filters.VirtualAccountNumber) {
+      queryParams = queryParams.set('VirtualAccountNumber', filters.VirtualAccountNumber.toString());
+    }
+  
     if (filters.MerchantId !== undefined) {
       queryParams = queryParams.set('MerchantId', filters.MerchantId.toString());
     }
-
-    if (filters.Provider) {
-      queryParams = queryParams.set('Provider', filters.Provider);
-    }
-
-    return this.http.get(`${environment.baseUrl}/virtual-accounts/all-download`, {
+  
+    return this.http.get(`${environment.baseUrl}/virtual-accounts/collections-download`, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem('token')}`,
       },
       params: queryParams,
     });
   }
+  
+
 }

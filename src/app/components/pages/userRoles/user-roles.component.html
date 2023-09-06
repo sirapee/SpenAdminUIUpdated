@@ -193,9 +193,9 @@
                     "
                   >
                     <td>{{ 20 * p - (19 - i) }}</td>
-                    <td style="font-size: 14px">{{ data?.name }}</td>
-                    <td style="font-size: 14px">{{ data?.roleCategory }}</td>
-                    <td style="font-size: 14px">{{ data?.roleDescription }}</td>
+                    <td style="font-size: 14px">{{ data?.name || 'N/A' }}</td>
+                    <td style="font-size: 14px">{{ data?.roleCategory || 'N/A' }}</td>
+                    <td style="font-size: 14px">{{ data?.roleDescription || 'N/A'}}</td>
 
                     <!-- <td>500.00$</td> -->
                     <td>

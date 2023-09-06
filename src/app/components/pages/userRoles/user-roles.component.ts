@@ -19,7 +19,7 @@ export class UserRolesComponent {
 
   userData: any;
   p: number = 1; // Current page number
-  pageSize: number = 20; // Page size
+  pageSize: number = 10; // Page size
   totalItems: number = 0;
   live: boolean = true;
   loading: boolean = true;

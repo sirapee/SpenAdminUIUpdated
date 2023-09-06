@@ -179,12 +179,12 @@ type="ball-clip-rotate"
                     <tbody >
                         <tr *ngFor="let data of filteredUserData |  paginate: { itemsPerPage: pageSize, currentPage: p, totalItems: totalItems }, let i = index">
                             <td>{{ 20 * p - (19 - i) }}</td>
-                            <td style="font-size: 14px;">{{data?.email}}</td>
-                            <td style="font-size: 14px;">{{data?.firstName}}</td>
-                            <td style="font-size: 14px;">{{data?.lastName}}</td>
+                            <td style="font-size: 14px;">{{data?.email || 'N/A'}}</td>
+                            <td style="font-size: 14px;">{{data?.firstName || 'N/A'}}</td>
+                            <td style="font-size: 14px;">{{data?.lastName || 'N/A'}}</td>
                             <td [ngClass]="{ 'active-status': data?.isEnabled, 'inactive-status': !data?.isEnabled }" style="font-size: 14px;">{{data?.isEnabled ? 'Active' : 'Inactive'}}</td>
-                            <td style="font-size: 14px;">{{data?.merchantName}}</td>
-                            <td style="font-size: 14px;">{{data?.roles}}</td>
+                            <td style="font-size: 14px;">{{data?.merchantName || 'N/A'}}</td>
+                            <td style="font-size: 14px;">{{data?.roles || 'N/A'}}</td>
 
                             <td  [ngClass]="{ 'active-status': !data?.isLocked, 'inactive-status': data?.isLocked }" style="font-size: 14px;">{{data?.isLocked ? 'Locked' : 'Unlocked'}}</td>
                             <!-- <td>500.00$</td> -->

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { UsersService } from '../../../services/userManagement/users.service';
 import * as _ from 'lodash';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
@@ -7,15 +6,16 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { VirtualAccountService } from 'src/app/components/services/virtualAccountService/virtual-account.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import * as XLSX from 'xlsx';
-
-
+import { UsersService } from 'src/app/components/services/userManagement/users.service';
+import { CollectionService } from 'src/app/components/services/collectionService/collection.service';
 
 @Component({
-  selector: 'app-virtual-accounts',
-  templateUrl: './virtual-accounts.component.html',
-  styleUrls: ['./virtual-accounts.component.css'],
+  selector: 'app-collection',
+  templateUrl: './collection.component.html',
+  styleUrls: ['./collection.component.css']
 })
-export class VirtualAccountsComponent {
+export class CollectionComponent {
+
   searchTerm!: string;
 
   sortTransaction!: string;
@@ -44,12 +44,13 @@ export class VirtualAccountsComponent {
   selectedProvider: any;
   filteredData: any;
   providerName: any;
+  CreditPosted: any;
 
   constructor(
     private usersService: UsersService,
     private notification: ToastrService,
     private spinner: NgxSpinnerService,
-    private virtualAccountService: VirtualAccountService
+    private collectionService: CollectionService
   ) {
     this.bsConfig = {
       containerClass: 'theme-default',
@@ -65,15 +66,18 @@ export class VirtualAccountsComponent {
   loadData() {
     this.spinner.show();
 
-    const filters: {
+
+  const  filters: {
       Id?: number;
+      VirtualAccountNumber?: number;
+      SourceAccountNumber?: number;
+      MerchantReference?: string;
+      CreditPosted?: boolean;
       StartDate?: Date;
       EndDate?: Date;
-      AccountNumber?: number;
-      Bank?: string;
-      MerchantId?: number | undefined;
-      Provider?: string;
-    } = {};
+      TransactionReference?: string;
+      MerchantId?: number;
+    } = {}
 
     if (this.selectedStartDate) {
       filters.StartDate = this.selectedStartDate;
@@ -83,21 +87,21 @@ export class VirtualAccountsComponent {
       filters.EndDate = this.selectedEndDate;
     }
  
-    if (this.Provider) {
-      filters.Provider = this.selectedItem.provider;
+    if (this.CreditPosted) {
+      filters.CreditPosted = this.CreditPosted;
     }
 
-    this.virtualAccountService
-      .getAllVirtualAccounts(this.p, this.pageSize, filters)
-      .subscribe(
+    this.collectionService
+      .getAllCollections(this.p, this.pageSize, filters)
+      .subscribe( 
         (response) => {
           this.loading = false;
-          this.userData = response.accounts;
+          this.userData = response.transactions;
           this.filteredUserData = this.userData;
           // this.userData.slice();
           this.usersService.updateUserData(this.filteredUserData);
           this.spinner.hide();
-          this.totalItems = response.total;
+          this.totalItems = response.totalCount;
         },
         (error) => {
           console.error('Error fetching reports:', error);
@@ -111,7 +115,7 @@ export class VirtualAccountsComponent {
     const selectedItem = this.userData.find((item: { id: any; }) => item.id === id);
     if (selectedItem) {
       this.selectedItem = selectedItem;
-      console.log(this.selectedItem)
+      console.log(this.selectedItem);
     }
   }
   
@@ -122,17 +126,17 @@ export class VirtualAccountsComponent {
       this.filteredUserData = this.userData.filter((result: any) => {
         // Add null checks before accessing properties for filtering
         // const username = result.username || '';
-        const accountName = result.accountName || '';
-        const accountNumber = result.accountNumber || '';
-        const bank = result.bank || '';
-        const category = result.category || '';
+        const accountName = result.sourceAccountName || '';
+        const accountNumber = result.sourceAccountNumber || '';
+        const VirtualAccountNumber = result.virtualAccountNumber || '';
+        const provider = result.provider || '';
 
         return (
           // username.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
           accountName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
           accountNumber.toString().toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-          bank.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-          category.toLowerCase().includes(this.searchTerm.toLowerCase())
+          VirtualAccountNumber.toString().toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+          provider.toLowerCase().includes(this.searchTerm.toLowerCase())
         );
       });
       this.sort();
@@ -152,7 +156,7 @@ export class VirtualAccountsComponent {
       }
     }
 
-    // Use a cast to 'asc' | 'desc' to address the TypeScript type error
+ 
     this.filteredUserData = _.orderBy(
       this.filteredUserData,
       [this.activeSortBy],
@@ -181,15 +185,17 @@ downloadData() {
   const thirtyDaysAgo = new Date();
   thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-  const filters: {
+  const  filters: {
     Id?: number;
+    VirtualAccountNumber?: number;
+    SourceAccountNumber?: number;
+    MerchantReference?: string;
+    CreditPosted?: boolean;
     StartDate?: Date;
     EndDate?: Date;
-    AccountNumber?: number;
-    Bank?: string;
-    MerchantId?: number | undefined;
-    Provider?: string;
-  } = {};
+    TransactionReference?: string;
+    MerchantId?: number;
+  } = {}
 
   if (this.selectedStartDate) {
     filters.StartDate = this.selectedStartDate;
@@ -202,12 +208,12 @@ downloadData() {
     filters.EndDate = this.selectedEndDate;
   }
 
-  this.virtualAccountService
-    .downloadAllVirtualAccounts(this.p, this.pageSize, filters)
+  this.collectionService
+    .downloadAllCollections(this.p, this.pageSize, filters)
     .subscribe(
       (response) => {
         this.loading = false;
-        this.userData = response.accounts;
+        this.userData = response.transactions;
         this.filteredUserData = this.userData;
         // this.userData.slice();
         // this.usersService.updateUserData(this.filteredUserData);
@@ -250,32 +256,30 @@ saveExcelFile(buffer: any, fileName: string) {
 
 
 
-providerData() {
-  this.spinner.show();
+// providerData() {
+//   this.spinner.show();
 
-  const filters = {
-    Provider: this.providerName,
-  };
+//   const filters = {
+//     Provider: this.providerName,
+//   };
 
-  this.virtualAccountService
-    .getAllVirtualAccounts(this.p, this.pageSize, filters)
-    .subscribe(
-      (response) => {
-        this.loading = false;
-        this.userData = response.accounts;
-        this.filteredData = this.userData;
-        // this.userData.slice();
-        // this.usersService.updateUserData(this.filteredUserData);
-        this.spinner.hide();
-        this.totalItems = response.total;
-      },
-      (error) => {
-        console.error('Error fetching reports:', error);
-        this.loading = false;
-        this.spinner.hide();
-      }
-    );
-}
-
+//   this.collectionService
+//     .getAllVirtualAccounts(this.p, this.pageSize, filters)
+//     .subscribe(
+//       (response) => {
+//         this.loading = false;
+//         this.userData = response.accounts;
+//         this.filteredData = this.userData;
+     
+//         this.spinner.hide();
+//         this.totalItems = response.total;
+//       },
+//       (error) => {
+//         console.error('Error fetching reports:', error);
+//         this.loading = false;
+//         this.spinner.hide();
+//       }
+//     );
+// }
 
 }
