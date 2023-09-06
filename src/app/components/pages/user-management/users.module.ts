@@ -15,6 +15,7 @@ import { LockAccountComponent } from './lock-account/lock-account/lock-account.c
 // import { RolesComponent } from './roles/allroles/roles/roles.component';
 // import { AddRolesComponent } from './roles/addroles/add-roles/add-roles.component';
 // import { passwordMatchValidator } from 'src/app/authenticationvalidator/confirm.validator';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -28,7 +29,8 @@ import { LockAccountComponent } from './lock-account/lock-account/lock-account.c
     FormsModule,
     ReactiveFormsModule,
     NgxSkeletonLoaderModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    NgbPaginationModule
   ]
 })
 export class UsersModule { }

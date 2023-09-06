@@ -49,9 +49,11 @@ type="ball-clip-rotate"
         </div>
         <div class="col-md-6 text-md-right mt-md-0 mt-3">
          
-          <!-- <button class="btn btn-success"  data-toggle="modal" data-target="#exampleLongModalLong2"><i class="fa fa-user-plus" ></i> Create User</button> -->
+
           <button class="btn btn-info ml-3" data-toggle="modal" data-target="#myModal"><i class="fa fa-filter"></i>Filter by Duration</button>
+          <button class="btn btn-success ml-2"  data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-filter" ></i>Filter by provider</button>
           <button class="btn btn-primary ml-2" (click)="downloadData()"><i class="fa fa-download"></i>Download Accounts</button>
+          
 
         </div>
       </div>
@@ -85,7 +87,7 @@ type="ball-clip-rotate"
                           <th scope="col" class="sortable-header" (click)="sort('provider')">Provider<i [ngClass]="getSortIcon('provider')"></i></th>
 
                           <th scope="col" class="sortable-header" (click)="sort('createdAt')">Date Created<i [ngClass]="getSortIcon('createdAt')"></i></th>
-                          <th scope="col">Action</th>
+                         
                         </tr>
                       </thead>
                     <tbody class="list fs-base" *ngIf="loading && filteredUserData?.length > 0">
@@ -182,26 +184,17 @@ type="ball-clip-rotate"
                     <tbody >
                         <tr *ngFor="let data of filteredUserData |  paginate: { itemsPerPage: pageSize, currentPage: p, totalItems: totalItems }, let i = index">
                             <td>{{ 20 * p - (19 - i) }}</td>
-                            <td style="font-size: 14px;">{{data?.accountName}}</td>
-                            <td style="font-size: 14px;">{{data?.accountNumber}}</td>
-                            <td style="font-size: 14px;">{{data?.bank}}</td>
-                            <td style="font-size: 14px;">{{data?.bvn}}</td>
-                            <td style="font-size: 14px;">{{data?.category}}</td>
-                            <td style="font-size: 14px;">{{data?.provider}}</td>
+                            <td style="font-size: 14px;">{{data?.accountName || 'N/A'}}</td>
+                            <td style="font-size: 14px;">{{data?.accountNumber || 'N/A'}}</td>
+                            <td style="font-size: 14px;">{{data?.bank || 'N/A'}}</td>
+                            <td style="font-size: 14px;">{{data?.bvn || 'N/A'}}</td>
+                            <td style="font-size: 14px;">{{data?.category || 'N/A'}}</td>
+                            <td style="font-size: 14px;">{{data?.provider || 'N/A'}}</td>
                             <td style="font-size: 14px;">
                                 <span class="fs-4">{{data?.createdAt | date : 'medium'}}</span>
                                 <small class="d-block text-muted">{{data?.createdAt | timeago : live}}</small></td>
                             <!-- <td>500.00$</td> -->
-                            <td>
-                                <div class="dropdown">
-                                  <button class="dropdown-ellipsis dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  </button>
-                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="javascript:;" data-toggle="modal" data-target="#exampleModalLong" (click)="viewDetails(data)"><i class="fa fa-eye"></i>Get accounts by provider</a>
-                                    
-                                  </div>
-                                </div>
-                              </td>   
+                            
                         </tr>
                     </tbody>
                 </table>
@@ -260,7 +253,7 @@ type="ball-clip-rotate"
           </div>
           
           
-          </div>
+         
 
           <!-- Modal footer -->
           <div class="modal-footer">
@@ -269,4 +262,190 @@ type="ball-clip-rotate"
           </div>
       </div>
   </div>
+ </div>
+</div>
 
+
+<!-- view by provider modal -->
+
+
+<div class="col-lg-6 mt-4 stretched_card">
+
+         
+          <div class="modal fade bd-example-modal-lg">
+              <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title">Get Accounts By Provider</h5>
+                          <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="form-group row">
+                        <div  class="input-group" style="padding-left: 50px; padding-right: 50px;">
+            
+                          <input  type="text" name="searchTerm" [(ngModel)]="providerName" class="form-control" placeholder="Enter provider name">
+                          <div class="input-group-append">
+                            <button class="btn btn-primary" type="button" (click)="providerData()"><i class="fa fa-search"></i></button>
+                          </div>
+                  
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <!-- Progress Table start -->
+                        <div class="col-12 mt-4">
+                          <div class="card">
+                            <div class="card-body">
+                              <h4 class="card_title">
+                                Account Data
+                              </h4>
+                              <div class="card-body" *ngIf="!filteredData?.length && !loading">
+                                <div class="alert alert-dark text-center">
+                                  No data to display at the moment
+                                </div>
+                              </div>
+                              <div class="single-table">
+                                <div class="table-responsive">
+                                  <!-- Table contents here -->
+                                 
+                                  <table class="table table-hover progress-table text-center">
+                                    <thead class="text-uppercase">
+                                        <tr>
+                                          <th>S/N</th>
+                                          <th scope="col" class="sortable-header" (click)="sort('accountName')">Account Name <i [ngClass]="getSortIcon('accountName')"></i></th>
+                                          <th scope="col" class="sortable-header" (click)="sort('accountNumber')">Account Number <i [ngClass]="getSortIcon('accountNumber')"></i></th>
+                                          <th scope="col" class="sortable-header" (click)="sort('bank')">Bank <i [ngClass]="getSortIcon('bank')"></i></th>
+                                          <th scope="col" class="sortable-header" (click)="sort('bvn')">BVN <i [ngClass]="getSortIcon('bvn')"></i></th>
+                                          <th scope="col" class="sortable-header" (click)="sort('category')">Category <i [ngClass]="getSortIcon('category')"></i></th>
+                                          <th scope="col" class="sortable-header" (click)="sort('provider')">Provider<i [ngClass]="getSortIcon('provider')"></i></th>
+                
+                                          <th scope="col" class="sortable-header" (click)="sort('createdAt')">Date Created<i [ngClass]="getSortIcon('createdAt')"></i></th>
+                                        
+                                        </tr>
+                                      </thead>
+                                    <tbody class="list fs-base" *ngIf="loading && filteredData?.length > 0">
+                                        <tr *ngFor="let loop of [1, 2, 3, 4]">
+                                          <td>
+                                            <ngx-skeleton-loader
+                                              count="1"
+                                              [theme]="{ width: '25px' }"
+                                              appearance="line"
+                                            ></ngx-skeleton-loader>
+                                          </td>
+                                          <td>
+                                            <ngx-skeleton-loader
+                                              count="1"
+                                              appearance="circle"
+                                            ></ngx-skeleton-loader>
+                                            <span style="display: inline-block; top: -13px; position: relative"
+                                              ><ngx-skeleton-loader
+                                                count="1"
+                                                [theme]="{ width: '150px' }"
+                                                appearance="line"
+                                              ></ngx-skeleton-loader
+                                            ></span>
+                                          </td>
+                                          <td>
+                                            <ngx-skeleton-loader
+                                              count="1"
+                                              [theme]="{ width: '100px' }"
+                                              appearance="line"
+                                            ></ngx-skeleton-loader>
+                                          </td>
+                                          <td>
+                                            <ngx-skeleton-loader
+                                              count="1"
+                                              [theme]="{ width: '25px' }"
+                                              appearance="line"
+                                            ></ngx-skeleton-loader>
+                                          </td>
+                                          <td>
+                                            <ngx-skeleton-loader
+                                              count="1"
+                                              [theme]="{ width: '50px' }"
+                                              appearance="line"
+                                            ></ngx-skeleton-loader>
+                                            <br />
+                                            <ngx-skeleton-loader
+                                              count="1"
+                                              [theme]="{ width: '70px' }"
+                                              appearance="line"
+                                            ></ngx-skeleton-loader>
+                                          </td>
+                                          <td>
+                                            <ngx-skeleton-loader
+                                              count="1"
+                                              [theme]="{ width: '50px' }"
+                                              appearance="line"
+                                            ></ngx-skeleton-loader>
+                                            <br />
+                                            <ngx-skeleton-loader
+                                              count="1"
+                                              [theme]="{ width: '70px' }"
+                                              appearance="line"
+                                            ></ngx-skeleton-loader>
+                                          </td>
+                                          <td>
+                                            <ngx-skeleton-loader
+                                              count="1"
+                                              [theme]="{ width: '50px' }"
+                                              appearance="line"
+                                            ></ngx-skeleton-loader>
+                                            <br />
+                                            <ngx-skeleton-loader
+                                              count="1"
+                                              [theme]="{ width: '70px' }"
+                                              appearance="line"
+                                            ></ngx-skeleton-loader>
+                                          </td>
+                                          <td>
+                                            <div class="dropdown">
+                                              <a
+                                                class="dropdown-ellipses dropdown-toggle"
+                                                href="#"
+                                                role="button"
+                                                data-bs-toggle="dropdown"
+                                                aria-haspopup="true"
+                                                aria-expanded="false"
+                                              >
+                                                <i class="fe fe-more-vertical"></i>
+                                              </a>
+                                            </div>
+                                          </td> 
+                                        </tr>
+                                      </tbody>
+                                    <tbody >
+                                        <tr *ngFor="let data of filteredData |  paginate: { itemsPerPage: pageSize, currentPage: p, totalItems: totalItems }, let i = index">
+                                            <td>{{ 20 * p - (19 - i) }}</td>
+                                            <td style="font-size: 14px;">{{data?.accountName || 'N/A'}}</td>
+                                            <td style="font-size: 14px;">{{data?.accountNumber || 'N/A'}}</td>
+                                            <td style="font-size: 14px;">{{data?.bank || 'N/A'}}</td>
+                                            <td style="font-size: 14px;">{{data?.bvn || 'N/A'}}</td>
+                                            <td style="font-size: 14px;">{{data?.category || 'N/A'}}</td>
+                                            <td style="font-size: 14px;">{{data?.provider || 'N/A'}}</td>
+                                            <td style="font-size: 14px;">
+                                                <span class="fs-4">{{data?.createdAt | date : 'medium'}}</span>
+                                                <small class="d-block text-muted">{{data?.createdAt | timeago : live}}</small></td>
+                                            <!-- <td>500.00$</td> -->
+                                            
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <pagination-controls (pageChange)="p = $event" 
+                                previousLabel="Prev"
+                                nextLabel="Next"></pagination-controls>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Progress Table end -->
+                      </div>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
