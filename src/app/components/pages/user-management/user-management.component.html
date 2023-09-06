@@ -1,227 +1,387 @@
-
 <ngx-spinner
-bdColor="rgba(0,0,0,0.5)"
-size="medium"
-color="#d81616"
-type="ball-clip-rotate"
-[fullScreen]="true"
+  bdColor="rgba(0,0,0,0.5)"
+  size="medium"
+  color="#d81616"
+  type="ball-pulse"
+  [fullScreen]="true"
 ></ngx-spinner>
 
-
 <div class="main-content-inner">
-    
-    <div class="header">
-        <div class="">
-          <!-- Body -->
-          <div class="header-body align-items-center">
-            <div class="row align-items-end">
-              <div class="col">
-                <!-- Pretitle -->
-                <h6 class="header-pretitle">Overview</h6>
-      
-                <!-- Title -->
-                <h1 class="header-title">User-management</h1>
-              </div>
-             
-              <div class="col-auto">
-                <!-- Button -->
-                <!--<a href="#!" class="btn btn-primary lift">
+  <div class="header">
+    <div class="">
+      <!-- Body -->
+      <div class="header-body align-items-center">
+        <div class="row align-items-end">
+          <div class="col">
+            <!-- Pretitle -->
+            <h6 class="header-pretitle">Overview</h6>
+
+            <!-- Title -->
+            <h1 class="header-title">User-management</h1>
+          </div>
+
+          <div class="col-auto">
+            <!-- Button -->
+            <!--<a href="#!" class="btn btn-primary lift">
                   Create Report
                 </a>-->
-              </div>
-            </div>
-            <!-- / .row -->
           </div>
-          <!-- / .header-body -->
+        </div>
+        <!-- / .row -->
+      </div>
+      <!-- / .header-body -->
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <div class="input-group">
+        <input
+          type="text"
+          name="searchTerm"
+          [(ngModel)]="searchTerm"
+          class="form-control"
+          placeholder="Search"
+          (input)="search()"
+        />
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="button">
+            <i class="fa fa-search"></i>
+          </button>
         </div>
       </div>
-      <div class="row mt-4">
-        <div class="col-md-6">
-            <div class="input-group">
-            
-                <input type="text" name="searchTerm" [(ngModel)] ="searchTerm" class="form-control" placeholder="Search" (input)="search()">
-                <div class="input-group-append">
-                  <button class="btn btn-primary" type="button"><i class="fa fa-search"></i></button>
-                </div>
-        
-              </div>
-        </div>
-        <div class="col-md-6 text-md-right mt-md-0 mt-3">
-         
-          <button class="btn btn-success"  data-toggle="modal" data-target="#exampleLongModalLong2"><i class="fa fa-user-plus" ></i> Create User</button>
-          <button class="btn btn-info ml-2" data-toggle="modal" data-target="#exampleLongModalLong3"><i class="fa fa-building"></i> Create Merchant</button>
-        </div>
-      </div>
-     
-      <div class="row">
-        <!-- Progress Table start -->
-        <div class="col-12 mt-4">
-          <div class="card">
-            <div class="card-body">
-              <h4 class="card_title">
-                User Table
-              </h4>
-              <div class="card-body" *ngIf="!filteredUserData?.length && !loading">
-                <div class="alert alert-dark text-center">
-                  No data to display at the moment
-                </div>
-              </div>
-              <div class="single-table">
-                <div class="table-responsive">
-                  <!-- Table contents here -->
-                 
-                  <table class="table table-hover progress-table text-center">
-                    <thead class="text-uppercase">
-                        <tr>
-                          <th>S/N</th>
-                          <th scope="col" class="sortable-header" (click)="sort('email')">Email <i [ngClass]="getSortIcon('email')"></i></th>
-                          <th scope="col" class="sortable-header" (click)="sort('firstName')">FirstName <i [ngClass]="getSortIcon('firstName')"></i></th>
-                          <th scope="col" class="sortable-header" (click)="sort('lastName')">LastName <i [ngClass]="getSortIcon('lastName')"></i></th>
-                          <th scope="col" class="sortable-header" (click)="sort('isEnabled')">Status <i [ngClass]="getSortIcon('isEnabled')"></i></th>
-                          <th scope="col" class="sortable-header" (click)="sort('merchantName')">Merchant <i [ngClass]="getSortIcon('merchantName')"></i></th>
-                          <th scope="col" class="sortable-header" (click)="sort('roles')">Roles <i [ngClass]="getSortIcon('roles')"></i></th>
+    </div>
+    <div class="col-md-6 text-md-right mt-md-0 mt-3">
+      <button
+        class="btn btn-success"
+        data-toggle="modal"
+        data-target="#exampleLongModalLong2"
+      >
+        <i class="fa fa-user-plus"></i> Create User
+      </button>
+      <button
+        class="btn btn-info ml-2"
+        data-toggle="modal"
+        data-target="#exampleLongModalLong3"
+      >
+        <i class="fa fa-building"></i> Create Merchant
+      </button>
+    </div>
+  </div>
 
-                          <th scope="col" class="sortable-header" (click)="sort('isLocked')">Account Status<i [ngClass]="getSortIcon('isLocked')"></i></th>
-                          <th scope="col">Action</th>
-                        </tr>
-                      </thead>
-                    <tbody class="list fs-base" *ngIf="loading && filteredUserData?.length > 0">
-                        <tr *ngFor="let loop of [1, 2, 3, 4]">
-                          <td>
-                            <ngx-skeleton-loader
-                              count="1"
-                              [theme]="{ width: '25px' }"
-                              appearance="line"
-                            ></ngx-skeleton-loader>
-                          </td>
-                          <td>
-                            <ngx-skeleton-loader
-                              count="1"
-                              appearance="circle"
-                            ></ngx-skeleton-loader>
-                            <span style="display: inline-block; top: -13px; position: relative"
-                              ><ngx-skeleton-loader
-                                count="1"
-                                [theme]="{ width: '150px' }"
-                                appearance="line"
-                              ></ngx-skeleton-loader
-                            ></span>
-                          </td>
-                          <td>
-                            <ngx-skeleton-loader
-                              count="1"
-                              [theme]="{ width: '100px' }"
-                              appearance="line"
-                            ></ngx-skeleton-loader>
-                          </td>
-                          <td>
-                            <ngx-skeleton-loader
-                              count="1"
-                              [theme]="{ width: '25px' }"
-                              appearance="line"
-                            ></ngx-skeleton-loader>
-                          </td>
-                          <td>
-                            <ngx-skeleton-loader
-                              count="1"
-                              [theme]="{ width: '50px' }"
-                              appearance="line"
-                            ></ngx-skeleton-loader>
-                            <br />
-                            <ngx-skeleton-loader
-                              count="1"
-                              [theme]="{ width: '70px' }"
-                              appearance="line"
-                            ></ngx-skeleton-loader>
-                          </td>
-                          <td>
-                            <ngx-skeleton-loader
-                              count="1"
-                              [theme]="{ width: '50px' }"
-                              appearance="line"
-                            ></ngx-skeleton-loader>
-                            <br />
-                            <ngx-skeleton-loader
-                              count="1"
-                              [theme]="{ width: '70px' }"
-                              appearance="line"
-                            ></ngx-skeleton-loader>
-                          </td>
-                          <td>
-                            <ngx-skeleton-loader
-                              count="1"
-                              [theme]="{ width: '50px' }"
-                              appearance="line"
-                            ></ngx-skeleton-loader>
-                            <br />
-                            <ngx-skeleton-loader
-                              count="1"
-                              [theme]="{ width: '70px' }"
-                              appearance="line"
-                            ></ngx-skeleton-loader>
-                          </td>
-                          <td>
-                            <div class="dropdown">
-                              <a
-                                class="dropdown-ellipses dropdown-toggle"
-                                href="#"
-                                role="button"
-                                data-bs-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                              >
-                                <i class="fe fe-more-vertical"></i>
-                              </a>
-                            </div>
-                          </td> 
-                        </tr>
-                      </tbody>
-                    <tbody >
-                        <tr *ngFor="let data of filteredUserData |  paginate: { itemsPerPage: pageSize, currentPage: p, totalItems: totalItems }, let i = index">
-                            <td>{{ 20 * p - (19 - i) }}</td>
-                            <td style="font-size: 14px;">{{data?.email || 'N/A'}}</td>
-                            <td style="font-size: 14px;">{{data?.firstName || 'N/A'}}</td>
-                            <td style="font-size: 14px;">{{data?.lastName || 'N/A'}}</td>
-                            <td [ngClass]="{ 'active-status': data?.isEnabled, 'inactive-status': !data?.isEnabled }" style="font-size: 14px;">{{data?.isEnabled ? 'Active' : 'Inactive'}}</td>
-                            <td style="font-size: 14px;">{{data?.merchantName || 'N/A'}}</td>
-                            <td style="font-size: 14px;">{{data?.roles || 'N/A'}}</td>
+  <div class="row">
+    <!-- Progress Table start -->
+    <div class="col-12 mt-4">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card_title">User Table</h4>
+          <div class="card-body" *ngIf="!filteredUserData?.length && !loading">
+            <div class="alert alert-dark text-center">
+              No data to display at the moment
+            </div>
+          </div>
+          <div class="single-table">
+            <div class="table-responsive">
+              <!-- Table contents here -->
 
-                            <td  [ngClass]="{ 'active-status': !data?.isLocked, 'inactive-status': data?.isLocked }" style="font-size: 14px;">{{data?.isLocked ? 'Locked' : 'Unlocked'}}</td>
-                            <!-- <td>500.00$</td> -->
-                            <td>
-                                <div class="dropdown">
-                                  <button class="dropdown-ellipsis dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  </button>
-                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="javascript:;" data-toggle="modal" data-target="#exampleModalLong" (click)="viewDetails(data)"><i class="fa fa-eye"></i>View details</a>
-                                    <hr class="dropdown-divider"/>
-                                    <a class="dropdown-item text-warning"  href="javascript:;" data-toggle="modal" data-target="#exampleModalLong2" (click)="viewDetails(data)"><i class="fa fa-edit"></i> Update</a>
-                                    <hr class="dropdown-divider" />
-                                    <a class="dropdown-item text-primary"  href="javascript:;" (click)="confirmDeleteUser(data.username)"><i class="ti-trash"></i> Delete</a>
-                                    <hr class="dropdown-divider" />
-                                    <a class="dropdown-item"  href="javascript:;"  data-toggle="modal" data-target="#myModal" *ngIf="!data?.isLocked" (click)="viewDetails(data)" ><i class="ti-lock"></i>Lock account</a>
-                                    <a class="dropdown-item"  href="javascript:;"  *ngIf="data?.isLocked" (click)="confirmUnlockUser(data.email)" ><i class="ti-unlock"></i>unlock account</a>
-                                    <hr class="dropdown-divider" />
-                                    <a class="dropdown-item text-success"  href="javascript:;" *ngIf="!data?.isEnabled" (click)="confirmEnableUser(data.username)"><i class="ti-check"></i> Enable</a>
-                                    <a class="dropdown-item text-danger"  href="javascript:;" *ngIf="data?.isEnabled" (click)="confirmDisableUser(data.username)"><i class="ti-close"></i>Disable</a>
-                                    <hr class="dropdown-divider" />
-                                    <a class="dropdown-item"  href="javascript:;" class="btn btn-primary" data-toggle="modal" data-target="#passwordModal"  (click)="viewDetails(data)"><i class="fa fa-edit"></i> Reset Password</a>
-                                  </div>
-                                </div>
-                              </td>   
-                        </tr>
-                    </tbody>
-                </table>
-                <pagination-controls (pageChange)="p = $event" 
+              <table class="table table-hover progress-table text-center">
+                <thead class="text-uppercase">
+                  <tr>
+                    <th>S/N</th>
+                    <th
+                      scope="col"
+                      class="sortable-header"
+                      (click)="sort('email')"
+                    >
+                      Email <i [ngClass]="getSortIcon('email')"></i>
+                    </th>
+                    <th
+                      scope="col"
+                      class="sortable-header"
+                      (click)="sort('firstName')"
+                    >
+                      FirstName <i [ngClass]="getSortIcon('firstName')"></i>
+                    </th>
+                    <th
+                      scope="col"
+                      class="sortable-header"
+                      (click)="sort('lastName')"
+                    >
+                      LastName <i [ngClass]="getSortIcon('lastName')"></i>
+                    </th>
+                    <th
+                      scope="col"
+                      class="sortable-header"
+                      (click)="sort('isEnabled')"
+                    >
+                      Status <i [ngClass]="getSortIcon('isEnabled')"></i>
+                    </th>
+                    <th
+                      scope="col"
+                      class="sortable-header"
+                      (click)="sort('merchantName')"
+                    >
+                      Merchant <i [ngClass]="getSortIcon('merchantName')"></i>
+                    </th>
+                    <th
+                      scope="col"
+                      class="sortable-header"
+                      (click)="sort('roles')"
+                    >
+                      Roles <i [ngClass]="getSortIcon('roles')"></i>
+                    </th>
+
+                    <th
+                      scope="col"
+                      class="sortable-header"
+                      (click)="sort('isLocked')"
+                    >
+                      Account Status<i [ngClass]="getSortIcon('isLocked')"></i>
+                    </th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody
+                  class="list fs-base"
+                  *ngIf="loading && filteredUserData?.length > 0"
+                >
+                  <tr *ngFor="let loop of [1, 2, 3, 4]">
+                    <td>
+                      <ngx-skeleton-loader
+                        count="1"
+                        [theme]="{ width: '25px' }"
+                        appearance="line"
+                      ></ngx-skeleton-loader>
+                    </td>
+                    <td>
+                      <ngx-skeleton-loader
+                        count="1"
+                        appearance="circle"
+                      ></ngx-skeleton-loader>
+                      <span
+                        style="
+                          display: inline-block;
+                          top: -13px;
+                          position: relative;
+                        "
+                        ><ngx-skeleton-loader
+                          count="1"
+                          [theme]="{ width: '150px' }"
+                          appearance="line"
+                        ></ngx-skeleton-loader
+                      ></span>
+                    </td>
+                    <td>
+                      <ngx-skeleton-loader
+                        count="1"
+                        [theme]="{ width: '100px' }"
+                        appearance="line"
+                      ></ngx-skeleton-loader>
+                    </td>
+                    <td>
+                      <ngx-skeleton-loader
+                        count="1"
+                        [theme]="{ width: '25px' }"
+                        appearance="line"
+                      ></ngx-skeleton-loader>
+                    </td>
+                    <td>
+                      <ngx-skeleton-loader
+                        count="1"
+                        [theme]="{ width: '50px' }"
+                        appearance="line"
+                      ></ngx-skeleton-loader>
+                      <br />
+                      <ngx-skeleton-loader
+                        count="1"
+                        [theme]="{ width: '70px' }"
+                        appearance="line"
+                      ></ngx-skeleton-loader>
+                    </td>
+                    <td>
+                      <ngx-skeleton-loader
+                        count="1"
+                        [theme]="{ width: '50px' }"
+                        appearance="line"
+                      ></ngx-skeleton-loader>
+                      <br />
+                      <ngx-skeleton-loader
+                        count="1"
+                        [theme]="{ width: '70px' }"
+                        appearance="line"
+                      ></ngx-skeleton-loader>
+                    </td>
+                    <td>
+                      <ngx-skeleton-loader
+                        count="1"
+                        [theme]="{ width: '50px' }"
+                        appearance="line"
+                      ></ngx-skeleton-loader>
+                      <br />
+                      <ngx-skeleton-loader
+                        count="1"
+                        [theme]="{ width: '70px' }"
+                        appearance="line"
+                      ></ngx-skeleton-loader>
+                    </td>
+                    <td>
+                      <div class="dropdown">
+                        <a
+                          class="dropdown-ellipses dropdown-toggle"
+                          href="#"
+                          role="button"
+                          data-bs-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        >
+                          <i class="fe fe-more-vertical"></i>
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let data of filteredUserData
+                        | paginate
+                          : {
+                              itemsPerPage: pageSize,
+                              currentPage: p,
+                              totalItems: totalItems
+                            };
+                      let i = index
+                    "
+                  >
+                    <td>{{ 20 * p - (19 - i) }}</td>
+                    <td style="font-size: 14px">{{ data?.email || "N/A" }}</td>
+                    <td style="font-size: 14px">
+                      {{ data?.firstName || "N/A" }}
+                    </td>
+                    <td style="font-size: 14px">
+                      {{ data?.lastName || "N/A" }}
+                    </td>
+                    <td
+                      [ngClass]="{
+                        'active-status': data?.isEnabled,
+                        'inactive-status': !data?.isEnabled
+                      }"
+                      style="font-size: 14px"
+                    >
+                      {{ data?.isEnabled ? "Active" : "Inactive" }}
+                    </td>
+                    <td style="font-size: 14px">
+                      {{ data?.merchantName || "N/A" }}
+                    </td>
+                    <td style="font-size: 14px">{{ data?.roles || "N/A" }}</td>
+
+                    <td
+                      [ngClass]="{
+                        'active-status': !data?.isLocked,
+                        'inactive-status': data?.isLocked
+                      }"
+                      style="font-size: 14px"
+                    >
+                      {{ data?.isLocked ? "Locked" : "Unlocked" }}
+                    </td>
+                    <!-- <td>500.00$</td> -->
+                    <td>
+                      <div class="dropdown">
+                        <button
+                          class="dropdown-ellipsis dropdown-toggle"
+                          type="button"
+                          id="dropdownMenuButton"
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        ></button>
+                        <div
+                          class="dropdown-menu"
+                          aria-labelledby="dropdownMenuButton"
+                        >
+                          <a
+                            class="dropdown-item"
+                            href="javascript:;"
+                            data-toggle="modal"
+                            data-target="#exampleModalLong"
+                            (click)="viewDetails(data)"
+                            ><i class="fa fa-eye"></i>View details</a
+                          >
+                          <hr class="dropdown-divider" />
+                          <a
+                            class="dropdown-item text-warning"
+                            href="javascript:;"
+                            data-toggle="modal"
+                            data-target="#exampleModalLong2"
+                            (click)="viewDetails(data)"
+                            ><i class="fa fa-edit"></i> Update</a
+                          >
+                          <hr class="dropdown-divider" />
+                          <a
+                            class="dropdown-item text-primary"
+                            href="javascript:;"
+                            (click)="confirmDeleteUser(data.username)"
+                            ><i class="ti-trash"></i> Delete</a
+                          >
+                          <hr class="dropdown-divider" />
+                          <a
+                            class="dropdown-item"
+                            href="javascript:;"
+                            data-toggle="modal"
+                            data-target="#myModal"
+                            *ngIf="!data?.isLocked"
+                            (click)="viewDetails(data)"
+                            ><i class="ti-lock"></i>Lock account</a
+                          >
+                          <a
+                            class="dropdown-item"
+                            href="javascript:;"
+                            *ngIf="data?.isLocked"
+                            (click)="confirmUnlockUser(data.email)"
+                            ><i class="ti-unlock"></i>unlock account</a
+                          >
+                          <hr class="dropdown-divider" />
+                          <a
+                            class="dropdown-item text-success"
+                            href="javascript:;"
+                            *ngIf="!data?.isEnabled"
+                            (click)="confirmEnableUser(data.username)"
+                            ><i class="ti-check"></i> Enable</a
+                          >
+                          <a
+                            class="dropdown-item text-danger"
+                            href="javascript:;"
+                            *ngIf="data?.isEnabled"
+                            (click)="confirmDisableUser(data.username)"
+                            ><i class="ti-close"></i>Disable</a
+                          >
+                          <hr class="dropdown-divider" />
+                          <a
+                            class="dropdown-item"
+                            href="javascript:;"
+                            class="btn btn-primary"
+                            data-toggle="modal"
+                            data-target="#passwordModal"
+                            (click)="viewDetails(data)"
+                            ><i class="fa fa-edit"></i> Reset Password</a
+                          >
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <pagination-controls
+                (pageChange)="p = $event"
                 previousLabel="Prev"
-                nextLabel="Next"></pagination-controls>
-                </div>
-              </div>
+                nextLabel="Next"
+              ></pagination-controls>
             </div>
           </div>
         </div>
-        <!-- Progress Table end -->
       </div>
+    </div>
+    <!-- Progress Table end -->
+  </div>
 </div>
 
 <app-view-users [selected]="selectedDetails"></app-view-users>
@@ -229,4 +389,3 @@ type="ball-clip-rotate"
 <app-create-organization></app-create-organization>
 <app-change-password [selected]="selectedDetails"></app-change-password>
 <app-lock-account [selected]="selectedDetails"></app-lock-account>
-

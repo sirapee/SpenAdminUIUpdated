@@ -2,121 +2,141 @@
   bdColor="rgba(0,0,0,0.5)"
   size="medium"
   color="#d81616"
-  type="ball-clip-rotate"
+  type="ball-pulse"
   [fullScreen]="true"
 ></ngx-spinner>
 
 <section class="h-100 gradient-form">
-    <div class="container py-5">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-xl-10">
-          <div class="card rounded-3 text-black">
-            <div class="row g-0">
-              <div class="col-lg-6">
-                <div class="card-body p-md-5 mx-md-4">
-                  <div class="text-center">
-                    <img
-                      src="assets/images/spen2.svg"
-                  
-                      alt="logo"
-                    />
-  
-                  </div>
-  
-                  <form [formGroup]="otpForm" class="mt-3">
-                    <h4>Verify OTP</h4>
-                    <p>We sent a 6-digit code to your verified email address, please enter below.</p>
-  
-                    <div class="otp-inputs justify-content-center">
-                      <input
-                        class="otp-input"
-                        type="text"
-                        formControlName="digit1"
-                        maxlength="1"
-                        placeholder=" _ "
-                        #input1 (keyup)="(input1.value.length == 1) ? input2.focus() : ''"
-                        pattern="[0-9]*"
-                      />
-                      <input
-                        class="otp-input"
-                        type="text"
-                        formControlName="digit2"
-                        maxlength="1"
-                        placeholder=" _ "
-                        #input2 (keyup)="(input2.value.length == 1) ? input3.focus() : ''"
-                        pattern="[0-9]*"
-                      />
-                      <input
-                        class="otp-input"
-                        type="text"
-                        formControlName="digit3"
-                        maxlength="1"
-                        placeholder=" _ "
-                        #input3 (keyup)="(input3.value.length == 1) ? input4.focus() : ''"
-                        pattern="[0-9]*"
-                      />
-                      <input
-                        class="otp-input"
-                        type="text"
-                        formControlName="digit4"
-                        maxlength="1"
-                        placeholder=" _ "
-                        #input4 (keyup)="(input4.value.length == 1) ? input5.focus() : ''"
-                        pattern="[0-9]*"
-                      />
-                      <input
-                        class="otp-input"
-                        type="text"
-                        formControlName="digit5"
-                        maxlength="1"
-                        placeholder=" _ "
-                        #input5 (keyup)="(input5.value.length == 1) ? input6.focus() : ''"
-                        pattern="[0-9]*"
-                      />
-                      <input
-                        class="otp-input"
-                        type="text"
-                        formControlName="digit6"
-                        maxlength="1"
-                        placeholder=" _ "
-                        #input6
-                        pattern="[0-9]*"
-                      />
-                    </div>
-  
-  
-                    <div class="text-center pt-1 mt-2 pb-1">
-                      <button
-                        class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
-                        type="button"
-                        (click)="confirmEmail()" type="submit"  [disabled]="!otpForm.valid"
-                      >
-                       Proceed
-                      </button>
-                      <!-- <a class="text-muted" routerLink="/forgot-password">Forgot password?</a> -->
-                      <div class="text-muted">Time remaining: {{ countdown }}</div>
+  <div class="container py-5">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-xl-10">
+        <div class="card rounded-3 text-black">
+          <div class="row g-0">
+            <div class="col-lg-6">
+              <div class="card-body p-md-5 mx-md-4">
+                <div class="text-center">
+                  <img src="assets/images/spen2.svg" alt="logo" />
+                </div>
 
-                      <a style="cursor: pointer; font-size: 12px; font-style: initial;" class="text-mute mt-5" >didn't receive Otp?<b (click)="resendOtp()" class="text-danger"> click to Resend</b></a>
-                    </div>
-  
-           
-                  </form>
-                </div>
-              </div>
-              <div class="col-lg-6 d-flex align-items-center gradient-custom-2" *ngIf="!isMobileScreen">
-                <div class="text-white px-3 py-4 p-md-5 mx-md-4">
-                  <h4 class="mb-4">We are more than just a company</h4>
-                  <p class="small mb-0">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut aliquip ex ea commodo consequat.
+                <form [formGroup]="otpForm" class="mt-3">
+                  <h4>Verify OTP</h4>
+                  <p>
+                    We sent a 6-digit code to your verified email address,
+                    please enter below.
                   </p>
-                </div>
+
+                  <div class="otp-inputs justify-content-center">
+                    <input
+                      class="otp-input"
+                      type="text"
+                      formControlName="digit1"
+                      maxlength="1"
+                      placeholder=" _ "
+                      #input1
+                      (keyup)="input1.value.length == 1 ? input2.focus() : ''"
+                      pattern="[0-9]*"
+                    />
+                    <input
+                      class="otp-input"
+                      type="text"
+                      formControlName="digit2"
+                      maxlength="1"
+                      placeholder=" _ "
+                      #input2
+                      (keyup)="input2.value.length == 1 ? input3.focus() : ''"
+                      pattern="[0-9]*"
+                    />
+                    <input
+                      class="otp-input"
+                      type="text"
+                      formControlName="digit3"
+                      maxlength="1"
+                      placeholder=" _ "
+                      #input3
+                      (keyup)="input3.value.length == 1 ? input4.focus() : ''"
+                      pattern="[0-9]*"
+                    />
+                    <input
+                      class="otp-input"
+                      type="text"
+                      formControlName="digit4"
+                      maxlength="1"
+                      placeholder=" _ "
+                      #input4
+                      (keyup)="input4.value.length == 1 ? input5.focus() : ''"
+                      pattern="[0-9]*"
+                    />
+                    <input
+                      class="otp-input"
+                      type="text"
+                      formControlName="digit5"
+                      maxlength="1"
+                      placeholder=" _ "
+                      #input5
+                      (keyup)="input5.value.length == 1 ? input6.focus() : ''"
+                      pattern="[0-9]*"
+                    />
+                    <input
+                      class="otp-input"
+                      type="text"
+                      formControlName="digit6"
+                      maxlength="1"
+                      placeholder=" _ "
+                      #input6
+                      pattern="[0-9]*"
+                    />
+                  </div>
+
+                  <div class="text-center pt-1 mt-2 pb-1">
+                    <button
+                      class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
+                      type="button"
+                      (click)="confirmEmail()"
+                      type="submit"
+                      [disabled]="!otpForm.valid"
+                    >
+                      Proceed
+                    </button>
+                    <!-- <a class="text-muted" routerLink="/forgot-password">Forgot password?</a> -->
+                    <div class="text-muted">
+                      Time remaining: {{ countdown }}
+                    </div>
+
+                    <a
+                      style="
+                        cursor: pointer;
+                        font-size: 12px;
+                        font-style: initial;
+                      "
+                      class="text-mute mt-5"
+                      >didn't receive Otp?<b
+                        (click)="resendOtp()"
+                        class="text-danger"
+                      >
+                        click to Resend</b
+                      ></a
+                    >
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div
+              class="col-lg-6 d-flex align-items-center gradient-custom-2"
+              *ngIf="!isMobileScreen"
+            >
+              <div class="text-white px-3 py-4 p-md-5 mx-md-4">
+                <h4 class="mb-4">We are more than just a company</h4>
+                <p class="small mb-0">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>

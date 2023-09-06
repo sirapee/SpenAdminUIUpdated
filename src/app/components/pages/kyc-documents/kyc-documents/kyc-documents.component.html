@@ -2,7 +2,7 @@
   bdColor="rgba(0,0,0,0.5)"
   size="medium"
   color="#d81616"
-  type="ball-clip-rotate"
+  type="ball-pulse"
   [fullScreen]="true"
 ></ngx-spinner>
 
@@ -65,10 +65,7 @@
         data-toggle="modal"
         data-target="#yourModal1"
       >
-
-      <i class="fa fa-cloud-upload"></i>Upload Documents
-
-       
+        <i class="fa fa-cloud-upload"></i>Upload Documents
       </button>
       <button
         *ngIf="
@@ -78,10 +75,7 @@
         data-toggle="modal"
         data-target="#yourModal"
       >
-
         <i class="fa fa-check-circle"></i>Authorize documents
-
-
       </button>
     </div>
   </div>
@@ -123,17 +117,23 @@
                       {{ data?.createdAt | date : "MMM d, y" }}
                     </td>
                     <td
-                    [ngClass]="{
-                      'active-status': data?.isApproved,
-                      'inactive-status': !data?.isApproved && !data?.isRejected,
-                      'pending-approval': !data?.isApproved && data?.isRejected
-                    }"
-                    style="font-size: 14px"
-                  >
-                    {{ data?.isApproved ? "Approved" : (data?.isRejected ? "Rejected" : "Pending Approval") }}
-                  </td>
-                  
-                  
+                      [ngClass]="{
+                        'active-status': data?.isApproved,
+                        'inactive-status':
+                          !data?.isApproved && !data?.isRejected,
+                        'pending-approval':
+                          !data?.isApproved && data?.isRejected
+                      }"
+                      style="font-size: 14px"
+                    >
+                      {{
+                        data?.isApproved
+                          ? "Approved"
+                          : data?.isRejected
+                          ? "Rejected"
+                          : "Pending Approval"
+                      }}
+                    </td>
 
                     <td>
                       <div class="dropdown">
@@ -149,18 +149,26 @@
                           class="dropdown-menu"
                           aria-labelledby="dropdownMenuButton"
                         >
-                        <a
-                        class="dropdown-item text-success"
-                        href="{{ data.publicUrl }}"
-                        target="_blank"
-                        data-toggle="tooltip"
-                        data-placement="top" 
-                        title="View and Download File" 
-                      >
-                        <i class="fa" [ngClass]="{'fa-eye': isHovered, 'fa-download': !isHovered}" (mouseenter)="isHovered = true" (mouseleave)="isHovered = false"></i>
-                        <span>View & Download</span>
-                      </a>
-                      
+                          <a
+                            class="dropdown-item text-success"
+                            href="{{ data.publicUrl }}"
+                            target="_blank"
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title="View and Download File"
+                          >
+                            <i
+                              class="fa"
+                              [ngClass]="{
+                                'fa-eye': isHovered,
+                                'fa-download': !isHovered
+                              }"
+                              (mouseenter)="isHovered = true"
+                              (mouseleave)="isHovered = false"
+                            ></i>
+                            <span>View & Download</span>
+                          </a>
+
                           <!-- <hr class="dropdown-divider" />
                           <a
                           class="dropdown-item text-success"
@@ -268,10 +276,8 @@
               formControlName="approveOrReject"
               required
             >
-
               <option value="approved">Approve</option>
               <option value="rejected">Reject</option>
-
             </select>
           </div>
           <div class="form-group">
