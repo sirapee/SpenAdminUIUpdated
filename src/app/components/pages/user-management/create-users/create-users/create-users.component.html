@@ -1,175 +1,277 @@
 <ngx-spinner
-bdColor="rgba(0,0,0,0.5)"
-size="medium"
-color="#d81616"
-type="ball-clip-rotate"
-[fullScreen]="true"
+  bdColor="rgba(0,0,0,0.5)"
+  size="medium"
+  color="#d81616"
+  type="ball-pulse"
+  [fullScreen]="true"
 ></ngx-spinner>
 
 <div class="col-lg-6 stretched_card mt-mob-4">
+  <div class="">
     <div class="">
-        <div class="">
-
-            <div class="modal fade" id="exampleLongModalLong2">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Create User</h5>
-                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                        </div>
-                        <div class="modal-body">
-                          <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="userTypeDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Select User Type
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="userTypeDropdown">
-                              <a class="dropdown-item" (click)="selectedUserType = 'user'">Merchant user</a>
-                              <a class="dropdown-item" (click)="selectedUserType = 'admin'">Admin user</a>
-                            </div>
-                          </div>
-                          <div *ngIf="selectedUserType === 'user'">
-                            <form [formGroup]="addUserform" class="custom-form" >
-
-                           
-                              
-                                <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    <label for="firstName">First Name</label>
-                                    <input type="text" id="firstName" class="form-control" formControlName="firstName">
-                                  </div>
-                                  <!-- <div class="form-group col-md-4">
+      <div class="modal fade" id="exampleLongModalLong2">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Create User</h5>
+              <button type="button" class="close" data-dismiss="modal">
+                <span>&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="dropdown">
+                <button
+                  class="btn btn-secondary dropdown-toggle"
+                  type="button"
+                  id="userTypeDropdown"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  Select User Type
+                </button>
+                <div class="dropdown-menu" aria-labelledby="userTypeDropdown">
+                  <a class="dropdown-item" (click)="selectedUserType = 'user'"
+                    >Merchant user</a
+                  >
+                  <a class="dropdown-item" (click)="selectedUserType = 'admin'"
+                    >Admin user</a
+                  >
+                </div>
+              </div>
+              <div *ngIf="selectedUserType === 'user'">
+                <form [formGroup]="addUserform" class="custom-form">
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="firstName">First Name</label>
+                      <input
+                        type="text"
+                        id="firstName"
+                        class="form-control"
+                        formControlName="firstName"
+                      />
+                    </div>
+                    <!-- <div class="form-group col-md-4">
                                     <label for="middleName">Middle Name</label>
                                     <input type="text" id="middleName" class="form-control" formControlName="middleName" >
                                   </div> -->
-                                  <div class="form-group col-md-6">
-                                    <label for="lastName">Last Name</label>
-                                    <input type="text" id="lastName" class="form-control" formControlName="lastName" >
-                                  </div>
-                                </div>
-                                <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="phoneNumber">Phone Number</label>
-                                    <input type="number" id="phoneNumber" class="form-control" formControlName="phoneNumber" >
-                                  </div>
-                                  <div class="col-md-6">
-                                    <div class="form-group">
-                                       
-                                            <label class="form-label" for="form2Example11"
-                                              >Email</label
-                                            >
-                                            <input
-                                            
-                                              id="form2Example11"
-                                              class="form-control"
-
-                                              [style.border-color]=" addUserform.get('email')?.errors && (addUserform.get('email')?.touched || addUserform.get('email')?.dirty) ? '#D81616' : ''" type="text" formControlName="email"
-                                            />
-                                            <span class="text-danger fs-13" *ngIf="addUserform.get('email')?.errors && (addUserform.get('email')?.touched || addUserform.get('email')?.dirty)">
-                                              <span *ngIf="addUserform.get('email')?.errors?.['required']">Email is required</span>
-                                            <span *ngIf="addUserform.get('email')?.errors?.['pattern']">Invalid email address</span>
-                                            </span>
-                                         
-                                      
-                                    </div>
-                                  </div>
-                                </div>
-                                <!-- <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="lastName">Last Name</label>
+                      <input
+                        type="text"
+                        id="lastName"
+                        class="form-control"
+                        formControlName="lastName"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="phoneNumber">Phone Number</label>
+                      <input
+                        type="number"
+                        id="phoneNumber"
+                        class="form-control"
+                        formControlName="phoneNumber"
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label" for="form2Example11"
+                          >Email</label
+                        >
+                        <input
+                          id="form2Example11"
+                          class="form-control"
+                          [style.border-color]="
+                            addUserform.get('email')?.errors &&
+                            (addUserform.get('email')?.touched ||
+                              addUserform.get('email')?.dirty)
+                              ? '#D81616'
+                              : ''
+                          "
+                          type="text"
+                          formControlName="email"
+                        />
+                        <span
+                          class="text-danger fs-13"
+                          *ngIf="
+                            addUserform.get('email')?.errors &&
+                            (addUserform.get('email')?.touched ||
+                              addUserform.get('email')?.dirty)
+                          "
+                        >
+                          <span
+                            *ngIf="addUserform.get('email')?.errors?.['required']"
+                            >Email is required</span
+                          >
+                          <span
+                            *ngIf="addUserform.get('email')?.errors?.['pattern']"
+                            >Invalid email address</span
+                          >
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div class="form-row">
                            
                                 <div class="form-group col-md-12">
                                     <label for="country">Country</label>
                                     <input type="text" id="country" class="form-control" formControlName="country" >
                                   </div>
                                  </div> -->
-                                 <div class="form-row">
-                                    <div class="form-group col-md-12">
-                                      <label for="role">Merchant Name</label>
-                                      <select id="role" class="form-control" formControlName="merchantName">
-                                        <option value="">Select Merchant</option>
-                                        <option *ngFor="let merchant of userData" [value]="merchant.merchantName">{{ merchant.merchantName }}</option>
-                                      </select>
-                                    </div>
-                                  </div>
-                                  
-                            <div class="form-row">
-                             
-                                <div class="form-group col-md-12">
-                                    <label for="role">Role</label>
-                                    <select id="role" class="form-control" formControlName="role">
-                                      <option value="">Select a role</option>
-                                      <option *ngFor="let role of role?.roles" [value]="role.name">{{ role.roleDescription }}</option>
-                                    </select>
-                                  </div>
-                                </div>
-                          
-                              </form>
-                            </div>
-                              
-                            <div *ngIf="selectedUserType === 'admin'">
-                              <form [formGroup]="adminUserform" class="custom-form" >
-  
-                               
-                                
-                                  <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                      <label for="firstName">First Name</label>
-                                      <input type="text" id="firstName" class="form-control" formControlName="firstName">
-                                    </div>
-                                 
-                                    <div class="form-group col-md-6">
-                                      <label for="lastName">Last Name</label>
-                                      <input type="text" id="lastName" class="form-control" formControlName="lastName" >
-                                    </div>
-                                  </div>
-                                  <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                      <label for="phoneNumber">Phone Number</label>
-                                      <input type="number" id="phoneNumber" class="form-control" formControlName="phoneNumber" >
-                                    </div>
-                                    <div class="col-md-6">
-                                      <div class="form-group">
-                                         
-                                              <label class="form-label" for="form2Example11"
-                                                >Email</label
-                                              >
-                                              <input
-                                              
-                                                id="form2Example11"
-                                                class="form-control"
-  
-                                                [style.border-color]=" addUserform.get('email')?.errors && (addUserform.get('email')?.touched || addUserform.get('email')?.dirty) ? '#D81616' : ''" type="text" formControlName="email"
-                                              />
-                                              <span class="text-danger fs-13" *ngIf="addUserform.get('email')?.errors && (addUserform.get('email')?.touched || addUserform.get('email')?.dirty)">
-                                                <span *ngIf="addUserform.get('email')?.errors?.['required']">Email is required</span>
-                                              <span *ngIf="addUserform.get('email')?.errors?.['pattern']">Invalid email address</span>
-                                              </span>
-                                           
-                                        
-                                      </div>
-                                    </div>
-                                  </div>
-                               
-                                    
-                              <div class="form-row">
-                                
-                                  <div class="form-group col-md-12">
-                                      <label for="role">Role</label>
-                                      <select id="role" class="form-control" formControlName="role">
-                                        <option value="">Select a role</option>
-                                        <option *ngFor="let role of role?.roles" [value]="role.name">{{ role.roleDescription }}</option>
-                                      </select>
-                                    </div>
-                                  </div>
-                               
-                                </form>
-                              </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" (click)="submitForm()" class="btn btn-primary">Create User</button>
-                            <button type="button" class="btn btn-light btn-close" data-dismiss="modal">Close</button>
-                        </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-12">
+                      <label for="role">Merchant Name</label>
+                      <select
+                        id="role"
+                        class="form-control"
+                        formControlName="merchantName"
+                      >
+                        <option value="">Select Merchant</option>
+                        <option
+                          *ngFor="let merchant of userData"
+                          [value]="merchant.merchantName"
+                        >
+                          {{ merchant.merchantName }}
+                        </option>
+                      </select>
                     </div>
-                </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-12">
+                      <label for="role">Role</label>
+                      <select
+                        id="role"
+                        class="form-control"
+                        formControlName="role"
+                      >
+                        <option value="">Select a role</option>
+                        <option
+                          *ngFor="let role of role?.roles"
+                          [value]="role.name"
+                        >
+                          {{ role.roleDescription }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              <div *ngIf="selectedUserType === 'admin'">
+                <form [formGroup]="adminUserform" class="custom-form">
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="firstName">First Name</label>
+                      <input
+                        type="text"
+                        id="firstName"
+                        class="form-control"
+                        formControlName="firstName"
+                      />
+                    </div>
+
+                    <div class="form-group col-md-6">
+                      <label for="lastName">Last Name</label>
+                      <input
+                        type="text"
+                        id="lastName"
+                        class="form-control"
+                        formControlName="lastName"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="phoneNumber">Phone Number</label>
+                      <input
+                        type="number"
+                        id="phoneNumber"
+                        class="form-control"
+                        formControlName="phoneNumber"
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label" for="form2Example11"
+                          >Email</label
+                        >
+                        <input
+                          id="form2Example11"
+                          class="form-control"
+                          [style.border-color]="
+                            addUserform.get('email')?.errors &&
+                            (addUserform.get('email')?.touched ||
+                              addUserform.get('email')?.dirty)
+                              ? '#D81616'
+                              : ''
+                          "
+                          type="text"
+                          formControlName="email"
+                        />
+                        <span
+                          class="text-danger fs-13"
+                          *ngIf="
+                            addUserform.get('email')?.errors &&
+                            (addUserform.get('email')?.touched ||
+                              addUserform.get('email')?.dirty)
+                          "
+                        >
+                          <span
+                            *ngIf="addUserform.get('email')?.errors?.['required']"
+                            >Email is required</span
+                          >
+                          <span
+                            *ngIf="addUserform.get('email')?.errors?.['pattern']"
+                            >Invalid email address</span
+                          >
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-12">
+                      <label for="role">Role</label>
+                      <select
+                        id="role"
+                        class="form-control"
+                        formControlName="role"
+                      >
+                        <option value="">Select a role</option>
+                        <option
+                          *ngFor="let role of role?.roles"
+                          [value]="role.name"
+                        >
+                          {{ role.roleDescription }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                (click)="submitForm()"
+                class="btn btn-primary"
+              >
+                Create User
+              </button>
+              <button
+                type="button"
+                class="btn btn-light btn-close"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>

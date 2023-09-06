@@ -29,7 +29,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     // ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    NgxSpinnerModule,
+    NgxSpinnerModule.forRoot(),
     AuthenticationModule,
     MainModule,
     SharedModule,

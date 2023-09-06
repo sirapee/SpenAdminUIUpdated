@@ -1,94 +1,132 @@
-
 <ngx-spinner
-bdColor="rgba(0,0,0,0.5)"
-size="medium"
-color="#d81616"
-type="ball-clip-rotate"
-[fullScreen]="true"
+  bdColor="rgba(0,0,0,0.5)"
+  size="medium"
+  color="#d81616"
+  type="ball-pulse"
+  [fullScreen]="true"
 ></ngx-spinner>
 
-
 <div class="col-lg-6 stretched_card mt-mob-4">
+  <div class="">
     <div class="">
-        <div class="">
-            <div class="modal fade" id="exampleLongModalLong3">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Create Merchant</h5>
-                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                        </div>
-                        <div class="modal-body">
-                          <form [formGroup]="addOrganizationform" class="custom-form">
-                            <!-- Merchant Details -->
-                            <h3>Merchant Details</h3>
-                            <div class="form-group">
-                              <label>Business name</label>
-                              <input type="text" class="form-control" formControlName="merchantName">
-                            </div>
-                            <div class="form-group">
-                              <label> Business Category</label>
-                              <input type="text" class="form-control" formControlName="businessCategory">
-                            </div>
-                            <div class="form-group">
-                              <label> Business Type</label>
-                              <input type="text" class="form-control" formControlName="businessType">
-                            </div>
-
-                            <div class="form-group">
-                              <label>RC Number</label>
-                              <input type="text" class="form-control" formControlName="rcnumber">
-                            </div>
-                          
-                            <!-- Merchant User Details -->
-                            <h3>Merchant User</h3>
-                            <div class="form-group">
-                              <label>First Name</label>
-                              <input type="text" class="form-control" formControlName="firstName">
-                            </div>
-                            <div class="form-group">
-                              <label>Last Name</label>
-                              <input type="text" class="form-control" formControlName="lastName">
-                            </div>
-                            <div class="form-group">
-                              <label>Email</label>
-                              <input type="email" class="form-control" formControlName="email">
-                            </div>
-                            <div class="form-group">
-                              <label>Phone Number</label>
-                              <input type="text" class="form-control" formControlName="phoneNumber">
-                            </div>
-                          
-                            <!-- Additional Controls -->
-                            <!-- ... Any additional form controls ... -->
-                          
-                            <!-- Role Selection -->
-                            <div class="form-group">
-                              <label for="role">Role</label>
-                              <select id="role" class="form-control" formControlName="role">
-                                <option value="">Select a role</option>
-                                <option *ngFor="let role of role?.roles" [value]="role.name">{{ role.roleDescription }}</option>
-                              </select>
-                            </div>
-                          
-                            <!-- Submit Button -->
-                            <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
-                          </form>
-                          
-                              
-                              
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" (click)="submit()" class="btn btn-primary">Create merchant</button>
-                            <button type="button" class="btn btn-light btn-close" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
+      <div class="modal fade" id="exampleLongModalLong3">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Create Merchant</h5>
+              <button type="button" class="close" data-dismiss="modal">
+                <span>&times;</span>
+              </button>
             </div>
+            <div class="modal-body">
+              <form [formGroup]="addOrganizationform" class="custom-form">
+                <!-- Merchant Details -->
+                <h3>Merchant Details</h3>
+                <div class="form-group">
+                  <label>Business name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="merchantName"
+                  />
+                </div>
+                <div class="form-group">
+                  <label> Business Category</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="businessCategory"
+                  />
+                </div>
+                <div class="form-group">
+                  <label> Business Type</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="businessType"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label>RC Number</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="rcnumber"
+                  />
+                </div>
+
+                <!-- Merchant User Details -->
+                <h3>Merchant User</h3>
+                <div class="form-group">
+                  <label>First Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="firstName"
+                  />
+                </div>
+                <div class="form-group">
+                  <label>Last Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="lastName"
+                  />
+                </div>
+                <div class="form-group">
+                  <label>Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    formControlName="email"
+                  />
+                </div>
+                <div class="form-group">
+                  <label>Phone Number</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="phoneNumber"
+                  />
+                </div>
+
+                <!-- Additional Controls -->
+                <!-- ... Any additional form controls ... -->
+
+                <!-- Role Selection -->
+                <div class="form-group">
+                  <label for="role">Role</label>
+                  <select id="role" class="form-control" formControlName="role">
+                    <option value="">Select a role</option>
+                    <option
+                      *ngFor="let role of role?.roles"
+                      [value]="role.name"
+                    >
+                      {{ role.roleDescription }}
+                    </option>
+                  </select>
+                </div>
+
+                <!-- Submit Button -->
+                <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" (click)="submit()" class="btn btn-primary">
+                Create merchant
+              </button>
+              <button
+                type="button"
+                class="btn btn-light btn-close"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
-
-
-
-
