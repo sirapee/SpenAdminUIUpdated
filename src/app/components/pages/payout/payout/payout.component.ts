@@ -8,13 +8,15 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import * as XLSX from 'xlsx';
 import { UsersService } from 'src/app/components/services/userManagement/users.service';
 import { CollectionService } from 'src/app/components/services/collectionService/collection.service';
+import { PayoutService } from 'src/app/components/services/payoutService/payout.service';
 
 @Component({
-  selector: 'app-collection',
-  templateUrl: './collection.component.html',
-  styleUrls: ['./collection.component.css']
+  selector: 'app-payout',
+  templateUrl: './payout.component.html',
+  styleUrls: ['./payout.component.css']
 })
-export class CollectionComponent {
+export class PayoutComponent {
+
 
   searchTerm!: string;
 
@@ -44,13 +46,15 @@ export class CollectionComponent {
   selectedProvider: any;
   filteredData: any;
   providerName: any;
-  CreditPosted: any;
+  // CreditPosted: any;
+  processedSuccessfully: any;
+  processedSuccessfullyy: boolean | undefined;
 
   constructor(
     private usersService: UsersService,
     private notification: ToastrService,
     private spinner: NgxSpinnerService,
-    private collectionService: CollectionService
+    private payoutService: PayoutService
   ) {
     this.bsConfig = {
       containerClass: 'theme-default',
@@ -66,17 +70,17 @@ export class CollectionComponent {
   loadData() {
     this.spinner.show();
 
-
-  const  filters: {
+    const filters: {
       Id?: number;
-      VirtualAccountNumber?: number;
-      SourceAccountNumber?: number;
-      MerchantReference?: string;
-      CreditPosted?: boolean;
+      SourceWalletNumber?: number;
+      BeneficiaryAccountNumber?: number;
+      MerchantId?: number;
+      ProviderReference?: string;
+      ProcessedSuccessfully?: boolean;
       StartDate?: Date;
       EndDate?: Date;
       TransactionReference?: string;
-      MerchantId?: number;
+   
     } = {}
 
     if (this.selectedStartDate) {
@@ -87,12 +91,10 @@ export class CollectionComponent {
       filters.EndDate = this.selectedEndDate;
     }
  
-    if (this.CreditPosted) {
-      filters.CreditPosted = this.CreditPosted;
-    }
+  
 
-    this.collectionService
-      .getAllCollections(this.p, this.pageSize, filters)
+    this.payoutService
+      .getAllTransfer(this.p, this.pageSize, filters)
       .subscribe( 
         (response) => {
           this.loading = false;
@@ -112,30 +114,28 @@ export class CollectionComponent {
   }
 
 
-  creditloadData() {
+  processedData() {
     this.spinner.show();
 
-
-  const  filters: {
+    const filters: {
       Id?: number;
-      VirtualAccountNumber?: number;
-      SourceAccountNumber?: number;
-      MerchantReference?: string;
-      CreditPosted?: boolean;
+      SourceWalletNumber?: number;
+      BeneficiaryAccountNumber?: number;
+      MerchantId?: number;
+      ProviderReference?: string;
+      ProcessedSuccessfully?: boolean;
       StartDate?: Date;
       EndDate?: Date;
       TransactionReference?: string;
-      MerchantId?: number;
+   
     } = {}
 
- 
- 
-    if (this.CreditPosted) {
-      filters.CreditPosted = this.CreditPosted;
+    if (this.processedSuccessfullyy) {
+      filters.ProcessedSuccessfully = this.processedSuccessfullyy;
     }
 
-    this.collectionService
-      .getAllCollections(this.p, this.pageSize, filters)
+    this.payoutService
+      .getAllTransfer(this.p, this.pageSize, filters)
       .subscribe( 
         (response) => {
           this.loading = false;
@@ -169,17 +169,19 @@ export class CollectionComponent {
       this.filteredUserData = this.userData.filter((result: any) => {
         // Add null checks before accessing properties for filtering
         // const username = result.username || '';
-        const accountName = result.sourceAccountName || '';
-        const accountNumber = result.sourceAccountNumber || '';
-        const VirtualAccountNumber = result.virtualAccountNumber || '';
-        const provider = result.provider || '';
+        const sourceWalletName = result.sourceWalletName || '';
+        const sourceWalletNumber = result.sourceWalletNumber || '';
+        const beneficiaryAccountName = result.beneficiaryAccountName || '';
+        const amount = result.amount || '';
+        const status = result.transactionStatus || '';
 
         return (
           // username.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-          accountName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-          accountNumber.toString().toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-          VirtualAccountNumber.toString().toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-          provider.toLowerCase().includes(this.searchTerm.toLowerCase())
+          sourceWalletName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+          sourceWalletNumber.toString().toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+          beneficiaryAccountName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+          amount.toString().toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+          status.toLowerCase().includes(this.searchTerm.toLowerCase())
         );
       });
       this.sort();
@@ -228,16 +230,17 @@ downloadData() {
   const thirtyDaysAgo = new Date();
   thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-  const  filters: {
+ const filters: {
     Id?: number;
-    VirtualAccountNumber?: number;
-    SourceAccountNumber?: number;
-    MerchantReference?: string;
-    CreditPosted?: boolean;
+    SourceWalletNumber?: number;
+    BeneficiaryAccountNumber?: number;
+    MerchantId?: number;
+    ProviderReference?: string;
+    ProcessedSuccessfully?: boolean;
     StartDate?: Date;
     EndDate?: Date;
     TransactionReference?: string;
-    MerchantId?: number;
+ 
   } = {}
 
   if (this.selectedStartDate) {
@@ -251,8 +254,8 @@ downloadData() {
     filters.EndDate = this.selectedEndDate;
   }
 
-  this.collectionService
-    .downloadAllCollections(this.p, this.pageSize, filters)
+  this.payoutService
+    .downloadAllTransfer(this.p, this.pageSize, filters)
     .subscribe(
       (response) => {
         this.loading = false;
@@ -294,35 +297,4 @@ saveExcelFile(buffer: any, fileName: string) {
   window.URL.revokeObjectURL(url);
   document.body.removeChild(a);
 }
-
-
-
-
-
-// providerData() {
-//   this.spinner.show();
-
-//   const filters = {
-//     Provider: this.providerName,
-//   };
-
-//   this.collectionService
-//     .getAllVirtualAccounts(this.p, this.pageSize, filters)
-//     .subscribe(
-//       (response) => {
-//         this.loading = false;
-//         this.userData = response.accounts;
-//         this.filteredData = this.userData;
-     
-//         this.spinner.hide();
-//         this.totalItems = response.total;
-//       },
-//       (error) => {
-//         console.error('Error fetching reports:', error);
-//         this.loading = false;
-//         this.spinner.hide();
-//       }
-//     );
-// }
-
 }
