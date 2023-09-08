@@ -17,7 +17,7 @@
             <h6 class="header-pretitle">Overview</h6>
 
             <!-- Title -->
-            <h1 class="header-title">Collections</h1>
+            <h1 class="header-title">Payout</h1>
           </div>
 
           <div class="col-auto"></div>
@@ -25,7 +25,6 @@
       </div>
     </div>
   </div>
-
 
   <div class="row mt-4">
     <div class="col-md-6">
@@ -70,7 +69,7 @@
             data-toggle="modal"
             data-target=".bd-example-modal-lg"
           >
-            <i class="fa fa-filter"></i>Filter by CreditPosted
+            <i class="fa fa-filter"></i> Filter by ProcessedSuccessfully
           </button>
         </div>
       </div>
@@ -78,10 +77,11 @@
         class="btn btn-primary ml-0 ml-md-2 mt-2 mt-md-0"
         (click)="downloadData()"
       >
-        <i class="fa fa-download"></i> Download Collections Acc
+        <i class="fa fa-download"></i> Download Payout Acc
       </button>
     </div>
   </div>
+  
 
   <div class="row">
     <!-- Progress Table start -->
@@ -105,42 +105,49 @@
                     <th
                       scope="col"
                       class="sortable-header"
-                      (click)="sort('sourceAccountName')"
+                      (click)="sort('sourceWalletName')"
                     >
-                      Account Name
-                      <i [ngClass]="getSortIcon('sourceAccountName')"></i>
+                    Wallet Name
+                      <i [ngClass]="getSortIcon('sourceWalletName')"></i>
                     </th>
                     <th
                       scope="col"
                       class="sortable-header"
-                      (click)="sort('sourceAccountNumber')"
+                      (click)="sort('sourceWalletNumber')"
                     >
-                      Account Number
-                      <i [ngClass]="getSortIcon('sourceAccountNumber')"></i>
+                    Wallet Number
+                      <i [ngClass]="getSortIcon('sourceWalletNumber')"></i>
                     </th>
                     <th
                       scope="col"
                       class="sortable-header"
-                      (click)="sort('virtualAccountNumber')"
+                      (click)="sort('beneficiaryAccountName')"
                     >
-                      Virtual Account Number
-                      <i [ngClass]="getSortIcon('virtualAccountNumber')"></i>
+                    Beneficiary Name
+                      <i [ngClass]="getSortIcon('beneficiaryAccountName')"></i>
                     </th>
                     <th
                       scope="col"
                       class="sortable-header"
-                      (click)="sort('transactionAmount')"
+                      (click)="sort('amount')"
                     >
                       Amount
-                      <i [ngClass]="getSortIcon('transactionAmount')"></i>
+                      <i [ngClass]="getSortIcon('amount')"></i>
                     </th>
                     <th
                       scope="col"
                       class="sortable-header"
-                      (click)="sort('provider')"
+                      (click)="sort('currency')"
                     >
-                      Provider <i [ngClass]="getSortIcon('provider')"></i>
+                    Currency <i [ngClass]="getSortIcon('currency')"></i>
                     </th>
+                    <th
+                    scope="col"
+                    class="sortable-header"
+                    (click)="sort('transactionStatus')"
+                  >
+                  Transaction Status <i [ngClass]="getSortIcon('transactionStatus')"></i>
+                  </th>
                     <th
                       scope="col"
                       class="sortable-header"
@@ -268,23 +275,27 @@
                   >
                     <td>{{ 20 * p - (19 - i) }}</td>
                     <td style="font-size: 14px">
-                      {{ data?.sourceAccountName || "N/A" }}
+                      {{ data?.sourceWalletName || "N/A" }}
                     </td>
                     <td style="font-size: 14px">
-                      {{ data?.sourceAccountNumber || "N/A" }}
+                      {{ data?.sourceWalletNumber || "N/A" }}
                     </td>
                     <td style="font-size: 14px">
-                      {{ data?.virtualAccountNumber || "N/A" }}
+                      {{ data?.beneficiaryAccountName || "N/A" }}
                     </td>
                     <td style="font-size: 14px">
                       {{
-                        data?.transactionAmount
+                        data?.amount
                           | currency : "#" : "symbol" : "1.2-2" || "N/A"
                       }}
                     </td>
                     <td style="font-size: 14px">
-                      {{ data?.provider || "N/A" }}
+                      {{ data?.currency  || "N/A"}}
                     </td>
+                    <td style="font-size: 14px" [style.color]="data?.transactionStatus === 'Success' ? 'green' : 'red'">
+                        {{ data?.transactionStatus || "N/A" }}
+                      </td>
+                      
                     <!-- <td style="font-size: 14px;">{{data?.provider || 'N/A'}}</td> -->
                     <td style="font-size: 14px">
                       <span class="fs-4">{{
@@ -420,7 +431,7 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Filter Collections by Credit Posted</h5>
+          <h5 class="modal-title">Filter Collections by ProcessedSuccessfully</h5>
           <button type="button" class="close" data-dismiss="modal">
             <span>&times;</span>
           </button>
@@ -433,7 +444,7 @@
             >
               <select
                 name="searchTerm"
-                [(ngModel)]="CreditPosted"
+                [(ngModel)]="processedSuccessfullyy"
                 class="form-control"
               >
                 <option value="" selected>Select status</option>
@@ -444,7 +455,7 @@
                 <button
                   class="btn btn-primary"
                   type="button"
-                  (click)="creditloadData()"
+                  (click)="processedData()"
                 >
                   <i class="fa fa-search"></i>
                 </button>
@@ -481,72 +492,52 @@
               <div class="row rowr">
                 <div class="col coll">
                   <p>
-                    <strong>Virtual Account Number:</strong>
-                    {{ selectedItem?.virtualAccountNumber || "N/A" }}
+                    <strong>Wallet Number:</strong>
+                    {{ selectedItem?.sourceWalletNumber || "N/A" }}
                   </p>
                   <p>
                     <strong>Transaction Amount:</strong>
                     {{
-                      selectedItem?.transactionAmount
+                      selectedItem?.amount
                         | currency : "NGN" || "N/A"
                     }}
                   </p>
-                  <p>
-                    <strong>Settled Amount:</strong>
-                    {{
-                      selectedItem?.settledAmount | currency : "NGN" || "N/A"
-                    }}
-                  </p>
+               
                   <p>
                     <strong>Transaction Reference:</strong>
                     {{ selectedItem?.transactionReference || "N/A" }}
                   </p>
+                
                   <p>
-                    <strong>Merchant Reference:</strong>
-                    {{ selectedItem?.merchantReference || "N/A" }}
+                    <strong>Wallet Name:</strong>
+                    {{ selectedItem?.sourceWalletName || "N/A" }}
                   </p>
                   <p>
-                    <strong>Source Account Number:</strong>
-                    {{ selectedItem?.sourceAccountNumber || "N/A" }}
+                    <strong>Bank Name:</strong>
+                    {{ selectedItem?.bankName || "N/A" }}
                   </p>
                   <p>
-                    <strong>Source Account Name:</strong>
-                    {{ selectedItem?.sourceAccountName || "N/A" }}
-                  </p>
-                  <p>
-                    <strong>Source Bank Name:</strong>
-                    {{ selectedItem?.sourceBankName || "N/A" }}
+                    <strong>Beneficiary Account Name</strong>
+                    {{ selectedItem?.beneficiaryAccountName || "N/A" }}
                   </p>
                 </div>
                 <div class="col coll">
-                  <p>
-                    <strong>Channel:</strong>
-                    {{ selectedItem?.channel || "N/A" }}
-                  </p>
+               
                   <p>
                     <strong>Narration:</strong>
                     {{ selectedItem?.narration || "N/A" }}
                   </p>
                   <p>
-                    <strong>Status:</strong> {{ selectedItem?.status || "N/A" }}
+                    <strong>Status:</strong> {{ selectedItem?.transactionStatus || "N/A" }}
                   </p>
+                 
                   <p>
-                    <strong>Transaction Type:</strong>
-                    {{ selectedItem?.transactionType || "N/A" }}
+                    <strong>ProcessedSuccessfully:</strong>
+                    {{ selectedItem?.processedSuccessfully || "N/A" }}
                   </p>
-                  <p>
-                    <strong>Credit Posted:</strong>
-                    {{ selectedItem?.creditPosted || "N/A" }}
-                  </p>
-                  <p>
-                    <strong>Request Date:</strong>
-                    {{ selectedItem?.requestDate | date }}
-                  </p>
+                
                   <p></p>
-                  <p>
-                    <strong>Provider:</strong>
-                    {{ selectedItem?.provider || "N/A" }}
-                  </p>
+                 
                   <p>
                     <strong>Currency:</strong>
                     {{ selectedItem?.currency || "N/A" }}

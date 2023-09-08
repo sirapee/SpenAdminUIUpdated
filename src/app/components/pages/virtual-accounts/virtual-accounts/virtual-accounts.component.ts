@@ -107,6 +107,9 @@ export class VirtualAccountsComponent {
       );
   }
 
+
+
+
   viewDetails(id: string) {
     const selectedItem = this.userData.find((item: { id: any; }) => item.id === id);
     if (selectedItem) {

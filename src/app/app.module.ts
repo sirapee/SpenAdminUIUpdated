@@ -17,10 +17,12 @@ import { SharedModule } from './components/pages/sharedmodule/shared.module';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { TimeagoModule } from 'ngx-timeago';
 import { NgxPaginationModule } from 'ngx-pagination';
+// import { PayoutComponent } from './components/pages/payout/payout/payout.component';
 @NgModule({
   declarations: [
     AppComponent,
     PageNotFoundComponent,
+    // PayoutComponent,
   ],
   imports: [
     BrowserModule,

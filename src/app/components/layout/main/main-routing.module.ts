@@ -42,6 +42,11 @@ const routes: Routes = [
       },
 
       {
+        path: 'payout',
+        loadChildren: () => import('../../pages/payout/payout/payout.module').then(m => m.PayoutModule)
+      },
+
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',
