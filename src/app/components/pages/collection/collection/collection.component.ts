@@ -8,6 +8,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import * as XLSX from 'xlsx';
 import { UsersService } from 'src/app/components/services/userManagement/users.service';
 import { CollectionService } from 'src/app/components/services/collectionService/collection.service';
+import { NgbPaginationConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-collection',
@@ -35,7 +36,7 @@ export class CollectionComponent {
   sortBy: string = '';
   sortOrder: string = 'asc';
   activeSortBy: string = ''; // Initialize activeSortBy property
-  bsConfig: Partial<BsDatepickerConfig>;
+
 
   selectedStartDate!: Date;
   selectedEndDate!: Date;
@@ -50,12 +51,13 @@ export class CollectionComponent {
     private usersService: UsersService,
     private notification: ToastrService,
     private spinner: NgxSpinnerService,
-    private collectionService: CollectionService
-  ) {
-    this.bsConfig = {
-      containerClass: 'theme-default',
-    };
-  }
+    private collectionService: CollectionService,
+    config: NgbPaginationConfig
+    ) {
+  
+        config.size = 'sm';
+      
+    }
 
   ngOnInit(): void {
 
@@ -109,6 +111,14 @@ export class CollectionComponent {
           this.spinner.hide();
         }
       );
+  }
+
+  onPageChange(newPage: number) {
+    this.p = newPage;
+
+    this.loadData();
+
+
   }
 
 

@@ -74,7 +74,7 @@
               <!-- Table contents here -->
 
               <table class="table table-hover progress-table text-center">
-                <thead class="text-uppercase">
+                <thead class="text-uppercase  red-table-head">
                   <tr>
                     <th>S/N</th>
                     <th
@@ -183,19 +183,15 @@
                   <tr
                     *ngFor="
                       let data of filteredUserData?.roles
-                        | paginate
-                          : {
-                              itemsPerPage: pageSize,
-                              currentPage: p,
-                              totalItems: totalItems
-                            };
+                        
                       let i = index
                     "
                   >
-                    <td>{{ 20 * p - (19 - i) }}</td>
+                  <td>{{ 10 * currentPage - (11 - i) }}</td>
                     <td style="font-size: 14px">{{ data?.name || 'N/A' }}</td>
                     <td style="font-size: 14px">{{ data?.roleCategory || 'N/A' }}</td>
-                    <td style="font-size: 14px">{{ data?.roleDescription || 'N/A'}}</td>
+                    <td style="font-size: 14px;">{{ data?.roleDescription || 'N/A'}}</td>
+
 
                     <!-- <td>500.00$</td> -->
                     <td>
@@ -211,6 +207,7 @@
                         <div
                           class="dropdown-menu"
                           aria-labelledby="dropdownMenuButton"
+
                         >
                           <hr class="dropdown-divider" />
                           <a
@@ -225,11 +222,12 @@
                   </tr>
                 </tbody>
               </table>
-              <pagination-controls
-                (pageChange)="p = $event"
-                previousLabel="Prev"
-                nextLabel="Next"
-              ></pagination-controls>
+              <ngb-pagination
+              [(page)]="currentPage"
+              [pageSize]="pageSize"
+              [collectionSize]="totalItems"
+              (pageChange)="onPageChange($event)"
+            ></ngb-pagination>
             </div>
           </div>
         </div>

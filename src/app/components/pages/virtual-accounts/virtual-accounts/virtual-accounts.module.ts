@@ -9,6 +9,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { SharedModule } from '../../sharedmodule/shared.module';
 import { TimeagoModule } from 'ngx-timeago';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     NgxSpinnerModule,
     BsDatepickerModule.forRoot(),
     TimeagoModule.forRoot(),
+    NgbPaginationModule
   ]
 })
 export class VirtualAccountsModule { }

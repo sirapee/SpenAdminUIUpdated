@@ -6,19 +6,18 @@ import * as _ from 'lodash';
 import Swal from 'sweetalert2';
 import { RoleService } from '../../services/roleService/role.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { NgbPaginationConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-user-roles',
   templateUrl: './user-roles.component.html',
-  styleUrls: ['./user-roles.component.css']
+  styleUrls: ['./user-roles.component.css'],
 })
 export class UserRolesComponent {
-
-
-  searchTerm! : string;
+  searchTerm!: string;
 
   userData: any;
-  p: number = 1; // Current page number
+  currentPage: number = 1; // Current page number
   pageSize: number = 10; // Page size
   totalItems: number = 0;
   live: boolean = true;
@@ -33,20 +32,17 @@ export class UserRolesComponent {
   role: any;
 
   constructor(
-    private roleService: RoleService, private notification: ToastrService, private spinner: NgxSpinnerService
- 
-  ) {}
-
-  ngOnInit(): void {
-    // this.usersService.userData$.subscribe((data) => {
-    //   this.userData = data;
-    // });
-    // this.loadData();
-    this.getRole();
+    private roleService: RoleService,
+    private notification: ToastrService,
+    private spinner: NgxSpinnerService,
+    config: NgbPaginationConfig
+  ) {
+    config.size = 'sm';
   }
 
-
-
+  ngOnInit(): void {
+    this.getRole();
+  }
 
   getRole() {
     this.spinner.show();
@@ -65,6 +61,10 @@ export class UserRolesComponent {
     );
   }
 
+  onPageChange(newPage: number) {
+    this.currentPage = newPage;
+    this.getRole();
+  }
 
   search(): void {
     if (this.searchTerm !== '') {
@@ -76,11 +76,15 @@ export class UserRolesComponent {
           const roleDescription = result.firstName || '';
           // const lastName = result.lastName || '';
           // const merchantName = result.merchantName || '';
-          
+
           return (
             name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-            roleCategory.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-            roleDescription.toLowerCase().includes(this.searchTerm.toLowerCase()) 
+            roleCategory
+              .toLowerCase()
+              .includes(this.searchTerm.toLowerCase()) ||
+            roleDescription
+              .toLowerCase()
+              .includes(this.searchTerm.toLowerCase())
             // lastName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
             // merchantName.toLowerCase().includes(this.searchTerm.toLowerCase())
           );
@@ -91,7 +95,7 @@ export class UserRolesComponent {
       this.filteredUserData.roles = this.role.roles.slice();
     }
   }
-  
+
   sort(property: string): void {
     if (this.activeSortBy === property) {
       this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
@@ -99,21 +103,22 @@ export class UserRolesComponent {
       this.activeSortBy = property; // Set active sort property
       this.sortOrder = 'asc';
     }
-  
-    this.filteredUserData.roles = _.orderBy(this.filteredUserData.roles, [property], [this.sortOrder as 'asc' | 'desc']);
+
+    this.filteredUserData.roles = _.orderBy(
+      this.filteredUserData.roles,
+      [property],
+      [this.sortOrder as 'asc' | 'desc']
+    );
   }
-  
 
   getSortIcon(property: string): string {
     if (this.activeSortBy === property) {
-      return this.sortOrder === 'asc' ? 'feather ft-arrow-up' : 'feather ft-arrow-down';
+      return this.sortOrder === 'asc'
+        ? 'feather ft-arrow-up'
+        : 'feather ft-arrow-down';
     }
     return '';
   }
-  
-
-
-
 
   confirmDeleteUser(username: string) {
     Swal.fire({
@@ -126,7 +131,6 @@ export class UserRolesComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         this.deleteUser(username);
-      
       }
     });
   }
@@ -150,11 +154,10 @@ export class UserRolesComponent {
       },
       (error) => {
         // console.error('Error deleting user:', error);
-        this.notification['error'](error.error.responseMessage || error.error.message);
+        this.notification['error'](
+          error.error.responseMessage || error.error.message
+        );
       }
     );
   }
-  
-  
-
 }

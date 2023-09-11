@@ -77,7 +77,7 @@
             data-toggle="modal"
             data-target=".bd-example-modal-lg"
           >
-            <i class="fa fa-filter"></i>Filter by Provider
+            <i class="fa fa-filter"></i>Get Accounts by Provider
           </button>
         </div>
       </div>
@@ -106,7 +106,7 @@
               <!-- Table contents here -->
 
               <table class="table table-hover progress-table text-center">
-                <thead class="text-uppercase">
+                <thead class="text-uppercase red-table-head">
                   <tr>
                     <th>S/N</th>
                     <th
@@ -275,7 +275,7 @@
                       let i = index
                     "
                   >
-                    <td>{{ 20 * p - (19 - i) }}</td>
+                  <td>{{ 10 * p - (9 - i) }}</td>
                     <td style="font-size: 14px">
                       {{ data?.accountName || "N/A" }}
                     </td>
@@ -302,11 +302,12 @@
                   </tr>
                 </tbody>
               </table>
-              <pagination-controls
-                (pageChange)="p = $event"
-                previousLabel="Prev"
-                nextLabel="Next"
-              ></pagination-controls>
+              <ngb-pagination
+              [(page)]="p"
+              [pageSize]="pageSize"
+              [collectionSize]="totalItems"
+              (pageChange)="onPageChange($event)"
+            ></ngb-pagination>
             </div>
           </div>
         </div>

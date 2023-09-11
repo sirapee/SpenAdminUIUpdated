@@ -7,6 +7,7 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { VirtualAccountService } from 'src/app/components/services/virtualAccountService/virtual-account.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import * as XLSX from 'xlsx';
+import { NgbPaginationConfig } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -35,7 +36,7 @@ export class VirtualAccountsComponent {
   sortBy: string = '';
   sortOrder: string = 'asc';
   activeSortBy: string = ''; // Initialize activeSortBy property
-  bsConfig: Partial<BsDatepickerConfig>;
+  
 
   selectedStartDate!: Date;
   selectedEndDate!: Date;
@@ -49,11 +50,12 @@ export class VirtualAccountsComponent {
     private usersService: UsersService,
     private notification: ToastrService,
     private spinner: NgxSpinnerService,
-    private virtualAccountService: VirtualAccountService
+    private virtualAccountService: VirtualAccountService,
+    config: NgbPaginationConfig
   ) {
-    this.bsConfig = {
-      containerClass: 'theme-default',
-    };
+
+      config.size = 'sm';
+    
   }
 
   ngOnInit(): void {
@@ -97,7 +99,7 @@ export class VirtualAccountsComponent {
           // this.userData.slice();
           this.usersService.updateUserData(this.filteredUserData);
           this.spinner.hide();
-          this.totalItems = response.total;
+          this.totalItems = response.totalCount;
         },
         (error) => {
           console.error('Error fetching reports:', error);
@@ -107,7 +109,13 @@ export class VirtualAccountsComponent {
       );
   }
 
+  onPageChange(newPage: number) {
+    this.p = newPage;
 
+    this.loadData();
+
+
+  }
 
 
   viewDetails(id: string) {

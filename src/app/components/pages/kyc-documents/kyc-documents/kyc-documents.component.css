@@ -64,6 +64,12 @@
       .pending-approval {
         color: red;
       }
+
+      .red-table-head {
+        background-color: #faeeee; 
+    
+        font-weight: bolder;
+      }
       
 
       

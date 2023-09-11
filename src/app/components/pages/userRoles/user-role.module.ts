@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { CreateRoleComponent } from './create-role/create-role/create-role.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { NgbPagination } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -21,7 +22,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     FormsModule,
     ReactiveFormsModule,
     NgxSkeletonLoaderModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    NgbPagination
   ]
 })
 export class UserRoleModule { }

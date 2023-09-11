@@ -92,15 +92,15 @@
             </div>
           </div>
           <div class="single-table">
-            <div class="table-responsive">
+            <div class="table-responsive ">
               <!-- Table contents here -->
               <!-- table for filtered documents -->
               <table class="table table-hover progress-table text-center">
-                <thead class="text-uppercase">
+                <thead class="text-uppercase red-table-head">
                   <tr>
                     <th>S/N</th>
                     <th scope="col" class="sortable-header">Filename</th>
-                    <th scope="col" class="sortable-header">File type</th>
+                    <!-- <th scope="col" class="sortable-header">File type</th> -->
                     <th scope="col" class="sortable-header">Date uploaded</th>
                     <th scope="col" class="sortable-header">Status</th>
 
@@ -112,7 +112,7 @@
                   <tr>
                     <td>{{ i + 1 }}</td>
                     <td style="font-size: 14px">{{ data?.filename }}</td>
-                    <td style="font-size: 14px">{{ data?.fileType }}</td>
+                    <!-- <td style="font-size: 14px">{{ data?.fileType }}</td> -->
                     <td style="font-size: 14px">
                       {{ data?.createdAt | date : "MMM d, y" }}
                     </td>

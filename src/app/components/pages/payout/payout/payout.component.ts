@@ -9,6 +9,7 @@ import * as XLSX from 'xlsx';
 import { UsersService } from 'src/app/components/services/userManagement/users.service';
 import { CollectionService } from 'src/app/components/services/collectionService/collection.service';
 import { PayoutService } from 'src/app/components/services/payoutService/payout.service';
+import { NgbPaginationConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-payout',
@@ -27,7 +28,7 @@ export class PayoutComponent {
   userData: any;
   p: number = 1; // Current page number
   pageSize: number = 10; // Page size
-  totalItems: number = 0;
+  totalItems!: number;
   live: boolean = true;
   loading: boolean = true;
   userDetail: any;
@@ -37,7 +38,7 @@ export class PayoutComponent {
   sortBy: string = '';
   sortOrder: string = 'asc';
   activeSortBy: string = ''; // Initialize activeSortBy property
-  bsConfig: Partial<BsDatepickerConfig>;
+
 
   selectedStartDate!: Date;
   selectedEndDate!: Date;
@@ -54,12 +55,13 @@ export class PayoutComponent {
     private usersService: UsersService,
     private notification: ToastrService,
     private spinner: NgxSpinnerService,
-    private payoutService: PayoutService
-  ) {
-    this.bsConfig = {
-      containerClass: 'theme-default',
-    };
-  }
+    private payoutService: PayoutService,
+    config: NgbPaginationConfig
+    ) {
+  
+        config.size = 'sm';
+      
+    }
 
   ngOnInit(): void {
 
@@ -111,6 +113,14 @@ export class PayoutComponent {
           this.spinner.hide();
         }
       );
+  }
+
+  onPageChange(newPage: number) {
+    this.p = newPage;
+
+    this.loadData();
+
+
   }
 
 
