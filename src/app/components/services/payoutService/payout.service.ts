@@ -32,7 +32,7 @@ export class PayoutService {
     }
   ): Observable<any> {
     let queryParams = new HttpParams()
-      .set('page', PageNumber.toString())
+      .set('pageNumber', PageNumber.toString())
       .set('pageSize', PageSize.toString());
   
     if (filters.Id !== undefined) {
@@ -98,7 +98,7 @@ export class PayoutService {
     }
   ): Observable<any> {
     let queryParams = new HttpParams()
-      .set('page', PageNumber.toString())
+      .set('pageNumber', PageNumber.toString())
       .set('pageSize', PageSize.toString());
   
     if (filters.Id !== undefined) {

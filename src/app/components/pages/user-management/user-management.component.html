@@ -73,7 +73,7 @@
     <div class="col-12 mt-4">
       <div class="card">
         <div class="card-body">
-          <h4 class="card_title">User Table</h4>
+          <h4 class="card_title">({{totalItems}}) User Data </h4>
           <div class="card-body" *ngIf="!filteredUserData?.length && !loading">
             <div class="alert alert-dark text-center">
               No data to display at the moment
@@ -84,7 +84,7 @@
               <!-- Table contents here -->
 
               <table class="table table-hover progress-table text-center">
-                <thead class="text-uppercase">
+                <thead class="text-uppercase red-table-head">
                   <tr>
                     <th>S/N</th>
                     <th
@@ -243,16 +243,11 @@
                   <tr
                     *ngFor="
                       let data of filteredUserData
-                        | paginate
-                          : {
-                              itemsPerPage: pageSize,
-                              currentPage: p,
-                              totalItems: totalItems
-                            };
+                       
                       let i = index
                     "
                   >
-                    <td>{{ 20 * p - (19 - i) }}</td>
+                  <td>{{ 10 * currentPage - (9 - i) }}</td>
                     <td style="font-size: 14px">{{ data?.email || "N/A" }}</td>
                     <td style="font-size: 14px">
                       {{ data?.firstName || "N/A" }}
@@ -370,11 +365,13 @@
                   </tr>
                 </tbody>
               </table>
-              <pagination-controls
-                (pageChange)="p = $event"
-                previousLabel="Prev"
-                nextLabel="Next"
-              ></pagination-controls>
+              <ngb-pagination
+              [(page)]="currentPage"
+              [pageSize]="pageSize"
+              [collectionSize]="totalItems"
+              (pageChange)="onPageChange($event)"
+            ></ngb-pagination>
+            
             </div>
           </div>
         </div>

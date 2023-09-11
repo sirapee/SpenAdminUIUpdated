@@ -22,8 +22,8 @@ export class UsersService {
   constructor(private http: HttpClient, private datePipe : DatePipe) {}
 
   getAllUsers(
-    pageNumber: number,
-    pageSize: number,
+    PageNumber: number,
+    PageSize: number,
     filters: {
       userId?: number;
       employeeId?: string;
@@ -39,8 +39,8 @@ export class UsersService {
     }
   ): Observable<any> {
     let queryParams = new HttpParams()
-      .set('page', pageNumber.toString())
-      .set('pageSize', pageSize.toString());
+      .set('PageNumber', PageNumber.toString())
+      .set('PageSize', PageSize.toString());
 
     if (filters.userId !== undefined) {
       queryParams = queryParams.set('UserId', filters.userId.toString());
@@ -168,7 +168,7 @@ export class UsersService {
     }
   ): Observable<any> {
     let queryParams = new HttpParams()
-      .set('page', PageNumber.toString())
+      .set('PageNumber', PageNumber.toString())
       .set('pageSize', PageSize.toString());
 
     if (filters.MerchantId !== undefined) {

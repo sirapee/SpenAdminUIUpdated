@@ -21,8 +21,8 @@ export class CreateUsersComponent {
   userData: any;
 
   p: number = 1; // Current page number
-  pageSize: number = 20; // Page size
-  totalItems: number = 0;
+  pageSize: number = 10; // Page size
+  totalItems!: number;
   loading: boolean = true;
   role: any;
   adminData: any;
@@ -64,9 +64,9 @@ export class CreateUsersComponent {
      
     });
 
-    this.loadData();
+    // this.loadData();
     this.getRole();
-    this.loadAllData();
+    // this.loadAllData();
 
     this.addUserform.get('merchantName')?.valueChanges.subscribe((selectedMerchantName) => {
       const selectedMerchant = this.userData.find(

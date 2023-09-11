@@ -99,7 +99,7 @@
               <!-- Table contents here -->
 
               <table class="table table-hover progress-table text-center">
-                <thead class="text-uppercase">
+                <thead class="text-uppercase red-table-head">
                   <tr>
                     <th>S/N</th>
                     <th
@@ -264,16 +264,11 @@
                   <tr
                     *ngFor="
                       let data of filteredUserData
-                        | paginate
-                          : {
-                              itemsPerPage: pageSize,
-                              currentPage: p,
-                              totalItems: totalItems
-                            };
+                  
                       let i = index
                     "
                   >
-                    <td>{{ 20 * p - (19 - i) }}</td>
+                  <td>{{ 10 * p - (9 - i) }}</td>
                     <td style="font-size: 14px">
                       {{ data?.sourceWalletName || "N/A" }}
                     </td>
@@ -346,11 +341,12 @@
                   </tr>
                 </tbody>
               </table>
-              <pagination-controls
-                (pageChange)="p = $event"
-                previousLabel="Prev"
-                nextLabel="Next"
-              ></pagination-controls>
+              <ngb-pagination
+              [(page)]="p"
+              [pageSize]="pageSize"
+              [collectionSize]="totalItems"
+              (pageChange)="onPageChange($event)"
+            ></ngb-pagination>
             </div>
           </div>
         </div>
