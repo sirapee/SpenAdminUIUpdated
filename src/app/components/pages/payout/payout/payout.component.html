@@ -206,6 +206,13 @@
                     <th
                     scope="col"
                     class="sortable-header"
+                    (click)="sort('charge')"
+                  >
+                  Charge <i [ngClass]="getSortIcon('charge')"></i>
+                  </th>
+                    <th
+                    scope="col"
+                    class="sortable-header"
                     (click)="sort('transactionStatus')"
                   >
                   Transaction Status <i [ngClass]="getSortIcon('transactionStatus')"></i>
@@ -348,6 +355,9 @@
                     </td>
                     <td style="font-size: 14px">
                       {{ data?.currency  || "N/A"}}
+                    </td>
+                    <td style="font-size: 14px">
+                      {{ data?.charge  || "N/A"}}
                     </td>
                     <td style="font-size: 14px" [style.color]="data?.transactionStatus === 'Success' ? 'green' : 'red'">
                         {{ data?.transactionStatus || "N/A" }}
