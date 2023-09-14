@@ -435,13 +435,13 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Issurance Charge</label>
+                  <label>Issuance Charge</label>
                   <input
                     type="number"
                     [(ngModel)]="
                       selectedDetails &&
-                      selectedDetails.selectedDetails?.clientConfiguration
-                        ?.clientCharge.issuanceCharge
+                      selectedDetails?.clientConfiguration.clientCharge
+                        .issuanceCharge
                     "
                     [ngModelOptions]="{ standalone: true }"
                     class="form-control"
@@ -458,8 +458,8 @@
                     type="number"
                     [(ngModel)]="
                       selectedDetails &&
-                      selectedDetails.selectedDetails?.clientConfiguration
-                        ?.clientCharge.topUpCharge
+                      selectedDetails?.clientConfiguration?.clientCharge
+                        .topUpCharge
                     "
                     [ngModelOptions]="{ standalone: true }"
                     class="form-control"
@@ -527,8 +527,8 @@
                     type="number"
                     [(ngModel)]="
                       selectedDetails &&
-                      selectedDetails.selectedDetails?.clientConfiguration
-                        ?.clientCharge.virtualAccountCollectionCharge
+                      selectedDetails?.clientConfiguration?.clientCharge
+                        .virtualAccountCollectionCharge
                     "
                     [ngModelOptions]="{ standalone: true }"
                     class="form-control"
@@ -560,8 +560,8 @@
                     type="number"
                     [(ngModel)]="
                       selectedDetails &&
-                      selectedDetails.selectedDetails?.clientConfiguration
-                        ?.clientCharge.cardCollectionCharge
+                      selectedDetails?.clientConfiguration?.clientCharge
+                        .cardCollectionCharge
                     "
                     [ngModelOptions]="{ standalone: true }"
                     class="form-control"
@@ -593,8 +593,8 @@
                     type="number"
                     [(ngModel)]="
                       selectedDetails &&
-                      selectedDetails.selectedDetails?.clientConfiguration
-                        ?.clientCharge.ussdCollectionCharge
+                      selectedDetails?.clientConfiguration?.clientCharge
+                        .ussdCollectionCharge
                     "
                     [ngModelOptions]="{ standalone: true }"
                     class="form-control"
