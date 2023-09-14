@@ -1,0 +1,26 @@
+.sortable-header {
+    cursor: pointer;
+  }
+  
+  .active-status {
+    color: green; 
+  }
+  
+  .inactive-status {
+    color: red; 
+  }
+  
+  .unlocked-status {
+    color: green; 
+  }
+  
+  .locked-status {
+    color: red; 
+  }
+
+  .red-table-head {
+    background-color: #faeeee; 
+
+    font-weight: bolder;
+  }
+  

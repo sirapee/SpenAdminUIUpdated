@@ -1,0 +1,710 @@
+<div
+  class="modal fade right"
+  id="exampleModalLong"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div
+    class="modal-dialog modal-dialog-centered modal-lg modal-dialog-centered"
+  >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Merchant Details</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row mb-3">
+            <div class="col-md-12">
+              <h5><i class="fa fa-envelope"></i> Email</h5>
+              <p>{{ selectedDetails?.email || "N/A" }}</p>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <h5><i class="fa fa-user-plus"></i> RC Number</h5>
+              <p>{{ selectedDetails?.rcNumber || "N/A" }}</p>
+            </div>
+            <div class="col-md-6">
+              <h5><i class="fa fa-user-plus"></i> Phone Number</h5>
+              <p>{{ selectedDetails?.phoneNumber || "N/A" }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <h5><i class="fa fa-money"></i> Business Type</h5>
+              <p>{{ selectedDetails?.businessType || "N/A" }}</p>
+            </div>
+            <div class="col-md-6">
+              <h5><i class="fa fa-money"></i> Business Category</h5>
+              <p>{{ selectedDetails?.businessCategory || "N/A" }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <h5><i class="fa fa-building"></i> Merchant Name</h5>
+              <p>{{ selectedDetails?.merchantName || "N/A" }}</p>
+            </div>
+
+            <div class="col-md-6">
+              <h5><i class="fa fa-cogs"></i> Status</h5>
+
+              <p
+                [ngClass]="{
+                  'active-status': selectedDetails?.deleted === 'N',
+                  'inactive-status': selectedDetails?.deleted === 'Y'
+                }"
+                style="font-size: 14px"
+              >
+                {{
+                  selectedDetails?.deleted === "N"
+                    ? "Active"
+                    : "Inactive" || "N/A"
+                }}
+              </p>
+            </div>
+          </div>
+          <div class="single-table">
+            <div class="table-responsive">
+              <div class="card-body" *ngIf="!selectedDetails?.wallets.length">
+                <div class="alert alert-dark text-center">
+                  No data to display at the moment
+                </div>
+              </div>
+              <hr />
+              <h5>Wallets ({{ selectedDetails?.wallets.length }})</h5>
+              <table class="table table-hover progress-table text-center">
+                <!-- <h4 class="card_title"> User Data </h4> -->
+                <thead class="text-uppercase red-table-head">
+                  <tr>
+                    <th>S/N</th>
+                    <th scope="col" class="sortable-header">RC Number</th>
+                    <th scope="col" class="sortable-header">Merchant</th>
+                    <th scope="col" class="sortable-header">Currency</th>
+                    <th scope="col" class="sortable-header">Wallet Balance</th>
+
+                    <th scope="col" class="sortable-header">Created At</th>
+
+                    <!-- <th scope="col">Action</th> -->
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr
+                    *ngFor="let data of selectedDetails?.wallets; let i = index"
+                  >
+                    <td>{{ i + 1 }}</td>
+                    <td style="font-size: 14px">
+                      {{ data?.walletNumber || "N/A" }}
+                    </td>
+                    <td style="font-size: 14px">
+                      {{ data?.walletName || "N/A" }}
+                    </td>
+                    <td style="font-size: 14px">
+                      {{ data?.walletCurrency || "N/A" }}
+                    </td>
+                    <td style="font-size: 14px">
+                      {{ data?.walletBalance || "N/A" }}
+                    </td>
+                    <td>
+                      {{ data?.createdAt | date }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="single-table">
+            <div class="table-responsive">
+              <hr />
+              <h5>Directors ({{ selectedDetails?.directors.length }})</h5>
+              <table class="table table-hover progress-table text-center">
+                <!-- <h4 class="card_title"> User Data </h4> -->
+                <thead class="text-uppercase red-table-head">
+                  <tr>
+                    <th>S/N</th>
+                    <th scope="col" class="sortable-header">Name</th>
+                    <th scope="col" class="sortable-header">
+                      Identification No
+                    </th>
+                    <th scope="col" class="sortable-header">Email</th>
+                    <th scope="col" class="sortable-header">Phone Number</th>
+
+                    <!-- <th scope="col">Action</th> -->
+                  </tr>
+                </thead>
+                <tbody
+                  class="card-body"
+                  *ngIf="!selectedDetails?.directors.length"
+                >
+                  <div>
+                    <div class="alert alert-dark text-center">
+                      No data to display at the moment
+                    </div>
+                  </div>
+                </tbody>
+
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let data of selectedDetails?.directors;
+                      let i = index
+                    "
+                  >
+                    <td>{{ i + 1 }}</td>
+                    <td style="font-size: 14px">
+                      {{ data?.directorFirstName || "N/A" }}
+                      {{ data?.directorLastName }}
+                    </td>
+                    <td style="font-size: 14px">
+                      {{ data?.directorIdentificationNumber || "N/A" }}
+                    </td>
+                    <td style="font-size: 14px">
+                      {{ data?.directorEmail || "N/A" }}
+                    </td>
+                    <td style="font-size: 14px">
+                      {{ data?.directorPhoneNumber || "N/A" }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary btn-close"
+          data-dismiss="modal"
+        >
+          <i class="fa fa-times"></i> Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- update modal -->
+<div
+  class="modal fade right"
+  id="exampleModalLong2"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-right">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel2">
+          <i class="fa fa-user-edit"></i> Update Merchant
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <h5><i class="fa fa-envelope"></i> Email</h5>
+              <input
+                type="text"
+                [(ngModel)]="selectedDetails && selectedDetails.email"
+                class="form-control"
+              />
+            </div>
+            <div class="col-md-6">
+              <h5><i class="fa fa-user"></i> Merchant Name</h5>
+              <input
+                type="text"
+                [(ngModel)]="selectedDetails && selectedDetails.merchantName"
+                class="form-control"
+              />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-0">
+              <h5><i class="fa fa-user"></i>RC Number</h5>
+              <input
+                type="text"
+                [(ngModel)]="selectedDetails && selectedDetails.rcNumber"
+                [ngModelOptions]="{ standalone: true }"
+                class="form-control"
+                readonly
+              />
+            </div>
+            <div class="col-md-6">
+              <h5><i class="fa fa-user"></i>Phone Number</h5>
+              <input
+                type="text"
+                [(ngModel)]="selectedDetails && selectedDetails.phoneNumber"
+                [ngModelOptions]="{ standalone: true }"
+                class="form-control"
+              />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <h5><i class="fa fa-money"></i>Business Type</h5>
+              <input
+                type="text"
+                [(ngModel)]="selectedDetails && selectedDetails.businessType"
+                [ngModelOptions]="{ standalone: true }"
+                class="form-control"
+              />
+            </div>
+
+            <div class="col-md-6">
+              <h5><i class="fa fa-money"></i> Business Category</h5>
+              <input
+                type="text"
+                [(ngModel)]="
+                  selectedDetails && selectedDetails.businessCategory
+                "
+                [ngModelOptions]="{ standalone: true }"
+                class="form-control"
+              />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <h5><i class="fa fa-building"></i>State</h5>
+              <input
+                type="text"
+                [(ngModel)]="selectedDetails && selectedDetails.state"
+                [ngModelOptions]="{ standalone: true }"
+                class="form-control"
+              />
+            </div>
+
+            <div class="col-md-6">
+              <h5><i class="fa fa-cogs"></i> Address</h5>
+              <input
+                type="text"
+                [(ngModel)]="selectedDetails && selectedDetails.address"
+                [ngModelOptions]="{ standalone: true }"
+                class="form-control"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer d-flex justify-content-between">
+        <button
+          type="button"
+          class="btn btn-secondary btn-close"
+          data-dismiss="modal"
+        >
+          <i class="fa fa-times"></i> Close
+        </button>
+        <button type="button" class="btn btn-primary" (click)="updateUser()">
+          <i class="fa fa-save"></i> Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- update charged -->
+
+<div
+  class="modal fade right"
+  id="exampleModalLongg2"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-right">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel2">
+          <i class="fa fa-user-edit"></i> Manage Charges
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <form class="custom-form">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Charge Name</label>
+                  <input
+                    type="text"
+                    [(ngModel)]="
+                      selectedDetails &&
+                      selectedDetails?.clientConfiguration?.clientCharge
+                        .chargeName
+                    "
+                    [ngModelOptions]="{ standalone: true }"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Plan</label>
+                  <input
+                    type="text"
+                    [(ngModel)]="
+                      selectedDetails &&
+                      selectedDetails?.clientConfiguration?.clientCharge.plan
+                    "
+                    [ngModelOptions]="{ standalone: true }"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Monthly Maintenance Fee</label>
+                  <input
+                    type="text"
+                    [(ngModel)]="
+                      selectedDetails &&
+                      selectedDetails?.clientConfiguration?.clientCharge
+                        .monthlyMaintenanceFee
+                    "
+                    [ngModelOptions]="{ standalone: true }"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>USD Funding Monthly Fee</label>
+                  <input
+                    type="number"
+                    [(ngModel)]="
+                      selectedDetails &&
+                      selectedDetails?.clientConfiguration?.clientCharge
+                        .usdFundingMonthlyFee
+                    "
+                    [ngModelOptions]="{ standalone: true }"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>USD Funding</label>
+                  <select
+                    [(ngModel)]="
+                      selectedDetails &&
+                      selectedDetails?.clientConfiguration?.clientCharge
+                        .isUsdFunding
+                    "
+                    [ngModelOptions]="{ standalone: true }"
+                    class="form-control"
+                  >
+                    <option value="" selected>Select</option>
+                    <option [value]="true">Yes</option>
+                    <option [value]="false">No</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Issurance Charge</label>
+                  <input
+                    type="number"
+                    [(ngModel)]="
+                      selectedDetails &&
+                      selectedDetails.selectedDetails?.clientConfiguration
+                        ?.clientCharge.issuanceCharge
+                    "
+                    [ngModelOptions]="{ standalone: true }"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Topup Charge</label>
+                  <input
+                    type="number"
+                    [(ngModel)]="
+                      selectedDetails &&
+                      selectedDetails.selectedDetails?.clientConfiguration
+                        ?.clientCharge.topUpCharge
+                    "
+                    [ngModelOptions]="{ standalone: true }"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Max Issue Card Allowed</label>
+                  <input
+                    type="number"
+                    [(ngModel)]="
+                      selectedDetails &&
+                      selectedDetails?.clientConfiguration?.clientCharge
+                        .maxIssueCardAllowed
+                    "
+                    [ngModelOptions]="{ standalone: true }"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Allow Currency Conversion</label>
+                  <select
+                    [(ngModel)]="
+                      selectedDetails &&
+                      selectedDetails?.clientConfiguration?.clientCharge
+                        .allowCurrencyConversion
+                    "
+                    [ngModelOptions]="{ standalone: true }"
+                    class="form-control"
+                  >
+                    <option value="" selected>Select</option>
+                    <option [value]="true">Yes</option>
+                    <option [value]="false">No</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Max Issue Card Allowed Per Customer</label>
+                  <input
+                    type="number"
+                    [(ngModel)]="
+                      selectedDetails &&
+                      selectedDetails?.clientConfiguration?.clientCharge
+                        .maxIssueCardAllowedPerCustomer
+                    "
+                    [ngModelOptions]="{ standalone: true }"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Virtual Account Collection Charge</label>
+                  <input
+                    type="number"
+                    [(ngModel)]="
+                      selectedDetails &&
+                      selectedDetails.selectedDetails?.clientConfiguration
+                        ?.clientCharge.virtualAccountCollectionCharge
+                    "
+                    [ngModelOptions]="{ standalone: true }"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Virtual Account Collection Charge Capped</label>
+                  <input
+                    type="number"
+                    [(ngModel)]="
+                      selectedDetails &&
+                      selectedDetails?.clientConfiguration?.clientCharge
+                        .virtualAccountCollectionChargeCappedAt
+                    "
+                    [ngModelOptions]="{ standalone: true }"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Card Collection Charge</label>
+                  <input
+                    type="number"
+                    [(ngModel)]="
+                      selectedDetails &&
+                      selectedDetails.selectedDetails?.clientConfiguration
+                        ?.clientCharge.cardCollectionCharge
+                    "
+                    [ngModelOptions]="{ standalone: true }"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Card Collection Charge Capped</label>
+                  <input
+                    type="number"
+                    [(ngModel)]="
+                      selectedDetails &&
+                      selectedDetails?.clientConfiguration?.clientCharge
+                        .cardCollectionChargeCappedAt
+                    "
+                    [ngModelOptions]="{ standalone: true }"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>USSD Collection Charge</label>
+                  <input
+                    type="number"
+                    [(ngModel)]="
+                      selectedDetails &&
+                      selectedDetails.selectedDetails?.clientConfiguration
+                        ?.clientCharge.ussdCollectionCharge
+                    "
+                    [ngModelOptions]="{ standalone: true }"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>USSD Collection Charge Capped</label>
+                  <input
+                    type="number"
+                    [(ngModel)]="
+                      selectedDetails &&
+                      selectedDetails?.clientConfiguration?.clientCharge
+                        .ussdCollectionChargeCappedAt
+                    "
+                    [ngModelOptions]="{ standalone: true }"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Bank Transfer Charge Is Standard</label>
+                  <select
+                    [(ngModel)]="
+                      selectedDetails &&
+                      selectedDetails?.clientConfiguration?.clientCharge
+                        .bankTransferChargeIsStandard
+                    "
+                    [ngModelOptions]="{ standalone: true }"
+                    class="form-control"
+                  >
+                    <option value="" selected>Select</option>
+                    <option [value]="true">Yes</option>
+                    <option [value]="false">No</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Bank Transfer Charge Is Flat</label>
+                  <select
+                    [(ngModel)]="
+                      selectedDetails &&
+                      selectedDetails?.clientConfiguration?.clientCharge
+                        .bankTransferChargeIsFlat
+                    "
+                    [ngModelOptions]="{ standalone: true }"
+                    class="form-control"
+                  >
+                    <option value="" selected>Select</option>
+                    <option [value]="true">Yes</option>
+                    <option [value]="false">No</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Bank Transfer Charge</label>
+                  <input
+                    type="number"
+                    [(ngModel)]="
+                      selectedDetails &&
+                      selectedDetails?.clientConfiguration?.clientCharge
+                        .bankTransferCharge
+                    "
+                    [ngModelOptions]="{ standalone: true }"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Withdrawal Charge</label>
+                  <input
+                    type="number"
+                    [(ngModel)]="
+                      selectedDetails &&
+                      selectedDetails?.clientConfiguration?.clientCharge
+                        .withdrawalCharge
+                    "
+                    [ngModelOptions]="{ standalone: true }"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer d-flex justify-content-between">
+        <button
+          type="button"
+          class="btn btn-secondary btn-close"
+          data-dismiss="modal"
+        >
+          <i class="fa fa-times"></i> Close
+        </button>
+        <button type="button" class="btn btn-primary" (click)="updateCharge()">
+          <i class="fa fa-save"></i> Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

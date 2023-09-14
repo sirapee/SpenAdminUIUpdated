@@ -1,0 +1,47 @@
+.custom-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    /* border: 0.5px solid #ddd; */
+    border-radius: 5px;
+    background-color: #FAFAFA;
+  }
+  
+  .custom-form label {
+    font-weight: bold;
+  }
+  
+  .form-row {
+    display: flex;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+
+  #role {
+    text-align: center;
+  }
+  
+
+  .form-control {
+    margin-top: 5px;
+  }
+  
+
+
+  
+  .custom-form label::before {
+    content: '*';
+    color: red;
+    margin-right: 5px;
+  }
+  
+
+  .custom-form .form-control.ng-invalid {
+    border-color: #d81616;
+  }
+  
+  
+  

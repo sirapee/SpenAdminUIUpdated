@@ -10,20 +10,25 @@ import Swal from 'sweetalert2';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  private idleTimeoutInSeconds = 600; // 5 minutes
-  private idleTimer: any;
+  idleTimeoutInSeconds = 1200; 
+  idleTimer: any;
   
   title = 'sidePro';
   constructor(
     private idleService: IdleService,
     private tokenService: TokenService,
   ){
-    this.loadScripts()
+    this.loadScripts();
   }
 
   ngOnInit(): void {
     // this.initialIdleSettings();
+    const userToken = sessionStorage.getItem('token');
+
+  if (userToken) {
+    // Start the idle timer when the component is created;
     this.startIdleTimer();
+  }
 
     // Listen for user interactions to reset the timer
     window.addEventListener('mousemove', this.resetIdleTimer);
@@ -54,7 +59,7 @@ export class AppComponent {
       'assets/vendors/charts/sparkline/sparklines.js',
       'assets/vendors/apex/js/apexcharts.min.js',
       'assets/js/home.js',
-      'assets/js/main.js',
+      'assets/js/main.js',  
     ];
     for (let i = 0; i < dynamicScripts.length; i++) {
       const node = document.createElement('script');
@@ -65,20 +70,20 @@ export class AppComponent {
     }
  }
 
- private startIdleTimer(): void {
+ startIdleTimer(): void {
   this.idleTimer = setTimeout(() => {
     this.showIdleTimeoutAlert();
   }, this.idleTimeoutInSeconds * 1000);
 }
 
-private resetIdleTimer = () => {
+ resetIdleTimer = () => {
   clearTimeout(this.idleTimer);
   this.startIdleTimer();
 };
 
-//  import Swal from 'sweetalert2';
 
-private showIdleTimeoutAlert(): void {
+
+ showIdleTimeoutAlert(): void {
   Swal.fire({
     title: 'Idle Timeout',
     text: 'You have been idle for a while. Do you want to continue using the app?',
