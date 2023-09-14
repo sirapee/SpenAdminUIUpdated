@@ -47,6 +47,11 @@ const routes: Routes = [
       },
 
       {
+        path: 'all-merchants',
+        loadChildren: () => import('../../pages/merchants/merchants/merchants.module').then(m => m.MerchantsModule)
+      },
+
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',

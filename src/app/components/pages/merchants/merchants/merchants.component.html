@@ -17,7 +17,7 @@
             <h6 class="header-pretitle">Overview</h6>
 
             <!-- Title -->
-            <h1 class="header-title">User-management</h1>
+            <h1 class="header-title">Merchants-management</h1>
           </div>
 
           <div class="col-auto">
@@ -51,13 +51,7 @@
       </div>
     </div>
     <div class="col-md-6 text-md-right mt-md-0 mt-3">
-      <button
-        class="btn btn-info"
-        data-toggle="modal"
-        data-target="#exampleLongModalLong2"
-      >
-        <i class="fa fa-user-plus"></i> Create User
-      </button>
+      
       <button
         class="btn btn-dark ml-2"
         data-toggle="modal"
@@ -88,6 +82,20 @@
                   <tr>
                     <th>S/N</th>
                     <th
+                    scope="col"
+                    class="sortable-header"
+                    (click)="sort('rcNumber')"
+                  >
+                    RC Number <i [ngClass]="getSortIcon('rcNumber')"></i>
+                  </th>
+                    <th
+                    scope="col"
+                    class="sortable-header"
+                    (click)="sort('merchantName')"
+                  >
+                    Merchant <i [ngClass]="getSortIcon('merchantName')"></i>
+                  </th>
+                    <th
                       scope="col"
                       class="sortable-header"
                       (click)="sort('email')"
@@ -97,17 +105,11 @@
                     <th
                       scope="col"
                       class="sortable-header"
-                      (click)="sort('firstName')"
+                      (click)="sort('phoneNumber')"
                     >
-                      FirstName <i [ngClass]="getSortIcon('firstName')"></i>
+                      Phone Number <i [ngClass]="getSortIcon('phoneNumber')"></i>
                     </th>
-                    <th
-                      scope="col"
-                      class="sortable-header"
-                      (click)="sort('lastName')"
-                    >
-                      LastName <i [ngClass]="getSortIcon('lastName')"></i>
-                    </th>
+                
                     <th
                       scope="col"
                       class="sortable-header"
@@ -115,28 +117,8 @@
                     >
                       Status <i [ngClass]="getSortIcon('isEnabled')"></i>
                     </th>
-                    <th
-                      scope="col"
-                      class="sortable-header"
-                      (click)="sort('merchantName')"
-                    >
-                      Merchant <i [ngClass]="getSortIcon('merchantName')"></i>
-                    </th>
-                    <th
-                      scope="col"
-                      class="sortable-header"
-                      (click)="sort('roles')"
-                    >
-                      Roles <i [ngClass]="getSortIcon('roles')"></i>
-                    </th>
-
-                    <th
-                      scope="col"
-                      class="sortable-header"
-                      (click)="sort('isLocked')"
-                    >
-                      Account Status<i [ngClass]="getSortIcon('isLocked')"></i>
-                    </th>
+                 
+        
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
@@ -248,28 +230,30 @@
                     "
                   >
                   <td>{{ 10 * currentPage - (9 - i) }}</td>
-                    <td style="font-size: 14px">{{ data?.email || "N/A" }}</td>
-                    <td style="font-size: 14px">
-                      {{ data?.firstName || "N/A" }}
-                    </td>
-                    <td style="font-size: 14px">
-                      {{ data?.lastName || "N/A" }}
-                    </td>
-                    <td
-                      [ngClass]="{
-                        'active-status': data?.isEnabled,
-                        'inactive-status': !data?.isEnabled
-                      }"
-                      style="font-size: 14px"
-                    >
-                      {{ data?.isEnabled ? "Active" : "Inactive" }}
-                    </td>
+                    <td style="font-size: 14px">{{ data?.rcNumber || "N/A" }}</td>
                     <td style="font-size: 14px">
                       {{ data?.merchantName || "N/A" }}
                     </td>
-                    <td style="font-size: 14px">{{ data?.roles || "N/A" }}</td>
+                    <td style="font-size: 14px">
+                      {{ data?.email || "N/A" }}
+                    </td>
+                    <td style="font-size: 14px">
+                        {{ data?.phoneNumber || "N/A" }}
+                      </td>
+                      <td
+                      [ngClass]="{
+                        'active-status': data?.deleted === 'N',
+                        'inactive-status': data?.deleted === 'Y'
+                      }"
+                      style="font-size: 14px"
+                    >
+                      {{ data?.deleted === 'N' ? 'Active' : 'Inactive' }}
+                    </td>
+                    
+                
+                    <!-- <td style="font-size: 14px">{{ data?.roles || "N/A" }}</td> -->
 
-                    <td
+                    <!-- <td
                       [ngClass]="{
                         'active-status': !data?.isLocked,
                         'inactive-status': data?.isLocked
@@ -277,7 +261,7 @@
                       style="font-size: 14px"
                     >
                       {{ data?.isLocked ? "Locked" : "Unlocked" }}
-                    </td>
+                    </td> -->
                     <!-- <td>500.00$</td> -->
                     <td>
                       <div class="dropdown">
@@ -301,64 +285,46 @@
                             (click)="viewDetails(data)"
                             ><i class="fa fa-eye"></i>View details</a
                           >
-                          <hr class="dropdown-divider" />
-                          <a
-                            class="dropdown-item text-warning"
-                            href="javascript:;"
-                            data-toggle="modal"
-                            data-target="#exampleModalLong2"
-                            (click)="viewDetails(data)"
-                            ><i class="fa fa-edit"></i> Update</a
-                          >
-                          <hr class="dropdown-divider" />
-                          <a
-                            class="dropdown-item text-primary"
-                            href="javascript:;"
-                            (click)="confirmDeleteUser(data.username)"
-                            ><i class="ti-trash"></i> Delete</a
-                          >
-                          <hr class="dropdown-divider" />
-                          <a
-                            class="dropdown-item"
-                            href="javascript:;"
-                            data-toggle="modal"
-                            data-target="#myModal"
-                            *ngIf="!data?.isLocked"
-                            (click)="viewDetails(data)"
-                            ><i class="ti-lock"></i>Lock account</a
-                          >
-                          <a
-                            class="dropdown-item"
-                            href="javascript:;"
-                            *ngIf="data?.isLocked"
-                            (click)="confirmUnlockUser(data.email)"
-                            ><i class="ti-unlock"></i>unlock account</a
-                          >
-                          <hr class="dropdown-divider" />
-                          <a
-                            class="dropdown-item text-success"
-                            href="javascript:;"
-                            *ngIf="!data?.isEnabled"
-                            (click)="confirmEnableUser(data.username)"
-                            ><i class="ti-check"></i> Enable</a
-                          >
-                          <a
-                            class="dropdown-item text-danger"
-                            href="javascript:;"
-                            *ngIf="data?.isEnabled"
-                            (click)="confirmDisableUser(data.username)"
-                            ><i class="ti-close"></i>Disable</a
-                          >
-                          <hr class="dropdown-divider" />
-                          <a
-                            class="dropdown-item"
-                            href="javascript:;"
-                            class="btn btn-primary"
-                            data-toggle="modal"
-                            data-target="#passwordModal"
-                            (click)="viewDetails(data)"
-                            ><i class="fa fa-edit"></i> Reset Password</a
-                          >
+                
+                    
+                      <hr class="dropdown-divider" />
+                      <a
+                        class="dropdown-item text-warning"
+                        href="javascript:;"
+                        data-toggle="modal"
+                        data-target="#exampleModalLong2"
+                        (click)="viewDetails(data)"
+                        ><i class="fa fa-edit"></i> Update</a
+                      >
+                  
+                      <hr class="dropdown-divider" />
+                      <a
+                      class="dropdown-item text-danger"
+                      href="javascript:;"
+                      *ngIf="data?.deleted === 'N'"
+                      (click)="confirmDeleteUser(data.id)"
+                      ><i class="ti-close"></i> Disable</a
+                    >
+                    <hr class="dropdown-divider" />
+                    <a
+                      class="dropdown-item text-success"
+                      href="javascript:;"
+                      *ngIf="data?.deleted === 'Y'"
+                      (click)="confirmEnableUser(data.id)"
+                      ><i class="ti-check"></i>Enable</a
+                    >
+                    <hr class="dropdown-divider" />
+
+                    <a *ngIf="data.clientConfiguration"
+                    class="dropdown-item"
+                    class="btn btn-primary"
+                    href="javascript:;"
+                    data-toggle="modal"
+                    data-target="#exampleModalLongg2"
+                    (click)="viewDetails(data)"
+                    ><i class="fa fa-edit"></i>Manage client charges</a
+                  >
+                        
                         </div>
                       </div>
                     </td>
@@ -381,8 +347,14 @@
   </div>
 </div>
 
-<app-view-users [selected]="selectedDetails"></app-view-users>
-<app-create-users></app-create-users>
-<app-create-organization></app-create-organization>
-<app-change-password [selected]="selectedDetails"></app-change-password>
-<app-lock-account [selected]="selectedDetails"></app-lock-account>
+<app-create-merchant></app-create-merchant>
+
+<app-update-merchant [selected]="selectedDetails"></app-update-merchant>
+
+
+
+
+
+
+
+  

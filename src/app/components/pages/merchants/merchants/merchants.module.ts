@@ -1,32 +1,34 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CollectionComponent } from './collection.component';
 
-import { CollectionRoutingModule } from './collection-routing.module';
+import { MerchantsRoutingModule } from './merchants-routing.module';
+import { MerchantsComponent } from './merchants.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { TimeagoModule } from 'ngx-timeago';
 import { SharedModule } from '../../sharedmodule/shared.module';
-import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { CreateMerchantComponent } from '../create-merchant/create-merchant.component';
+import { UpdateMerchantComponent } from '../update-merchant/update-merchant.component';
 
 
 @NgModule({
-  declarations: [CollectionComponent],
+  declarations: [
+    MerchantsComponent,
+    CreateMerchantComponent,
+    UpdateMerchantComponent
+  ],
   imports: [
     CommonModule,
-    CollectionRoutingModule,
+    MerchantsRoutingModule,
     SharedModule,
     NgxPaginationModule,
     FormsModule,
     ReactiveFormsModule,
     NgxSkeletonLoaderModule,
     NgxSpinnerModule,
-    BsDatepickerModule.forRoot(),
-    TimeagoModule.forRoot(),
     NgbPaginationModule
   ]
 })
-export class CollectionModule {}
+export class MerchantsModule { }
