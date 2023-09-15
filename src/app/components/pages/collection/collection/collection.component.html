@@ -203,6 +203,13 @@
                       Provider <i [ngClass]="getSortIcon('provider')"></i>
                     </th>
                     <th
+                    scope="col"
+                    class="sortable-header"
+                    (click)="sort('postedChargeAmount')"
+                  >
+                    Charge <i [ngClass]="getSortIcon('postedChargeAmount')"></i>
+                  </th>
+                    <th
                       scope="col"
                       class="sortable-header"
                       (click)="sort('createdAt')"
@@ -341,6 +348,10 @@
                     <td style="font-size: 14px">
                       {{ data?.provider || "N/A" }}
                     </td>
+                    <td style="font-size: 14px">
+                      {{ data?.postedChargeAmount | currency : "#" : "symbol" : "1.2-2" || "N/A" }}
+                    </td>
+                    
                     <!-- <td style="font-size: 14px;">{{data?.provider || 'N/A'}}</td> -->
                     <td style="font-size: 14px">
                       <span class="fs-4">{{
@@ -607,6 +618,15 @@
                   <p>
                     <strong>Currency:</strong>
                     {{ selectedItem?.currency || "N/A" }}
+                  </p>
+
+                  <p>
+                    <strong>Charge Amount:</strong>
+                    {{ selectedItem?.postedChargeAmount | currency : "NGN" : "symbol" : "1.2-2" || "N/A" }}
+                  </p>
+                  <p>
+                    <strong>Credited Amount:</strong>
+                    {{ selectedItem?.postedCreditAmount | currency : "NGN" : "symbol" : "1.2-2" || "N/A" }}
                   </p>
                 </div>
               </div>
