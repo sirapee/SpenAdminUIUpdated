@@ -52,6 +52,11 @@ const routes: Routes = [
       },
 
       {
+        path: 'wallets',
+        loadChildren: () => import('../../pages/wallets/wallet/wallet.module').then(m => m.WalletModule)
+      },
+
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',
