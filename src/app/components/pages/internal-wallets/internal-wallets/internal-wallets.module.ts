@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 
-import { WalletRoutingModule } from './wallet-routing.module';
-import { WalletComponent } from './wallet.component';
+import { InternalWalletsRoutingModule } from './internal-wallets-routing.module';
+import { InternalWalletsComponent } from './internal-wallets.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
@@ -11,21 +11,22 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { TimeagoModule } from 'ngx-timeago';
 import { SharedModule } from '../../sharedmodule/shared.module';
-import { AddWalletComponent } from '../add-wallet/add-wallet/add-wallet.component';
-import { AmountPipe } from '../amount.pipe';
-
+import { WalletamountPipe } from './walletamount.pipe';
+import { AddInternalWalletComponent } from '../add-internal-wallet/add-internal-wallet/add-internal-wallet.component';
+// import { AmountPipe } from '../../wallets/amount.pipe';
 
 
 @NgModule({
   declarations: [
-    WalletComponent,
-    AddWalletComponent,
-    AmountPipe
+    InternalWalletsComponent,
+    WalletamountPipe,
+    AddInternalWalletComponent
     
+    // AmountPipe
   ],
   imports: [
     CommonModule,
-    WalletRoutingModule,
+    InternalWalletsRoutingModule,
     SharedModule,
     NgxPaginationModule,
     FormsModule,
@@ -38,4 +39,4 @@ import { AmountPipe } from '../amount.pipe';
   ],
   providers: [DecimalPipe], 
 })
-export class WalletModule { }
+export class InternalWalletsModule { }

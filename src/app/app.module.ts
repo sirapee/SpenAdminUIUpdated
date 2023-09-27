@@ -17,11 +17,17 @@ import { SharedModule } from './components/pages/sharedmodule/shared.module';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { TimeagoModule } from 'ngx-timeago';
 import { NgxPaginationModule } from 'ngx-pagination';
+// import { AddInternalWalletComponent } from './components/pages/internal-wallets/add-internal-wallet/add-internal-wallet/add-internal-wallet.component';
+
+// import { AddWalletComponent } from './components/pages/wallets/add-wallet/add-wallet/add-wallet.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PageNotFoundComponent,
+    // AddInternalWalletComponent,
+    // AmountPipe,
+    // AddWalletComponent,
 
   ],
   imports: [

@@ -17,7 +17,7 @@
             <h6 class="header-pretitle">Overview</h6>
 
             <!-- Title -->
-            <h1 class="header-title">Wallet</h1>
+            <h1 class="header-title">Internal Wallet</h1>
           </div>
 
           <div class="col-auto"></div>
@@ -64,15 +64,15 @@
             data-toggle="modal"
             data-target="#myModal"
           >
-            <i class="fa fa-filter"></i> Filter by Merchant Name
+            <i class="fa fa-filter"></i> Filter by Currency
           </button>
-          <button
+          <!-- <button
             class="dropdown-item"
             data-toggle="modal"
             data-target=".bd-example-modal-lg"
           >
             <i class="fa fa-filter"></i> Filter by Status
-          </button>
+          </button> -->
         </div>
       </div>
       <button
@@ -80,7 +80,7 @@
         data-toggle="modal"
         data-target="#exampleLongModalLong"
       >
-        <i class="fa fa-plus"></i> Add wallet
+        <i class="fa fa-plus"></i> Add Internal wallet
       </button>
     </div>
   </div>
@@ -125,15 +125,15 @@
             data-toggle="modal"
             data-target="#myModal"
           >
-            <i class="fa fa-filter"></i> Filter by Merchant Name
+            <i class="fa fa-filter"></i> Filter by Currency
           </button>
-          <button
+          <!-- <button
             class="dropdown-item"
             data-toggle="modal"
             data-target=".bd-example-modal-lg"
           >
             <i class="fa fa-filter"></i> Filter by Status
-          </button>
+          </button> -->
         </div>
       </div>
       <button
@@ -141,7 +141,7 @@
         data-toggle="modal"
         data-target="#exampleLongModalLong"
       >
-        <i class="fa fa-plus"></i> Add wallet
+        <i class="fa fa-plus"></i> Add Internal wallet
       </button>
     </div>
   </div>
@@ -187,17 +187,17 @@
                       class="sortable-header"
                       (click)="sort('beneficiaryAccountName')"
                     >
-                    Ledger Balance
+                    Wallet Balance
                       <i [ngClass]="getSortIcon('beneficiaryAccountName')"></i>
                     </th>
-                    <th
+                    <!-- <th
                       scope="col"
                       class="sortable-header"
                       (click)="sort('amount')"
                     >
                       Available Balance
                       <i [ngClass]="getSortIcon('amount')"></i>
-                    </th>
+                    </th> -->
                     <th
                       scope="col"
                       class="sortable-header"
@@ -205,17 +205,17 @@
                     >
                     Wallet Currency <i [ngClass]="getSortIcon('currency')"></i>
                     </th>
-                    <th
+                    <!-- <th
                     scope="col"
                     class="sortable-header"
                     (click)="sort('charge')"
                   >
                   Status <i [ngClass]="getSortIcon('charge')"></i>
-                  </th>
+                  </th> -->
                 
                  
 
-                    <th scope="col" class="sortable-header">Action<i></i></th>
+                    <!-- <th scope="col" class="sortable-header">Action<i></i></th> -->
                   </tr>
                 </thead>
                 <tbody
@@ -335,62 +335,26 @@
                  
                     <td style="font-size: 14px">
                       {{
-                        (data?.walletBalance | amount)
+                        (data?.walletBalance | walletamount)
                           || 'N/A'
                       }}
                     </td>
-                    <td style="font-size: 14px">
-                      {{ (data?.walletAvailableBalance | amount) || 'N/A' }}
-                    </td>
+                    <!-- <td style="font-size: 14px">
+                      {{ (data?.walletAvailableBalance | walletamount) || 'N/A' }}
+                    </td> -->
 
                     <td style="font-size: 14px">
                         {{ data?.walletCurrency  || "N/A"}}
                       </td>
             
-                    <td style="font-size: 14px" [style.color]="data?.status === 'Success' ? 'green' : 'red'">
+                    <!-- <td style="font-size: 14px" [style.color]="data?.status === 'Success' ? 'green' : 'red'">
                         {{ data?.status || "N/A" }}
-                      </td>
+                      </td> -->
                       
                     <!-- <td style="font-size: 14px;">{{data?.provider || 'N/A'}}</td> -->
                  
                     <!-- <td>500.00$</td> -->
-                    <td>
-                      <div class="dropdown">
-                        <button
-                          class="dropdown-ellipsis dropdown-toggle"
-                          type="button"
-                          id="dropdownMenuButton"
-                          data-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                        ></button>
-                        <div
-                          class="dropdown-menu"
-                          aria-labelledby="dropdownMenuButton"
-                        >
-                          <a
-                            class="dropdown-item"
-                            href="javascript:;"
-                            data-toggle="modal"
-                            data-target=".bd-example-modal-lgg"
-                            (click)="viewDetails(data.id)"
-                            ><i class="fa fa-eye"></i>View details</a
-                          >
-                          <!-- <hr class="dropdown-divider"/>
-                                    <a class="dropdown-item text-warning"  href="javascript:;" data-toggle="modal" data-target="#exampleModalLong2" (click)="viewDetails(data)"><i class="fa fa-edit"></i> Update</a>
-                                    <hr class="dropdown-divider" />
-                                    <a class="dropdown-item text-primary"  href="javascript:;" (click)="confirmDeleteUser(data.username)"><i class="ti-trash"></i> Delete</a>
-                                    <hr class="dropdown-divider" />
-                                    <a class="dropdown-item"  href="javascript:;"  data-toggle="modal" data-target="#myModal" *ngIf="!data?.isLocked" (click)="viewDetails(data)" ><i class="ti-lock"></i>Lock account</a>
-                                    <a class="dropdown-item"  href="javascript:;"  *ngIf="data?.isLocked" (click)="confirmUnlockUser(data.email)" ><i class="ti-unlock"></i>unlock account</a>
-                                    <hr class="dropdown-divider" />
-                                    <a class="dropdown-item text-success"  href="javascript:;" *ngIf="!data?.isEnabled" (click)="confirmEnableUser(data.username)"><i class="ti-check"></i> Enable</a>
-                                    <a class="dropdown-item text-danger"  href="javascript:;" *ngIf="data?.isEnabled" (click)="confirmDisableUser(data.username)"><i class="ti-close"></i>Disable</a>
-                                    <hr class="dropdown-divider" />
-                                    <a class="dropdown-item"  href="javascript:;" class="btn btn-primary" data-toggle="modal" data-target="#passwordModal"  (click)="viewDetails(data)"><i class="fa fa-edit"></i> Reset Password</a> -->
-                        </div>
-                      </div>
-                    </td>
+                 
                   </tr>
                 </tbody>
               </table>
@@ -415,7 +379,7 @@
     <div class="modal-content">
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Filter By Merchant Name</h4>
+        <h4 class="modal-title">Filter By Currency</h4>
         <button type="button" class="close" data-dismiss="modal">
           &times;
         </button>
@@ -423,7 +387,7 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-        <label>Select Merchant Name</label>
+        <!-- <label>Select Currency</label> -->
         <div class="form-group row">
           
           <div
@@ -431,14 +395,14 @@
           style="padding-left: 30px; padding-right: 30px"
         >
         
-          <select
-            name="searchTerm"
-            [(ngModel)]="merchantName"
-            class="form-control"
-          >
-            <!-- <option value="" selected>Select status</option> -->
-            <option value="" selected>Select Merchant Name</option>
-            <option *ngFor="let merchant of merchantData" [value]="merchant.id">{{ merchant.merchantName }}</option>
+          <label for="merchantId">Currency<span class="text-danger">*</span></label>
+          <select class="form-control" id="merchantId"  [(ngModel)]="currency">
+            <!-- Add your dropdown options here -->
+            <option value="" selected>Select currency</option>
+            <option value="GSH">Cedi</option>
+            <option value="NGN">Naira</option>
+            <option value="USD">Dollars</option>
+            <!-- Add more options as needed -->
           </select>
           <div class="input-group-append">
             <button
@@ -458,7 +422,7 @@
 
 <!-- view by status modal -->
 
-<div class="col-lg-6">
+<!-- <div class="col-lg-6">
   <div class="modal fade bd-example-modal-lg">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -479,11 +443,9 @@
                 [(ngModel)]="processedStatus"
                 class="form-control"
               >
-                <option value="" selected disabled>Select status</option>
-                <option value="A">Active</option>
-                <option value="I">In-Active</option>
-                <option value="D">Dormant</option>
-                <option value="C">Closed</option>
+                <option value="" selected>Select status</option>
+                <option value="true">True</option>
+                <option value="false">False</option>
               </select>
               <div class="input-group-append">
                 <button
@@ -506,11 +468,11 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 <!-- view details modal -->
 
-<div class="col-lg-6">
+<!-- <div class="col-lg-6">
   <div class="modal fade bd-example-modal-lgg">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -532,14 +494,14 @@
                   <p>
                     <strong>Ledger Balance:</strong>
                     {{
-                      (selectedItem?.walletAvailableBalance | amount)
+                      (selectedItem?.walletAvailableBalance | walletamount)
                         ||  "N/A"
                     }}
                   </p>
                
                   <p>
                     <strong>Available Balance:</strong>
-                    {{ (selectedItem?.walletBalance | amount) || "N/A" }}
+                    {{ (selectedItem?.walletBalance | walletamount) || "N/A" }}
 
                   </p>
                 
@@ -549,7 +511,7 @@
                   </p>
                   <p>
                     <strong>Wallet Currency:</strong>
-                    {{ (selectedItem?.walletCurrency | amount) || "N/A" }}
+                    {{ (selectedItem?.walletCurrency | walletamount) || "N/A" }}
                   </p>
               
                 </div>
@@ -580,7 +542,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <!-- <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="loadData()">Filter</button> -->
+          
           <button type="button" class="btn btn-light" data-dismiss="modal">
             Close
           </button>
@@ -588,14 +550,15 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 
 
 
+<app-add-internal-wallet></app-add-internal-wallet>
 
 
 
-<app-add-wallet></app-add-wallet>
+
 
 <!-- <app-add-wallet></app-add-wallet> -->

@@ -7,14 +7,15 @@ import { MerchantService } from 'src/app/components/services/merchantService/mer
 import { UsersService } from 'src/app/components/services/userManagement/users.service';
 import { walletService } from 'src/app/components/services/wallet/wallet.service';
 
-@Component({
-  selector: 'app-wallet',
-  templateUrl: './wallet.component.html',
-  styleUrls: ['./wallet.component.css']
-})
-export class WalletComponent {
 
-  
+@Component({
+  selector: 'app-internal-wallets',
+  templateUrl: './internal-wallets.component.html',
+  styleUrls: ['./internal-wallets.component.css']
+})
+export class InternalWalletsComponent {
+
+  currency : any;
   searchTerm!: string;
 
   sortTransaction!: string;
@@ -75,34 +76,31 @@ export class WalletComponent {
     this.spinner.show();
 
     const filters: {
-      Id?: number;
-      walletName?: number;
-      walletNumber?: number;
+      // Id?: number;
+      // walletName?: number;
+      Currency?: string;
       // ProviderReference?: string;
-      Status?: boolean;
-      MerchantId?: number;
-      createdAt?: Date;
+      // status?: boolean;
+      // MerchantId?: number;
+      // createdAt?: Date;
       // EndDate?: Date;
       // TransactionReference?: string;
    
     } = {}
 
-    if (this.processedStatus) {
-      filters.Status = this.processedStatus;
+    if (this.currency) {
+      filters.Currency = this.currency;
     }
 
-    if (this.merchantName) {
-      filters.MerchantId = this.merchantName;
-    }
  
   
 
     this.walletService
-      .getAllWallets(this.p, this.pageSize, filters)
+      .getAllInternalWallets( filters)
       .subscribe( 
         (response) => {
           this.loading = false;
-          this.userData = response.clientWallets;
+          this.userData = response.wallets;
           this.filteredUserData = this.userData;
           // this.userData.slice();
           this.usersService.updateUserData(this.filteredUserData);
