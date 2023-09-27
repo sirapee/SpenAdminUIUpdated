@@ -5,6 +5,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 // import { ViewUsersComponent } from '../user-management/update-users/view-users/view-users.component';
 import { passwordMatchValidator } from 'src/app/authentication/validator/confirm.validator';
+import { AmountPipe } from '../wallets/amount.pipe';
 
 
 
@@ -14,11 +15,12 @@ import { passwordMatchValidator } from 'src/app/authentication/validator/confirm
     CommonModule,
     NgxSpinnerModule,
     NgxPaginationModule,
-    NgxSkeletonLoaderModule
+    NgxSkeletonLoaderModule,
+    
   ],
   exports: [
     // ViewUsersComponent,
-    NgxSkeletonLoaderModule
+    NgxSkeletonLoaderModule,
   ],
   providers: [DatePipe],
 })

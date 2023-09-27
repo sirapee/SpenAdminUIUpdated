@@ -1,0 +1,564 @@
+<ngx-spinner
+  bdColor="rgba(0,0,0,0.5)"
+  size="medium"
+  color="#d81616"
+  type="ball-pulse"
+  [fullScreen]="true"
+></ngx-spinner>
+
+<div class="main-content-inner">
+  <div class="header">
+    <div class="">
+      <!-- Body -->
+      <div class="header-body align-items-center">
+        <div class="row align-items-end">
+          <div class="col">
+            <!-- Pretitle -->
+            <h6 class="header-pretitle">Overview</h6>
+
+            <!-- Title -->
+            <h1 class="header-title">Internal Wallet</h1>
+          </div>
+
+          <div class="col-auto"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- for desktop -->
+  <div class="d-none d-md-block">
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <div class="input-group">
+        <input
+          type="text"
+          name="searchTerm"
+          [(ngModel)]="searchTerm"
+          class="form-control"
+          placeholder="Search"
+          (input)="search()"
+        />
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="button">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 text-md-right mt-md-0 mt-3 d-flex justify-content-end">
+      <div class="dropdown">
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          id="filterDropdown"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Filter Options
+        </button>
+        <div class="dropdown-menu" aria-labelledby="filterDropdown">
+          <button
+            class="dropdown-item"
+            data-toggle="modal"
+            data-target="#myModal"
+          >
+            <i class="fa fa-filter"></i> Filter by Currency
+          </button>
+          <!-- <button
+            class="dropdown-item"
+            data-toggle="modal"
+            data-target=".bd-example-modal-lg"
+          >
+            <i class="fa fa-filter"></i> Filter by Status
+          </button> -->
+        </div>
+      </div>
+      <button
+        class="btn btn-primary ml-0 ml-md-2 mt-2 mt-md-0"
+        data-toggle="modal"
+        data-target="#exampleLongModalLong"
+      >
+        <i class="fa fa-plus"></i> Add Internal wallet
+      </button>
+    </div>
+  </div>
+</div>
+  
+<!-- for mobile -->
+
+<div class="d-md-none">
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <div class="input-group">
+        <input
+          type="text"
+          name="searchTerm"
+          [(ngModel)]="searchTerm"
+          class="form-control"
+          placeholder="Search"
+          (input)="search()"
+        />
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="button">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 text-md-right ">
+      <div class="dropdown mt-2">
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          id="filterDropdown"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Filter Options
+        </button>
+        <div class="dropdown-menu" aria-labelledby="filterDropdown">
+          <button
+            class="dropdown-item"
+            data-toggle="modal"
+            data-target="#myModal"
+          >
+            <i class="fa fa-filter"></i> Filter by Currency
+          </button>
+          <!-- <button
+            class="dropdown-item"
+            data-toggle="modal"
+            data-target=".bd-example-modal-lg"
+          >
+            <i class="fa fa-filter"></i> Filter by Status
+          </button> -->
+        </div>
+      </div>
+      <button
+        class="btn btn-primary ml-0 ml-md-2 mt-2 mt-md-0"
+        data-toggle="modal"
+        data-target="#exampleLongModalLong"
+      >
+        <i class="fa fa-plus"></i> Add Internal wallet
+      </button>
+    </div>
+  </div>
+</div>
+
+  <div class="row">
+    <!-- Progress Table start -->
+    <div class="col-12 mt-4">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card_title">Account Data</h4>
+          <div class="card-body" *ngIf="!filteredUserData?.length && !loading">
+            <div class="alert alert-dark text-center">
+              No data to display at the moment
+            </div>
+          </div>
+          <div class="single-table">
+            <div class="table-responsive">
+              <!-- Table contents here -->
+
+              <table class="table table-hover progress-table text-center">
+                <thead class="text-uppercase red-table-head">
+                  <tr>
+                    <th>S/N</th>
+                    <th
+                      scope="col"
+                      class="sortable-header"
+                      (click)="sort('sourceWalletName')"
+                    >
+                    Wallet Name
+                      <i [ngClass]="getSortIcon('sourceWalletName')"></i>
+                    </th>
+                    <th
+                      scope="col"
+                      class="sortable-header"
+                      (click)="sort('sourceWalletNumber')"
+                    >
+                    Wallet Number
+                      <i [ngClass]="getSortIcon('sourceWalletNumber')"></i>
+                    </th>
+                    <th
+                      scope="col"
+                      class="sortable-header"
+                      (click)="sort('beneficiaryAccountName')"
+                    >
+                    Wallet Balance
+                      <i [ngClass]="getSortIcon('beneficiaryAccountName')"></i>
+                    </th>
+                    <!-- <th
+                      scope="col"
+                      class="sortable-header"
+                      (click)="sort('amount')"
+                    >
+                      Available Balance
+                      <i [ngClass]="getSortIcon('amount')"></i>
+                    </th> -->
+                    <th
+                      scope="col"
+                      class="sortable-header"
+                      (click)="sort('currency')"
+                    >
+                    Wallet Currency <i [ngClass]="getSortIcon('currency')"></i>
+                    </th>
+                    <!-- <th
+                    scope="col"
+                    class="sortable-header"
+                    (click)="sort('charge')"
+                  >
+                  Status <i [ngClass]="getSortIcon('charge')"></i>
+                  </th> -->
+                
+                 
+
+                    <!-- <th scope="col" class="sortable-header">Action<i></i></th> -->
+                  </tr>
+                </thead>
+                <tbody
+                  class="list fs-base"
+                  *ngIf="loading && filteredUserData?.length > 0"
+                >
+                  <tr *ngFor="let loop of [1, 2, 3, 4]">
+                    <td>
+                      <ngx-skeleton-loader
+                        count="1"
+                        [theme]="{ width: '25px' }"
+                        appearance="line"
+                      ></ngx-skeleton-loader>
+                    </td>
+                    <td>
+                      <ngx-skeleton-loader
+                        count="1"
+                        appearance="circle"
+                      ></ngx-skeleton-loader>
+                      <span
+                        style="
+                          display: inline-block;
+                          top: -13px;
+                          position: relative;
+                        "
+                        ><ngx-skeleton-loader
+                          count="1"
+                          [theme]="{ width: '150px' }"
+                          appearance="line"
+                        ></ngx-skeleton-loader
+                      ></span>
+                    </td>
+                    <td>
+                      <ngx-skeleton-loader
+                        count="1"
+                        [theme]="{ width: '100px' }"
+                        appearance="line"
+                      ></ngx-skeleton-loader>
+                    </td>
+                    <td>
+                      <ngx-skeleton-loader
+                        count="1"
+                        [theme]="{ width: '25px' }"
+                        appearance="line"
+                      ></ngx-skeleton-loader>
+                    </td>
+                    <td>
+                      <ngx-skeleton-loader
+                        count="1"
+                        [theme]="{ width: '50px' }"
+                        appearance="line"
+                      ></ngx-skeleton-loader>
+                      <br />
+                      <ngx-skeleton-loader
+                        count="1"
+                        [theme]="{ width: '70px' }"
+                        appearance="line"
+                      ></ngx-skeleton-loader>
+                    </td>
+                    <td>
+                      <ngx-skeleton-loader
+                        count="1"
+                        [theme]="{ width: '50px' }"
+                        appearance="line"
+                      ></ngx-skeleton-loader>
+                      <br />
+                      <ngx-skeleton-loader
+                        count="1"
+                        [theme]="{ width: '70px' }"
+                        appearance="line"
+                      ></ngx-skeleton-loader>
+                    </td>
+                    <td>
+                      <ngx-skeleton-loader
+                        count="1"
+                        [theme]="{ width: '50px' }"
+                        appearance="line"
+                      ></ngx-skeleton-loader>
+                      <br />
+                      <ngx-skeleton-loader
+                        count="1"
+                        [theme]="{ width: '70px' }"
+                        appearance="line"
+                      ></ngx-skeleton-loader>
+                    </td>
+                    <td>
+                      <div class="dropdown">
+                        <a
+                          class="dropdown-ellipses dropdown-toggle"
+                          href="#"
+                          role="button"
+                          data-bs-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        >
+                          <i class="fe fe-more-vertical"></i>
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let data of filteredUserData
+                  
+                      let i = index
+                    "
+                  >
+                  <td>{{ 10 * p - (9 - i) }}</td>
+                    <td style="font-size: 14px">
+                      {{ data?.walletName || "N/A" }}
+                    </td>
+                    <td style="font-size: 14px">
+                      {{ data?.walletNumber || "N/A" }}
+                    </td>
+                 
+                    <td style="font-size: 14px">
+                      {{
+                        (data?.walletBalance | walletamount)
+                          || 'N/A'
+                      }}
+                    </td>
+                    <!-- <td style="font-size: 14px">
+                      {{ (data?.walletAvailableBalance | walletamount) || 'N/A' }}
+                    </td> -->
+
+                    <td style="font-size: 14px">
+                        {{ data?.walletCurrency  || "N/A"}}
+                      </td>
+            
+                    <!-- <td style="font-size: 14px" [style.color]="data?.status === 'Success' ? 'green' : 'red'">
+                        {{ data?.status || "N/A" }}
+                      </td> -->
+                      
+                    <!-- <td style="font-size: 14px;">{{data?.provider || 'N/A'}}</td> -->
+                 
+                    <!-- <td>500.00$</td> -->
+                 
+                  </tr>
+                </tbody>
+              </table>
+              <ngb-pagination
+              [(page)]="p"
+              [pageSize]="pageSize"
+              [collectionSize]="totalItems"
+              (pageChange)="onPageChange($event)"
+            ></ngb-pagination>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Progress Table end -->
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Filter By Currency</h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <!-- <label>Select Currency</label> -->
+        <div class="form-group row">
+          
+          <div
+          class="input-group"
+          style="padding-left: 30px; padding-right: 30px"
+        >
+        
+          <label for="merchantId">Currency<span class="text-danger">*</span></label>
+          <select class="form-control" id="merchantId"  [(ngModel)]="currency">
+            <!-- Add your dropdown options here -->
+            <option value="" selected>Select currency</option>
+            <option value="GSH">Cedi</option>
+            <option value="NGN">Naira</option>
+            <option value="USD">Dollars</option>
+            <!-- Add more options as needed -->
+          </select>
+          <div class="input-group-append">
+            <button
+              class="btn btn-primary"
+              type="button"
+              (click)="loadData()"
+            >
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- view by status modal -->
+
+<!-- <div class="col-lg-6">
+  <div class="modal fade bd-example-modal-lg">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Filter Merchants Wallet by Status</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row">
+            <div
+              class="input-group"
+              style="padding-left: 50px; padding-right: 50px"
+            >
+              <select
+                name="searchTerm"
+                [(ngModel)]="processedStatus"
+                class="form-control"
+              >
+                <option value="" selected>Select status</option>
+                <option value="true">True</option>
+                <option value="false">False</option>
+              </select>
+              <div class="input-group-append">
+                <button
+                  class="btn btn-primary"
+                  type="button"
+                  (click)="loadData()"
+                >
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-light" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- view details modal -->
+
+<!-- <div class="col-lg-6">
+  <div class="modal fade bd-example-modal-lgg">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Wallet Details</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row">
+            <div class="container">
+              <div class="row align-items-center">
+                <div class="col coll">
+                  <p>
+                    <strong>Wallet Number:</strong>
+                    {{ selectedItem?.walletNumber || "N/A" }}
+                  </p>
+                  <p>
+                    <strong>Ledger Balance:</strong>
+                    {{
+                      (selectedItem?.walletAvailableBalance | walletamount)
+                        ||  "N/A"
+                    }}
+                  </p>
+               
+                  <p>
+                    <strong>Available Balance:</strong>
+                    {{ (selectedItem?.walletBalance | walletamount) || "N/A" }}
+
+                  </p>
+                
+                  <p>
+                    <strong>Wallet Name:</strong>
+                    {{ selectedItem?.walletName || "N/A" }}
+                  </p>
+                  <p>
+                    <strong>Wallet Currency:</strong>
+                    {{ (selectedItem?.walletCurrency | walletamount) || "N/A" }}
+                  </p>
+              
+                </div>
+                <div class="col coll">
+               
+                  <p>
+                    <strong>Wallet Ownership:</strong>
+                    {{ selectedItem?.walletOwnership || "N/A" }}
+                  </p>
+                  <p>
+                    <strong>Last Transaction Date:</strong> {{ selectedItem?.lastTransactionDate | date:'short' || "N/A" }}
+                  </p>
+                 
+                  <p>
+                    <strong>Third Party Wallet Number:</strong>
+                    {{ selectedItem?.thirdPartyWalletNumber || "N/A" }}
+                  </p>
+                
+                  <p></p>
+                 
+                  <p>
+                    <strong>Third Party Bank Name:</strong>
+                    {{ selectedItem?.thirdPartyBankName || "N/A" }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          
+          <button type="button" class="btn btn-light" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+
+
+<app-add-internal-wallet></app-add-internal-wallet>
+
+
+
+
+
+<!-- <app-add-wallet></app-add-wallet> -->
