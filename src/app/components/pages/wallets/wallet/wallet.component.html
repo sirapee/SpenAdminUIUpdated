@@ -28,131 +28,145 @@
 
   <!-- for desktop -->
   <div class="d-none d-md-block">
-  <div class="row mt-4">
-    <div class="col-md-6">
-      <div class="input-group">
-        <input
-          type="text"
-          name="searchTerm"
-          [(ngModel)]="searchTerm"
-          class="form-control"
-          placeholder="Search"
-          (input)="search()"
-        />
-        <div class="input-group-append">
-          <button class="btn btn-primary" type="button">
-            <i class="fa fa-search"></i>
-          </button>
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input
+            type="text"
+            name="searchTerm"
+            [(ngModel)]="searchTerm"
+            class="form-control"
+            placeholder="Search"
+            (input)="search()"
+          />
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="button">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-6 text-md-right mt-md-0 mt-3 d-flex justify-content-end">
-      <div class="dropdown">
-        <button
-          class="btn btn-secondary dropdown-toggle"
-          type="button"
-          id="filterDropdown"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          Filter Options
-        </button>
-        <div class="dropdown-menu" aria-labelledby="filterDropdown">
-          <button
-            class="dropdown-item"
-            data-toggle="modal"
-            data-target="#myModal"
-          >
-            <i class="fa fa-filter"></i> Filter by Merchant Name
-          </button>
-          <button
-            class="dropdown-item"
-            data-toggle="modal"
-            data-target=".bd-example-modal-lg"
-          >
-            <i class="fa fa-filter"></i> Filter by Status
-          </button>
-        </div>
-      </div>
-      <button
-        class="btn btn-primary ml-0 ml-md-2 mt-2 mt-md-0"
-        data-toggle="modal"
-        data-target="#exampleLongModalLong"
+      <div
+        class="col-md-6 text-md-right mt-md-0 mt-3 d-flex justify-content-end"
       >
-        <i class="fa fa-plus"></i> Add wallet
-      </button>
+        <div class="dropdown">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="filterDropdown"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Filter Options
+          </button>
+          <div class="dropdown-menu" aria-labelledby="filterDropdown">
+            <button
+              class="dropdown-item"
+              data-toggle="modal"
+              data-target="#myModal"
+            >
+              <i class="fa fa-filter"></i> Filter by Merchant Name
+            </button>
+            <button
+              class="dropdown-item"
+              data-toggle="modal"
+              data-target=".bd-example-modal-lg"
+            >
+              <i class="fa fa-filter"></i> Filter by Status
+            </button>
+          </div>
+        </div>
+        <button
+          class="btn btn-primary ml-0 ml-md-2 mt-2 mt-md-0"
+          data-toggle="modal"
+          data-target="#exampleLongModalLong"
+        >
+          <i class="fa fa-plus"></i> Add wallet
+        </button>
+      </div>
     </div>
   </div>
-</div>
-  
-<!-- for mobile -->
 
-<div class="d-md-none">
-  <div class="row mt-4">
-    <div class="col-md-6">
-      <div class="input-group">
-        <input
-          type="text"
-          name="searchTerm"
-          [(ngModel)]="searchTerm"
-          class="form-control"
-          placeholder="Search"
-          (input)="search()"
-        />
-        <div class="input-group-append">
-          <button class="btn btn-primary" type="button">
-            <i class="fa fa-search"></i>
-          </button>
+  <!-- for mobile -->
+
+  <div class="d-md-none">
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input
+            type="text"
+            name="searchTerm"
+            [(ngModel)]="searchTerm"
+            class="form-control"
+            placeholder="Search"
+            (input)="search()"
+          />
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="button">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-6 text-md-right ">
-      <div class="dropdown mt-2">
+      <div class="col-md-6 text-md-right">
+        <div class="dropdown mt-2">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="filterDropdown"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Filter Options
+          </button>
+          <div class="dropdown-menu" aria-labelledby="filterDropdown">
+            <button
+              class="dropdown-item"
+              data-toggle="modal"
+              data-target="#myModal"
+            >
+              <i class="fa fa-filter"></i> Filter by Merchant Name
+            </button>
+            <button
+              class="dropdown-item"
+              data-toggle="modal"
+              data-target=".bd-example-modal-lg"
+            >
+              <i class="fa fa-filter"></i> Filter by Status
+            </button>
+          </div>
+        </div>
         <button
-          class="btn btn-secondary dropdown-toggle"
-          type="button"
-          id="filterDropdown"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
+          class="btn btn-primary ml-0 ml-md-2 mt-2 mt-md-0"
+          data-toggle="modal"
+          data-target="#exampleLongModalLong"
         >
-          Filter Options
+          <i class="fa fa-plus"></i> Add wallet
         </button>
-        <div class="dropdown-menu" aria-labelledby="filterDropdown">
-          <button
-            class="dropdown-item"
-            data-toggle="modal"
-            data-target="#myModal"
-          >
-            <i class="fa fa-filter"></i> Filter by Merchant Name
-          </button>
-          <button
-            class="dropdown-item"
-            data-toggle="modal"
-            data-target=".bd-example-modal-lg"
-          >
-            <i class="fa fa-filter"></i> Filter by Status
-          </button>
-        </div>
       </div>
-      <button
-        class="btn btn-primary ml-0 ml-md-2 mt-2 mt-md-0"
-        data-toggle="modal"
-        data-target="#exampleLongModalLong"
-      >
-        <i class="fa fa-plus"></i> Add wallet
-      </button>
     </div>
   </div>
-</div>
 
   <div class="row">
     <!-- Progress Table start -->
     <div class="col-12 mt-4">
       <div class="card">
         <div class="card-body">
-          <h4 class="card_title">Account Data</h4>
+          <div class="row">
+            <div class="col-md-6">
+              <h4 class="card_title">Account Data</h4>
+            </div>
+            <div class="col-md-6 d-flex justify-content-end">
+              <a (click)="downloadData()" class="text-dark" style="cursor: pointer;">
+                <span class="badge badge-dark">
+                  <i class="fa fa-download"></i> Download wallets
+                </span>
+              </a>
+            </div>
+          </div>
+
           <div class="card-body" *ngIf="!filteredUserData?.length && !loading">
             <div class="alert alert-dark text-center">
               No data to display at the moment
@@ -171,7 +185,7 @@
                       class="sortable-header"
                       (click)="sort('sourceWalletName')"
                     >
-                    Wallet Name
+                      Wallet Name
                       <i [ngClass]="getSortIcon('sourceWalletName')"></i>
                     </th>
                     <th
@@ -179,7 +193,7 @@
                       class="sortable-header"
                       (click)="sort('sourceWalletNumber')"
                     >
-                    Wallet Number
+                      Wallet Number
                       <i [ngClass]="getSortIcon('sourceWalletNumber')"></i>
                     </th>
                     <th
@@ -187,7 +201,7 @@
                       class="sortable-header"
                       (click)="sort('beneficiaryAccountName')"
                     >
-                    Ledger Balance
+                      Ledger Balance
                       <i [ngClass]="getSortIcon('beneficiaryAccountName')"></i>
                     </th>
                     <th
@@ -203,17 +217,16 @@
                       class="sortable-header"
                       (click)="sort('currency')"
                     >
-                    Wallet Currency <i [ngClass]="getSortIcon('currency')"></i>
+                      Wallet Currency
+                      <i [ngClass]="getSortIcon('currency')"></i>
                     </th>
                     <th
-                    scope="col"
-                    class="sortable-header"
-                    (click)="sort('charge')"
-                  >
-                  Status <i [ngClass]="getSortIcon('charge')"></i>
-                  </th>
-                
-                 
+                      scope="col"
+                      class="sortable-header"
+                      (click)="sort('charge')"
+                    >
+                      Status <i [ngClass]="getSortIcon('charge')"></i>
+                    </th>
 
                     <th scope="col" class="sortable-header">Action<i></i></th>
                   </tr>
@@ -318,41 +331,37 @@
                   </tr>
                 </tbody>
                 <tbody>
-                  <tr
-                    *ngFor="
-                      let data of filteredUserData
-                  
-                      let i = index
-                    "
-                  >
-                  <td>{{ 10 * p - (9 - i) }}</td>
+                  <tr *ngFor="let data of filteredUserData; let i = index">
+                    <td>{{ 10 * p - (9 - i) }}</td>
                     <td style="font-size: 14px">
                       {{ data?.walletName || "N/A" }}
                     </td>
                     <td style="font-size: 14px">
                       {{ data?.walletNumber || "N/A" }}
                     </td>
-                 
+
                     <td style="font-size: 14px">
-                      {{
-                        (data?.walletBalance | amount)
-                          || 'N/A'
-                      }}
+                      {{ (data?.walletBalance | amount) || "N/A" }}
                     </td>
                     <td style="font-size: 14px">
-                      {{ (data?.walletAvailableBalance | amount) || 'N/A' }}
+                      {{ (data?.walletAvailableBalance | amount) || "N/A" }}
                     </td>
 
                     <td style="font-size: 14px">
-                        {{ data?.walletCurrency  || "N/A"}}
-                      </td>
-            
-                    <td style="font-size: 14px" [style.color]="data?.status === 'Success' ? 'green' : 'red'">
-                        {{ data?.status || "N/A" }}
-                      </td>
-                      
+                      {{ data?.walletCurrency || "N/A" }}
+                    </td>
+
+                    <td
+                      style="font-size: 14px"
+                      [style.color]="
+                        data?.status === 'Success' ? 'green' : 'red'
+                      "
+                    >
+                      {{ data?.status || "N/A" }}
+                    </td>
+
                     <!-- <td style="font-size: 14px;">{{data?.provider || 'N/A'}}</td> -->
-                 
+
                     <!-- <td>500.00$</td> -->
                     <td>
                       <div class="dropdown">
@@ -395,11 +404,11 @@
                 </tbody>
               </table>
               <ngb-pagination
-              [(page)]="p"
-              [pageSize]="pageSize"
-              [collectionSize]="totalItems"
-              (pageChange)="onPageChange($event)"
-            ></ngb-pagination>
+                [(page)]="p"
+                [pageSize]="pageSize"
+                [collectionSize]="totalItems"
+                (pageChange)="onPageChange($event)"
+              ></ngb-pagination>
             </div>
           </div>
         </div>
@@ -425,31 +434,34 @@
       <div class="modal-body">
         <label>Select Merchant Name</label>
         <div class="form-group row">
-          
           <div
-          class="input-group"
-          style="padding-left: 30px; padding-right: 30px"
-        >
-        
-          <select
-            name="searchTerm"
-            [(ngModel)]="merchantName"
-            class="form-control"
+            class="input-group"
+            style="padding-left: 30px; padding-right: 30px"
           >
-            <!-- <option value="" selected>Select status</option> -->
-            <option value="" selected>Select Merchant Name</option>
-            <option *ngFor="let merchant of merchantData" [value]="merchant.id">{{ merchant.merchantName }}</option>
-          </select>
-          <div class="input-group-append">
-            <button
-              class="btn btn-primary"
-              type="button"
-              (click)="loadData()"
+            <select
+              name="searchTerm"
+              [(ngModel)]="merchantName"
+              class="form-control"
             >
-              <i class="fa fa-search"></i>
-            </button>
+              <!-- <option value="" selected>Select status</option> -->
+              <option value="" selected>Select Merchant Name</option>
+              <option
+                *ngFor="let merchant of merchantData"
+                [value]="merchant.id"
+              >
+                {{ merchant.merchantName }}
+              </option>
+            </select>
+            <div class="input-group-append">
+              <button
+                class="btn btn-primary"
+                type="button"
+                (click)="loadData()"
+              >
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
           </div>
-        </div>
         </div>
       </div>
     </div>
@@ -498,7 +510,6 @@
           </div>
         </div>
         <div class="modal-footer">
-
           <button type="button" class="btn btn-light" data-dismiss="modal">
             Close
           </button>
@@ -532,17 +543,15 @@
                   <p>
                     <strong>Ledger Balance:</strong>
                     {{
-                      (selectedItem?.walletAvailableBalance | amount)
-                        ||  "N/A"
+                      (selectedItem?.walletAvailableBalance | amount) || "N/A"
                     }}
                   </p>
-               
+
                   <p>
                     <strong>Available Balance:</strong>
                     {{ (selectedItem?.walletBalance | amount) || "N/A" }}
-
                   </p>
-                
+
                   <p>
                     <strong>Wallet Name:</strong>
                     {{ selectedItem?.walletName || "N/A" }}
@@ -551,25 +560,27 @@
                     <strong>Wallet Currency:</strong>
                     {{ (selectedItem?.walletCurrency | amount) || "N/A" }}
                   </p>
-              
                 </div>
                 <div class="col coll">
-               
                   <p>
                     <strong>Wallet Ownership:</strong>
                     {{ selectedItem?.walletOwnership || "N/A" }}
                   </p>
                   <p>
-                    <strong>Last Transaction Date:</strong> {{ selectedItem?.lastTransactionDate | date:'short' || "N/A" }}
+                    <strong>Last Transaction Date:</strong>
+                    {{
+                      selectedItem?.lastTransactionDate
+                        | date : "short" || "N/A"
+                    }}
                   </p>
-                 
+
                   <p>
                     <strong>Third Party Wallet Number:</strong>
                     {{ selectedItem?.thirdPartyWalletNumber || "N/A" }}
                   </p>
-                
+
                   <p></p>
-                 
+
                   <p>
                     <strong>Third Party Bank Name:</strong>
                     {{ selectedItem?.thirdPartyBankName || "N/A" }}
@@ -589,12 +600,6 @@
     </div>
   </div>
 </div>
-
-
-
-
-
-
 
 <app-add-wallet></app-add-wallet>
 

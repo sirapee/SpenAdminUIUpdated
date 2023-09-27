@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MerchantService } from 'src/app/components/services/merchantService/merchant.service';
 import { UsersService } from 'src/app/components/services/userManagement/users.service';
 import { walletService } from 'src/app/components/services/wallet/wallet.service';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-wallet',
@@ -123,6 +124,89 @@ export class WalletComponent {
     this.loadData();
 
 
+  }
+
+
+  downloadData() {
+    this.spinner.show();
+  
+  
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+  
+    const filters: {
+      Id?: number;
+      walletName?: number;
+      walletNumber?: number;
+      // ProviderReference?: string;
+      Status?: boolean;
+      MerchantId?: number;
+      createdAt?: Date;
+      // EndDate?: Date;
+      // TransactionReference?: string;
+   
+    } = {}
+  
+    if (this.selectedStartDate) {
+      filters.createdAt = this.selectedStartDate;
+    } else {
+      
+      filters.createdAt = thirtyDaysAgo;
+    }
+  
+    // if (this.selectedEndDate) {
+    //   filters.EndDate = this.selectedEndDate;
+    // }
+  
+    this.walletService
+      .downloadAllWallets(this.p, this.pageSize, filters)
+      .subscribe(
+        (response) => {
+          // this.loading = false;
+          this.userData = response.clientWallets;
+          this.filteredUserData = this.userData;
+          // this.userData.slice();
+          // this.usersService.updateUserData(this.filteredUserData);
+          this.spinner.hide();
+          this.totalItems = response.total;
+  
+          // Export the data to Excel
+          this.exportDataToExcel(this.userData);
+        },
+        (error) => {
+          console.error('Error fetching reports:', error);
+          this.loading = false;
+          this.spinner.hide();
+        }
+      );
+  }
+
+
+  exportDataToExcel(data: any[]) {
+    if (!data || data.length === 0) {
+      console.error('Data is empty or undefined.');
+      return;
+    }
+  
+    const ws: XLSX.WorkSheet = XLSX.utils?.json_to_sheet(data);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    const excelBuffer: any = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+    this.saveExcelFile(excelBuffer, 'exported-data');
+  }
+  
+  
+  saveExcelFile(buffer: any, fileName: string) {
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${fileName}.xlsx`;
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
   }
 
 

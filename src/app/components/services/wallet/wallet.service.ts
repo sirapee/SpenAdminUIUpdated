@@ -65,20 +65,16 @@ export class walletService {
 
   
 
-  downloadAllTransfer(
+
+  downloadAllWallets(
     PageNumber: number,
     PageSize: number,
     filters: {
       Id?: number;
-      SourceWalletNumber?: number;
-      BeneficiaryAccountNumber?: number;
+      WalletNumber?: number;
+      Status?: boolean;
       MerchantId?: number;
-      ProviderReference?: string;
-      ProcessedSuccessfully?: boolean;
-      StartDate?: Date;
-      EndDate?: Date;
-      TransactionReference?: string;
-   
+      CreatedAt?: Date;
     }
   ): Observable<any> {
     let queryParams = new HttpParams()
@@ -88,40 +84,29 @@ export class walletService {
     if (filters.Id !== undefined) {
       queryParams = queryParams.set('Id', filters.Id.toString());
     }
-  
-    if (filters.StartDate) {
-      queryParams = queryParams.set('StartDate', this.dateToString(filters.StartDate));
+
+    if (filters.WalletNumber) {
+      queryParams = queryParams.set('WalletNumber', filters.WalletNumber.toString());
     }
-  
-    if (filters.EndDate !== undefined) {
-      queryParams = queryParams.set('EndDate', this.dateToString(filters.EndDate));
+
+      
+    if (filters.Status !== undefined) {
+      queryParams = queryParams.set('Status', filters.Status.toString());
     }
-  
-    if (filters.SourceWalletNumber) {
-      queryParams = queryParams.set('SourceAccountNumber', filters.SourceWalletNumber.toString());
-    }
-  
-    if (filters.ProviderReference) {
-      queryParams = queryParams.set('MerchantReference', filters.ProviderReference);
-    }
-  
-    if (filters.ProcessedSuccessfully !== undefined) {
-      queryParams = queryParams.set('CreditPosted', filters.ProcessedSuccessfully.toString());
-    }
-  
-    if (filters.TransactionReference) {
-      queryParams = queryParams.set('TransactionReference', filters.TransactionReference);
-    }
-  
-    if (filters.BeneficiaryAccountNumber) {
-      queryParams = queryParams.set('VirtualAccountNumber', filters.BeneficiaryAccountNumber.toString());
-    }
-  
+
+    
     if (filters.MerchantId !== undefined) {
       queryParams = queryParams.set('MerchantId', filters.MerchantId.toString());
     }
   
-    return this.http.get(`${environment.baseUrl}/payouts/bank/transfers-download`, {
+  
+  
+    if (filters.CreatedAt) {
+      queryParams = queryParams.set('CreatedAt', this.dateToString(filters.CreatedAt));
+    }
+  
+
+    return this.http.get(`${environment.baseUrl}/wallets-download`, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem('token')}`,
       },
