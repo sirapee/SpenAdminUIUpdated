@@ -49,6 +49,7 @@ export class WalletComponent {
   // processedStatus: any;
   processedStatus: boolean | undefined;
   merchantData: any;
+  currency!: string;
 
   constructor(
     private usersService: UsersService,
@@ -72,6 +73,37 @@ export class WalletComponent {
 
   }
 
+  getStatusColor(status: string): string {
+    switch (status) {
+      case 'A':
+        return 'green'; 
+      case 'I':
+        return 'red';  
+      case 'D':
+        return 'yellow'; 
+      case 'C':
+        return 'red';   
+      default:
+        return 'black';  
+    }
+  }
+  
+  getStatusText(status: string): string {
+    switch (status) {
+      case 'A':
+        return 'Active';
+      case 'I':
+        return 'Inactive';
+      case 'D':
+        return 'Dormant';
+      case 'C':
+        return 'Closed';
+      default:
+        return ''; 
+    }
+  }
+  
+
   loadData() {
     this.spinner.show();
 
@@ -79,6 +111,7 @@ export class WalletComponent {
       Id?: number;
       walletName?: number;
       walletNumber?: number;
+      Currency?: string;
       // ProviderReference?: string;
       Status?: boolean;
       MerchantId?: number;
@@ -94,6 +127,10 @@ export class WalletComponent {
 
     if (this.merchantName) {
       filters.MerchantId = this.merchantName;
+    }
+
+    if (this.currency) {
+      filters.Currency = this.currency;
     }
  
   

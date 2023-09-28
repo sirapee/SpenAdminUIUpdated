@@ -75,6 +75,14 @@
             >
               <i class="fa fa-filter"></i> Filter by Status
             </button>
+
+            <button
+            class="dropdown-item"
+            data-toggle="modal"
+            data-target="#myModal2"
+          >
+            <i class="fa fa-filter"></i> Filter by Currency
+          </button>
           </div>
         </div>
         <button
@@ -136,6 +144,14 @@
             >
               <i class="fa fa-filter"></i> Filter by Status
             </button>
+
+            <button
+            class="dropdown-item"
+            data-toggle="modal"
+            data-target="#myModal2"
+          >
+            <i class="fa fa-filter"></i> Filter by Currency
+          </button>
           </div>
         </div>
         <button
@@ -351,14 +367,10 @@
                       {{ data?.walletCurrency || "N/A" }}
                     </td>
 
-                    <td
-                      style="font-size: 14px"
-                      [style.color]="
-                        data?.status === 'Success' ? 'green' : 'red'
-                      "
-                    >
-                      {{ data?.status || "N/A" }}
+                    <td style="font-size: 14px" [style.color]="getStatusColor(data?.status)">
+                      {{ getStatusText(data?.status) || "N/A" }}
                     </td>
+                    
 
                     <!-- <td style="font-size: 14px;">{{data?.provider || 'N/A'}}</td> -->
 
@@ -462,6 +474,54 @@
               </button>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal2">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Filter By Currency</h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <!-- <label>Select Currency</label> -->
+        <div class="form-group row">
+          
+          <div
+          class="input-group"
+          style="padding-left: 30px; padding-right: 30px"
+        >
+        
+          <label for="merchantId">Currency<span class="text-danger">*</span></label>
+          <select class="form-control" id="merchantId"  [(ngModel)]="currency">
+            <!-- Add your dropdown options here -->
+            <option value="" selected>Select currency</option>
+            <option value="GHS">Cedi</option>
+            <option value="NGN">Naira</option>
+            <option value="USD">Dollars</option>
+            <!-- Add more options as needed -->
+          </select>
+          <div class="input-group-append">
+            <button
+              class="btn btn-primary"
+              type="button"
+              (click)="loadData()"
+            >
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
         </div>
       </div>
     </div>
