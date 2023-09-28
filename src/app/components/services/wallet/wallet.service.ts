@@ -21,6 +21,7 @@ export class walletService {
     filters: {
       Id?: number;
       WalletNumber?: number;
+      Currency?: string;
       Status?: boolean;
       MerchantId?: number;
       CreatedAt?: Date;
@@ -36,6 +37,10 @@ export class walletService {
 
     if (filters.WalletNumber) {
       queryParams = queryParams.set('WalletNumber', filters.WalletNumber.toString());
+    }
+
+    if (filters.Currency) {
+      queryParams = queryParams.set('Curreny', filters.Currency);
     }
 
       
