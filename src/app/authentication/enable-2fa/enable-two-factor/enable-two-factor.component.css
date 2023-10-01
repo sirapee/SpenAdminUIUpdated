@@ -15,14 +15,12 @@
   }
   
 
-  /* @media (min-width: 768px) {
-    .gradient-form {
-      height: 100vh;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-    }
-  } */
+  .gradient-form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
 
   .otp-inputs {
     display: flex;

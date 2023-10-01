@@ -62,6 +62,11 @@ const routes: Routes = [
       },
 
       {
+        path: 'settlement',
+        loadChildren: () => import('../../pages/settlement/settlement/settlement.module').then(m => m.SettlementModule)
+      },
+
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',
