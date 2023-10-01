@@ -14,7 +14,7 @@ export class DashboardService {
   
 
   dashboard(): Observable<any> {
-    const url = `${environment.baseUrl}/user-management/dashboard`;
+    const url = `${environment.baseUrl}/dashboard`;
     const token = sessionStorage.getItem('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`

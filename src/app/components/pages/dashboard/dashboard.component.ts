@@ -5,7 +5,14 @@ import { Component, OnInit } from '@angular/core';
 // import { LabelItem } from 'chart.js';
 import Chart from 'chart.js/auto';
 import { StoreService } from '../../services/store/store.service';
+// import * as Chart from 'chart.js';
 
+
+
+interface CollectionData {
+  total: number;
+  month: string;
+}
 
 @Component({
   selector: 'app-dashboard',
@@ -14,7 +21,7 @@ import { StoreService } from '../../services/store/store.service';
 })
 export class DashboardComponent {
   public chart: Chart | undefined;
-  public dashboardData: any = {}; // Initialize with an empty object
+  public dashboardData: any = {}
   username: any;
 
   constructor(private dashboardService: DashboardService, private store: StoreService) {}
@@ -23,36 +30,54 @@ export class DashboardComponent {
 
 
     this.dashboardService.dashboard().subscribe((res: any) => {
-      if (res) {
+      if (res && res.collectionsGraph) {
         this.dashboardData = res;
-        console.log(this.dashboardData);
+        const collectionsGraph = res.collectionsGraph;
+    
+        const chartLabels: string[] = collectionsGraph.map((item: { month: any; }) => item.month);
+        const chartData: number[] = collectionsGraph.map((item: { total: any; }) => item.total);
+    
+        this.createChart(res.collectionsGraph);
 
-        const chartLabels = Object.keys(this.dashboardData);
-        const chartData = Object.values(this.dashboardData) as number[];
-
-        this.createChart(chartLabels, chartData);
       }
     });
-  }
+  }    
 
-  createChart(labels: string[], data: number[]): void {
+
+  
+  // ...
+  
+  createChart(data: any[]): void {
+    const chartLabels: string[] = data.map(item => item.month);
+    const chartData: number[] = data.map(item => item.total);
+  
     this.chart = new Chart('MyChart', {
-      type: 'line',
+      type: 'bar',
       data: {
-        labels: labels,
+        labels: chartLabels,
         datasets: [
           {
             label: 'Metrics',
-            data: data,
-            backgroundColor: 'red'
+            data: chartData,
+            borderColor: 'red',
+            
           }
         ]
       },
       options: {
-        responsive: true
+        responsive: true,
+        // scales: {
+        //   yAxes: [{
+        //     ticks: {
+        //       beginAtZero: true
+        //     }
+        //   }]
+        // }
       }
-    });
+    }); 
   }
+  
+  
 
 }
 

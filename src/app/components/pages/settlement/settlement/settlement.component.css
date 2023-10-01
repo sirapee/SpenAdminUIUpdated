@@ -1,0 +1,10 @@
+strong {
+    font-weight: bold;
+    margin-right: 5px;
+  }
+
+  .red-table-head {
+    background-color: #faeeee; 
+
+    font-weight: bolder;
+  }

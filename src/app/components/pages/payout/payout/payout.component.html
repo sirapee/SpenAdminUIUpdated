@@ -75,12 +75,12 @@
           </button>
         </div>
       </div>
-      <button
+      <!-- <button
         class="btn btn-primary ml-0 ml-md-2 mt-2 mt-md-0"
         (click)="downloadData()"
       >
         <i class="fa fa-download"></i> Download Payout Acc
-      </button>
+      </button> -->
     </div>
   </div>
 </div>
@@ -135,12 +135,12 @@
           </button>
         </div>
       </div>
-      <button
+      <!-- <button
         class="btn btn-primary ml-0 ml-md-2 mt-2 mt-md-0"
         (click)="downloadData()"
       >
         <i class="fa fa-download"></i> Download Payout Acc
-      </button>
+      </button> -->
     </div>
   </div>
 </div>
@@ -150,7 +150,18 @@
     <div class="col-12 mt-4">
       <div class="card">
         <div class="card-body">
-          <h4 class="card_title">Account Data</h4>
+          <div class="row">
+            <div class="col-md-6">
+              <h4 class="card_title">Payout Data</h4>
+            </div>
+            <div class="col-md-6 d-flex justify-content-end">
+              <a (click)="downloadData()" class="text-dark" style="cursor: pointer;">
+                <span class="badge badge-dark">
+                  <i class="fa fa-download"></i> Export
+                </span>
+              </a>
+            </div>
+          </div>
           <div class="card-body" *ngIf="!filteredUserData?.length && !loading">
             <div class="alert alert-dark text-center">
               No data to display at the moment

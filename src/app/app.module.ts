@@ -17,6 +17,7 @@ import { SharedModule } from './components/pages/sharedmodule/shared.module';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { TimeagoModule } from 'ngx-timeago';
 import { NgxPaginationModule } from 'ngx-pagination';
+// import { RegularizeComponent } from './components/pages/settlement/regularize/regularize/regularize.component';
 // import { AddInternalWalletComponent } from './components/pages/internal-wallets/add-internal-wallet/add-internal-wallet/add-internal-wallet.component';
 
 // import { AddWalletComponent } from './components/pages/wallets/add-wallet/add-wallet/add-wallet.component';
@@ -25,6 +26,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
   declarations: [
     AppComponent,
     PageNotFoundComponent,
+    // RegularizeComponent,
     // AddInternalWalletComponent,
     // AmountPipe,
     // AddWalletComponent,

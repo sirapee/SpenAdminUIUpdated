@@ -17,7 +17,7 @@
             <h6 class="header-pretitle">Overview</h6>
 
             <!-- Title -->
-            <h1 class="header-title">Collections</h1>
+            <h1 class="header-title">Settlement</h1>
           </div>
 
           <div class="col-auto"></div>
@@ -27,122 +27,143 @@
   </div>
 
   <!-- for desktop -->
-<div class="d-none d-md-block">
-  <div class="row mt-4 ">
-    <div class="col-md-6">
-      <div class="input-group">
-        <input
-          type="text"
-          name="searchTerm"
-          [(ngModel)]="searchTerm"
-          class="form-control"
-          placeholder="Search"
-          (input)="search()"
-        />
-        <div class="input-group-append">
-          <button class="btn btn-primary" type="button">
-            <i class="fa fa-search"></i>
-          </button>
+  <div class="d-none d-md-block">
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input
+            type="text"
+            name="searchTerm"
+            [(ngModel)]="searchTerm"
+            class="form-control"
+            placeholder="Search"
+            (input)="search()"
+          />
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="button">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-6 text-md-right mt-md-0 mt-3 d-flex justify-content-end">
-      <div class="dropdown">
-        <button
-          class="btn btn-secondary dropdown-toggle"
-          type="button"
-          id="filterDropdown"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          Filter Options
-        </button>
-        <div class="dropdown-menu" aria-labelledby="filterDropdown">
-          <button
-            class="dropdown-item"
-            data-toggle="modal"
-            data-target="#myModal"
-          >
-            <i class="fa fa-filter"></i> Filter by Duration
-          </button>
-          <button
-            class="dropdown-item"
-            data-toggle="modal"
-            data-target=".bd-example-modal-lg"
-          >
-            <i class="fa fa-filter"></i>Filter by CreditPosted
-          </button>
-        </div>
-      </div>
-      <!-- <button
-        class="btn btn-primary ml-0 ml-md-2 mt-2 mt-md-0"
-        (click)="downloadData()"
+      <div
+        class="col-md-6 text-md-right mt-md-0 mt-3 d-flex justify-content-end"
       >
-        <i class="fa fa-download"></i> Download Collections Acc
-      </button> -->
+        <div class="dropdown">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="filterDropdown"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Filter Options
+          </button>
+          <div class="dropdown-menu" aria-labelledby="filterDropdown">
+            <!-- <button
+              class="dropdown-item"
+              data-toggle="modal"
+              data-target="#myModal"
+            >
+              <i class="fa fa-filter"></i> Filter by se
+            </button> -->
+            <button
+              class="dropdown-item"
+              data-toggle="modal"
+              data-target=".bd-example-modal-lg"
+            >
+              <i class="fa fa-filter"></i> Filter by Status
+            </button>
+
+            <!-- <button
+            class="dropdown-item"
+            data-toggle="modal"
+            data-target="#myModal2"
+          >
+            <i class="fa fa-filter"></i> Filter by Currency
+          </button> -->
+          </div>
+        </div>
+        <button
+          class="btn btn-primary ml-0 ml-md-2 mt-2 mt-md-0"
+          data-toggle="modal"
+          data-target="#exampleLongModalLong"
+        >
+          <i class="fa fa-plus"></i> Regularize
+        </button>
+      </div>
     </div>
   </div>
-</div>
-  
+
   <!-- for mobile -->
+
   <div class="d-md-none">
-  <div class="row mt-4 ">
-    <div class="col-md-6">
-      <div class="input-group">
-        <input
-          type="text"
-          name="searchTerm"
-          [(ngModel)]="searchTerm"
-          class="form-control"
-          placeholder="Search"
-          (input)="search()"
-        />
-        <div class="input-group-append">
-          <button class="btn btn-primary" type="button">
-            <i class="fa fa-search"></i>
-          </button>
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input
+            type="text"
+            name="searchTerm"
+            [(ngModel)]="searchTerm"
+            class="form-control"
+            placeholder="Search"
+            (input)="search()"
+          />
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="button">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-6 text-md-right">
-      <div class="dropdown mt-2">
+      <div class="col-md-6 text-md-right">
+        <div class="dropdown mt-2">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="filterDropdown"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Filter Options
+          </button>
+          <div class="dropdown-menu" aria-labelledby="filterDropdown">
+            <!-- <button
+              class="dropdown-item"
+              data-toggle="modal"
+              data-target="#myModal"
+            >
+              <i class="fa fa-filter"></i> Filter by Merchant Name
+            </button> -->
+            <button
+              class="dropdown-item"
+              data-toggle="modal"
+              data-target=".bd-example-modal-lg"
+            >
+              <i class="fa fa-filter"></i> Filter by Status
+            </button>
+
+            <!-- <button
+            class="dropdown-item"
+            data-toggle="modal"
+            data-target="#myModal2"
+          >
+            <i class="fa fa-filter"></i> Filter by Currency
+          </button> -->
+          </div>
+        </div>
         <button
-          class="btn btn-secondary dropdown-toggle"
-          type="button"
-          id="filterDropdown"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
+          class="btn btn-primary ml-0 ml-md-2 mt-2 mt-md-0"
+          data-toggle="modal"
+          data-target="#exampleLongModalLong"
         >
-          Filter Options
+          <i class="fa fa-plus"></i> Regularize
         </button>
-        <div class="dropdown-menu" aria-labelledby="filterDropdown">
-          <button
-            class="dropdown-item"
-            data-toggle="modal"
-            data-target="#myModal"
-          >
-            <i class="fa fa-filter"></i> Filter by Duration
-          </button>
-          <button
-            class="dropdown-item"
-            data-toggle="modal"
-            data-target=".bd-example-modal-lg"
-          >
-            <i class="fa fa-filter"></i>Filter by CreditPosted
-          </button>
-        </div>
       </div>
-      <!-- <button
-        class="btn btn-primary ml-0 ml-md-2 mt-2 mt-md-0"
-        (click)="downloadData()"
-      >
-        <i class="fa fa-download"></i> 
-      </button> -->
     </div>
   </div>
-</div>
 
   <div class="row">
     <!-- Progress Table start -->
@@ -151,24 +172,24 @@
         <div class="card-body">
           <div class="row">
             <div class="col-md-6">
-              <h4 class="card_title">Collections Data</h4>
+              <h4 class="card_title">Settlement Data</h4>
             </div>
             <div class="col-md-6 d-flex justify-content-end">
               <a (click)="downloadData()" class="text-dark" style="cursor: pointer;">
                 <span class="badge badge-dark">
-                  <i class="fa fa-download"></i> Export Collections
+                  <i class="fa fa-download"></i> Export
                 </span>
               </a>
             </div>
           </div>
-     
+
           <div class="card-body" *ngIf="!filteredUserData?.length && !loading">
             <div class="alert alert-dark text-center">
               No data to display at the moment
             </div>
           </div>
           <div class="single-table">
-            <div class="table-responsive ">
+            <div class="table-responsive">
               <!-- Table contents here -->
 
               <table class="table table-hover progress-table text-center">
@@ -178,57 +199,49 @@
                     <th
                       scope="col"
                       class="sortable-header"
-                      (click)="sort('sourceAccountName')"
+                      (click)="sort('sourceWalletName')"
                     >
-                      Account Name
-                      <i [ngClass]="getSortIcon('sourceAccountName')"></i>
+                      Wallet Name
+                      <i [ngClass]="getSortIcon('sourceWalletName')"></i>
                     </th>
                     <th
                       scope="col"
                       class="sortable-header"
-                      (click)="sort('sourceAccountNumber')"
+                      (click)="sort('sourceWalletNumber')"
                     >
-                      Account Number
-                      <i [ngClass]="getSortIcon('sourceAccountNumber')"></i>
+                      Wallet Number
+                      <i [ngClass]="getSortIcon('sourceWalletNumber')"></i>
                     </th>
                     <th
                       scope="col"
                       class="sortable-header"
-                      (click)="sort('virtualAccountNumber')"
+                      (click)="sort('beneficiaryAccountName')"
                     >
-                      Virtual Account Number
-                      <i [ngClass]="getSortIcon('virtualAccountNumber')"></i>
+                    Transaction Date
+                      <i [ngClass]="getSortIcon('beneficiaryAccountName')"></i>
                     </th>
                     <th
                       scope="col"
                       class="sortable-header"
-                      (click)="sort('transactionAmount')"
+                      (click)="sort('amount')"
                     >
-                      Amount
-                      <i [ngClass]="getSortIcon('transactionAmount')"></i>
+                    Transaction Type
+                      <i [ngClass]="getSortIcon('amount')"></i>
                     </th>
                     <th
                       scope="col"
                       class="sortable-header"
-                      (click)="sort('provider')"
+                      (click)="sort('currency')"
                     >
-                      Provider <i [ngClass]="getSortIcon('provider')"></i>
+                      Settlement Status
+                      <i [ngClass]="getSortIcon('currency')"></i>
                     </th>
-                    <th
-                    scope="col"
-                    class="sortable-header"
-                    (click)="sort('postedChargeAmount')"
-                  >
-                    Charge <i [ngClass]="getSortIcon('postedChargeAmount')"></i>
-                  </th>
                     <th
                       scope="col"
                       class="sortable-header"
-                      (click)="sort('createdAt')"
+                      (click)="sort('charge')"
                     >
-                      Transaction Date<i
-                        [ngClass]="getSortIcon('createdAt')"
-                      ></i>
+                    Transaction Status <i [ngClass]="getSortIcon('charge')"></i>
                     </th>
 
                     <th scope="col" class="sortable-header">Action<i></i></th>
@@ -334,45 +347,41 @@
                   </tr>
                 </tbody>
                 <tbody>
-                  <tr
-                    *ngFor="
-                      let data of filteredUserData
-                     
-                      let i = index
-                    "
-                  >
-                  <td>{{ 10 * p - (9 - i) }}</td>
+                  <tr *ngFor="let data of filteredUserData; let i = index">
+                    <td>{{ 10 * p - (9 - i) }}</td>
                     <td style="font-size: 14px">
-                      {{ data?.sourceAccountName || "N/A" }}
+                      {{ data?.walletName || "N/A" }}
                     </td>
                     <td style="font-size: 14px">
-                      {{ data?.sourceAccountNumber || "N/A" }}
+                      {{ data?.walletNumber || "N/A" }}
                     </td>
+
                     <td style="font-size: 14px">
-                      {{ data?.virtualAccountNumber || "N/A" }}
-                    </td>
+                        <span class="fs-4">{{
+                          (data?.transactionDate | date : "medium") || 'N/A'
+                        }}</span>
+                        <small class="d-block text-muted">{{
+                          (data?.transactionDate | timeago : live) || 'N/A'
+                        }}</small>
+                      </td>
                     <td style="font-size: 14px">
-                      {{
-                        data?.transactionAmount
-                          | currency : "#" : "symbol" : "1.2-2" || "N/A"
-                      }}
+                      {{ (data?.transactionType ) || "N/A" }}
                     </td>
+
+                    <td [ngClass]="{'text-success': data?.cleared, 'text-danger': !data?.cleared}" style="font-size: 14px">
+                        {{ data?.cleared ? 'Settled' : 'Unsettled' }}
+                      </td>
+                      
+
                     <td style="font-size: 14px">
-                      {{ data?.provider || "N/A" }}
+                      {{ data?.transactionStatus || "N/A" }}
                     </td>
-                    <td style="font-size: 14px">
-                      {{ data?.postedChargeAmount | currency : "#" : "symbol" : "1.2-2" || "N/A" }}
-                    </td>
+
+                  
                     
+
                     <!-- <td style="font-size: 14px;">{{data?.provider || 'N/A'}}</td> -->
-                    <td style="font-size: 14px">
-                      <span class="fs-4">{{
-                        data?.createdAt | date : "medium"
-                      }}</span>
-                      <small class="d-block text-muted">{{
-                        data?.createdAt | timeago : live
-                      }}</small>
-                    </td>
+
                     <!-- <td>500.00$</td> -->
                     <td>
                       <div class="dropdown">
@@ -415,11 +424,11 @@
                 </tbody>
               </table>
               <ngb-pagination
-              [(page)]="p"
-              [pageSize]="pageSize"
-              [collectionSize]="totalItems"
-              (pageChange)="onPageChange($event)"
-            ></ngb-pagination>
+                [(page)]="p"
+                [pageSize]="pageSize"
+                [collectionSize]="totalItems"
+                (pageChange)="onPageChange($event)"
+              ></ngb-pagination>
             </div>
           </div>
         </div>
@@ -429,78 +438,16 @@
   </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="myModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Filter</h4>
-        <button type="button" class="close" data-dismiss="modal">
-          &times;
-        </button>
-      </div>
 
-      <!-- Modal body -->
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-md-5">
-            <div class="form-group">
-              <label for="startDate">Start Date</label>
-              <input
-                id="startDate"
-                type="date"
-                class="form-control"
-                [(ngModel)]="selectedStartDate"
-                placeholder="Select Start Date"
-              />
-            </div>
-          </div>
-          <div class="col-md-2 text-center align-self-center">
-            <span class="arrow">&#8594;</span>
-            <!-- Arrow symbol (→) -->
-          </div>
-          <div class="col-md-5">
-            <div class="form-group">
-              <label for="endDate">End Date</label>
-              <input
-                id="endDate"
-                type="date"
-                class="form-control"
-                [(ngModel)]="selectedEndDate"
-                placeholder="Select End Date"
-              />
-            </div>
-          </div>
-        </div>
 
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-primary"
-            data-dismiss="modal"
-            (click)="loadData()"
-          >
-            Filter
-          </button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- view by creditPosted modal -->
+<!-- view by status modal -->
 
 <div class="col-lg-6">
   <div class="modal fade bd-example-modal-lg">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Filter Collections by Credit Posted</h5>
+          <h5 class="modal-title">Filter by Settlement Status</h5>
           <button type="button" class="close" data-dismiss="modal">
             <span>&times;</span>
           </button>
@@ -513,18 +460,18 @@
             >
               <select
                 name="searchTerm"
-                [(ngModel)]="CreditPosted"
+                [(ngModel)]="processedStatus"
                 class="form-control"
               >
-                <option value="" selected>Select status</option>
-                <option value="true">True</option>
-                <option value="false">False</option>
+                <option value="" selected disabled>Select status</option>
+                <option value="true">Settled</option>
+                <option value="false">Unsettled</option>
               </select>
               <div class="input-group-append">
                 <button
                   class="btn btn-primary"
                   type="button"
-                  (click)="creditloadData()"
+                  (click)="loadData()"
                 >
                   <i class="fa fa-search"></i>
                 </button>
@@ -533,7 +480,9 @@
           </div>
         </div>
         <div class="modal-footer">
-          <!-- <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="loadData()">Filter</button> -->
+            <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="clearLoadData()">
+                Clear filter
+              </button>
           <button type="button" class="btn btn-light" data-dismiss="modal">
             Close
           </button>
@@ -550,96 +499,71 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Transaction Details</h5>
+          <h5 class="modal-title">Account Settlement Details</h5>
           <button type="button" class="close" data-dismiss="modal">
             <span>&times;</span>
           </button>
         </div>
         <div class="modal-body">
           <div class="form-group row">
-            <div class="containerr">
-              <div class="row rowr">
+            <div class="container">
+              <div class="row align-items-center">
                 <div class="col coll">
                   <p>
-                    <strong>Virtual Account Number:</strong>
-                    {{ selectedItem?.virtualAccountNumber || "N/A" }}
+                    <strong>Wallet Number:</strong>
+                    {{ selectedItem?.walletNumber || "N/A" }}
                   </p>
+                  <p>
+                    <strong>Transaction Date:</strong>
+                    {{
+                      (selectedItem?.transactionDate | date ) || "N/A"
+                    }}
+                  </p>
+
                   <p>
                     <strong>Transaction Amount:</strong>
-                    {{
-                      selectedItem?.transactionAmount
-                        | currency : "NGN" || "N/A"
-                    }}
+                    {{ (selectedItem?.transactionAmount ) || "N/A" }}
+                  </p>
+
+                  <p>
+                    <strong>Wallet Name:</strong>
+                    {{ selectedItem?.walletName || "N/A" }}
                   </p>
                   <p>
-                    <strong>Settled Amount:</strong>
-                    {{
-                      selectedItem?.settledAmount | currency : "NGN" || "N/A"
-                    }}
-                  </p>
-                  <p>
-                    <strong>Transaction Reference:</strong>
-                    {{ selectedItem?.transactionReference || "N/A" }}
-                  </p>
-                  <p>
-                    <strong>Merchant Reference:</strong>
-                    {{ selectedItem?.merchantReference || "N/A" }}
-                  </p>
-                  <p>
-                    <strong>Source Account Number:</strong>
-                    {{ selectedItem?.sourceAccountNumber || "N/A" }}
-                  </p>
-                  <p>
-                    <strong>Source Account Name:</strong>
-                    {{ selectedItem?.sourceAccountName || "N/A" }}
-                  </p>
-                  <p>
-                    <strong>Source Bank Name:</strong>
-                    {{ selectedItem?.sourceBankName || "N/A" }}
+                    <strong>Transaction Currency:</strong>
+                    {{ (selectedItem?.transactionCurrency ) || "N/A" }}
                   </p>
                 </div>
                 <div class="col coll">
-                  <p>
-                    <strong>Channel:</strong>
-                    {{ selectedItem?.channel || "N/A" }}
-                  </p>
                   <p>
                     <strong>Narration:</strong>
                     {{ selectedItem?.narration || "N/A" }}
                   </p>
                   <p>
-                    <strong>Status:</strong> {{ selectedItem?.status || "N/A" }}
+                    <strong>Value Date:</strong>
+                    {{
+                      selectedItem?.valueDate
+                        | date : "short" || "N/A"
+                    }}
                   </p>
+
                   <p>
                     <strong>Transaction Type:</strong>
                     {{ selectedItem?.transactionType || "N/A" }}
                   </p>
-                  <p>
-                    <strong>Credit Posted:</strong>
-                    {{ selectedItem?.creditPosted || "N/A" }}
-                  </p>
-                  <p>
-                    <strong>Request Date:</strong>
-                    {{ selectedItem?.requestDate | date }}
-                  </p>
+
                   <p></p>
-                  <p>
-                    <strong>Provider:</strong>
-                    {{ selectedItem?.provider || "N/A" }}
-                  </p>
-                  <p>
-                    <strong>Currency:</strong>
-                    {{ selectedItem?.currency || "N/A" }}
-                  </p>
 
                   <p>
-                    <strong>Charge Amount:</strong>
-                    {{ selectedItem?.postedChargeAmount | currency : "NGN" : "symbol" : "1.2-2" || "N/A" }}
+                    <strong>Transaction Status:</strong>
+                    {{ selectedItem?.transactionStatus || "N/A" }}
                   </p>
-                  <p>
-                    <strong>Credited Amount:</strong>
-                    {{ selectedItem?.postedCreditAmount | currency : "NGN" : "symbol" : "1.2-2" || "N/A" }}
+
+                  <p >
+                    <strong >Settlement Status:</strong>
+                    <span [ngClass]="{'text-success': selectedItem?.cleared, 'text-danger': !selectedItem?.cleared}" style="font-size: 14px">{{(selectedItem?.cleared  ? 'Settled' : 'Unsettled') || "N/A" }}</span>
                   </p>
+
                 </div>
               </div>
             </div>
@@ -655,3 +579,9 @@
     </div>
   </div>
 </div>
+
+<!-- <app-add-wallet></app-add-wallet> -->
+
+<!-- <app-add-wallet></app-add-wallet> -->
+
+<app-regularize></app-regularize>
