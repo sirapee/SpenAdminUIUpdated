@@ -7,21 +7,19 @@ import { MerchantService } from 'src/app/components/services/merchantService/mer
 import { UsersService } from 'src/app/components/services/userManagement/users.service';
 import { walletService } from 'src/app/components/services/wallet/wallet.service';
 
-
 @Component({
   selector: 'app-internal-wallets',
   templateUrl: './internal-wallets.component.html',
-  styleUrls: ['./internal-wallets.component.css']
+  styleUrls: ['./internal-wallets.component.css'],
 })
 export class InternalWalletsComponent {
-
-  currency : any;
+  currency: any;
   searchTerm!: string;
 
   sortTransaction!: string;
 
   selectedDateRange!: Date;
-  currentPage : number = 1;
+  currentPage: number = 1;
   size: number = 100;
   userData: any;
   p: number = 1; // Current page number
@@ -36,7 +34,6 @@ export class InternalWalletsComponent {
   sortBy: string = '';
   sortOrder: string = 'asc';
   activeSortBy: string = ''; // Initialize activeSortBy property
-
 
   selectedStartDate!: Date;
   selectedEndDate!: Date;
@@ -55,21 +52,16 @@ export class InternalWalletsComponent {
     private notification: ToastrService,
     private spinner: NgxSpinnerService,
     // private payoutService: PayoutService,
-    private walletService : walletService,
-    private merchantService : MerchantService,
+    private walletService: walletService,
+    private merchantService: MerchantService,
     config: NgbPaginationConfig
-    ) {
-  
-        config.size = 'sm';
-      
-    }
+  ) {
+    config.size = 'sm';
+  }
 
   ngOnInit(): void {
-
     this.loadData();
     this.loadMerchant();
-
-
   }
 
   loadData() {
@@ -85,45 +77,35 @@ export class InternalWalletsComponent {
       // createdAt?: Date;
       // EndDate?: Date;
       // TransactionReference?: string;
-   
-    } = {}
+    } = {};
 
     if (this.currency) {
       filters.Currency = this.currency;
     }
 
- 
-  
-
-    this.walletService
-      .getAllInternalWallets( filters)
-      .subscribe( 
-        (response) => {
-          this.loading = false;
-          this.userData = response.wallets;
-          this.filteredUserData = this.userData;
-          // this.userData.slice();
-          this.usersService.updateUserData(this.filteredUserData);
-          this.spinner.hide();
-          this.totalItems = response.totalCount;
-        },
-        (error) => {
-          console.error('Error fetching reports:', error);
-          this.loading = false;
-          this.spinner.hide();
-        }
-      );
+    this.walletService.getAllInternalWallets(filters).subscribe(
+      (response) => {
+        this.loading = false;
+        this.userData = response.wallets;
+        this.filteredUserData = this.userData;
+        // this.userData.slice();
+        this.usersService.updateUserData(this.filteredUserData);
+        this.spinner.hide();
+        this.totalItems = response.totalCount;
+      },
+      (error) => {
+        console.error('Error fetching reports:', error);
+        this.loading = false;
+        this.spinner.hide();
+      }
+    );
   }
 
   onPageChange(newPage: number) {
     this.p = newPage;
 
     this.loadData();
-
-
   }
-
-
 
   loadMerchant() {
     this.spinner.show();
@@ -131,7 +113,6 @@ export class InternalWalletsComponent {
     const filters = {};
 
     // Log the request payload
-  
 
     this.merchantService
       .getAllUsers(this.currentPage, this.size, filters)
@@ -153,16 +134,40 @@ export class InternalWalletsComponent {
       );
   }
 
+  clearLoadData() {
+    this.spinner.show();
+
+    const filters: {
+      Id?: number;
+    } = {};
+
+    this.walletService.getAllWallets(this.p, this.pageSize, filters).subscribe(
+      (response) => {
+        this.loading = false;
+        this.userData = response.wallets;
+        this.filteredUserData = this.userData;
+        // this.userData.slice();
+        this.usersService.updateUserData(this.filteredUserData);
+        this.spinner.hide();
+        this.totalItems = response.totalCount;
+      },
+      (error) => {
+        console.error('Error fetching reports:', error);
+        this.loading = false;
+        this.spinner.hide();
+      }
+    );
+  }
 
   viewDetails(id: string) {
-    const selectedItem = this.userData.find((item: { id: any; }) => item.id === id);
+    const selectedItem = this.userData.find(
+      (item: { id: any }) => item.id === id
+    );
     if (selectedItem) {
       this.selectedItem = selectedItem;
       console.log(this.selectedItem);
     }
   }
-  
-
 
   search(): void {
     if (this.searchTerm !== '') {
@@ -178,9 +183,17 @@ export class InternalWalletsComponent {
         return (
           // username.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
           walletName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-          walletNumber.toString().toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-          beneficiaryAccountName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-          amount.toString().toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+          walletNumber
+            .toString()
+            .toLowerCase()
+            .includes(this.searchTerm.toLowerCase()) ||
+          beneficiaryAccountName
+            .toLowerCase()
+            .includes(this.searchTerm.toLowerCase()) ||
+          amount
+            .toString()
+            .toLowerCase()
+            .includes(this.searchTerm.toLowerCase()) ||
           status.toLowerCase().includes(this.searchTerm.toLowerCase())
         );
       });
@@ -201,7 +214,6 @@ export class InternalWalletsComponent {
       }
     }
 
- 
     this.filteredUserData = _.orderBy(
       this.filteredUserData,
       [this.activeSortBy],
@@ -217,5 +229,4 @@ export class InternalWalletsComponent {
     }
     return '';
   }
-
 }

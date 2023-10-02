@@ -42,11 +42,11 @@ export class RegularizeComponent {
     this.addForm =
      this.fb.group({
       id: ['',],
-      walletNumber: ['',Validators.required],
-      transactionId: ['', Validators.required],
+      walletNumber: ['',],
+      transactionId: ['',],
       merchantId: ['', Validators.required],
-      startDate: ['', Validators.required],
-      endDate: ['',  Validators.required],
+      startDate: ['', ],
+      endDate: ['',],
       // status: [''],
     });
 

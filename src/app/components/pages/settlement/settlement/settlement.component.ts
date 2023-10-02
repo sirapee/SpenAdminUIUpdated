@@ -8,6 +8,9 @@ import { SettlementService } from 'src/app/components/services/settlementService
 import { UsersService } from 'src/app/components/services/userManagement/users.service';
 import { walletService } from 'src/app/components/services/wallet/wallet.service';
 import * as XLSX from 'xlsx';
+import Swal from 'sweetalert2';
+import { DashboardService } from 'src/app/components/services/dashboardService/dashboard.service';
+
 
 @Component({
   selector: 'app-settlement',
@@ -51,6 +54,7 @@ export class SettlementComponent {
   processedStatus: boolean | undefined;
   merchantData: any;
   currency!: string;
+  dashboardData: any;
 
   constructor(
     private usersService: UsersService,
@@ -60,6 +64,7 @@ export class SettlementComponent {
     private walletService : walletService,
     private merchantService : MerchantService,
     private settlementService : SettlementService,
+    private dashboardService : DashboardService,
     config: NgbPaginationConfig
     ) {
   
@@ -69,41 +74,27 @@ export class SettlementComponent {
 
   ngOnInit(): void {
 
+
+    this.dashboardService.dashboard().subscribe((res: any) => {
+      this.dashboardData = res;
+ 
+    });
+
     this.loadData();
     this.loadMerchant();
 
 
   }
 
-  getStatusColor(status: string): string {
-    switch (status) {
-      case 'A':
-        return 'green'; 
-      case 'I':
-        return 'red';  
-      case 'D':
-        return 'yellow'; 
-      case 'C':
-        return 'red';   
-      default:
-        return 'black';  
+  getBalanceByStatus(status: string): string {
+    if (this.dashboardData && this.dashboardData.settlementSummary) {
+      const summaryItem = this.dashboardData.settlementSummary.find((item: { transactionStatus: string; }) => item.transactionStatus === status);
+      return summaryItem ? (summaryItem.totalBalance || 0).toFixed(2) : '0.00';
     }
+    return '0.00';
   }
-  
-  getStatusText(status: string): string {
-    switch (status) {
-      case 'A':
-        return 'Active';
-      case 'I':
-        return 'Inactive';
-      case 'D':
-        return 'Dormant';
-      case 'C':
-        return 'Closed';
-      default:
-        return ''; 
-    }
-  }
+
+
   
 
   loadData() {
@@ -166,9 +157,7 @@ export class SettlementComponent {
    
     } = {}
 
- 
- 
-  
+
 
     this.settlementService
       .getAllSettlement(this.p, this.pageSize, filters)
@@ -197,6 +186,74 @@ export class SettlementComponent {
 
 
   }
+
+
+
+  
+
+  regularizeWithSweetAlert(id: any) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You are about to regularize this item!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, regularize it!',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const requestObject = {
+          id: id
+          // Add other properties if required by the API
+        };
+  
+        this.performRegularizeAction(requestObject);
+      } else {
+        Swal.fire('Regularization Cancelled', '', 'info');
+      }
+    });
+  }
+  
+  performRegularizeAction(requestObject: any) {
+    this.spinner.show();
+  
+    this.settlementService.regularise(requestObject).subscribe(
+      (response: any) => {
+        this.spinner.hide();
+  
+        if (response.isSuccessful) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: response.responseMessage,
+            confirmButtonText: 'OK'
+          });
+          // Handle additional success action if needed
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: response.responseMessage,
+            confirmButtonText: 'OK'
+          });
+          // Handle additional error action if needed
+        }
+      },
+      (error) => {
+        this.spinner.hide();
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: error.error.responseMessage || error.error.message,
+          confirmButtonText: 'OK'
+        });
+        // Handle additional error action if needed
+      }
+    );
+  }
+  
+  
+    
+  
 
 
   downloadData() {
