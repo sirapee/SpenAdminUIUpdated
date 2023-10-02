@@ -14,6 +14,8 @@ import { AuthenticationService } from '../services/authentication.service';
 })
 export class LoginComponent {
 
+  hidePassword: boolean = true;
+
   isMobileScreen: boolean = false;
 
   loginForm!: FormGroup;
@@ -42,7 +44,9 @@ export class LoginComponent {
     
   }
   
-
+  togglePasswordVisibility(): void {
+    this.hidePassword = !this.hidePassword;
+  }
 
 
   // @HostListener('window:resize', ['$event'])

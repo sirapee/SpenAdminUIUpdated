@@ -35,122 +35,124 @@
 
   <!-- for desktop -->
   <div class="d-none d-md-block">
-  <div class="row mt-4">
-    <div class="col-md-6">
-      <div class="input-group">
-        <input
-          type="text"
-          name="searchTerm"
-          [(ngModel)]="searchTerm"
-          class="form-control"
-          placeholder="Search"
-          (input)="search()"
-        />
-        <div class="input-group-append">
-          <button class="btn btn-primary" type="button">
-            <i class="fa fa-search"></i>
-          </button>
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input
+            type="text"
+            name="searchTerm"
+            [(ngModel)]="searchTerm"
+            class="form-control"
+            placeholder="Search"
+            (input)="search()"
+          />
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="button">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-6 text-md-right mt-md-0 mt-3 d-flex justify-content-end">
-      <div class="dropdown">
-        <button
-          class="btn btn-secondary dropdown-toggle"
-          type="button"
-          id="filterDropdown"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          Filter Options
-        </button>
-        <div class="dropdown-menu" aria-labelledby="filterDropdown">
+      <div
+        class="col-md-6 text-md-right mt-md-0 mt-3 d-flex justify-content-end"
+      >
+        <div class="dropdown">
           <button
-            class="dropdown-item"
-            data-toggle="modal"
-            data-target="#myModal"
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="filterDropdown"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
           >
-            <i class="fa fa-filter"></i> Filter by Duration
+            Filter Options
           </button>
-          <button
-            class="dropdown-item"
-            data-toggle="modal"
-            data-target=".bd-example-modal-lg"
-          >
-            <i class="fa fa-filter"></i>Get Accounts by Provider
-          </button>
+          <div class="dropdown-menu" aria-labelledby="filterDropdown">
+            <button
+              class="dropdown-item"
+              data-toggle="modal"
+              data-target="#myModal"
+            >
+              <i class="fa fa-filter"></i> Filter by Duration
+            </button>
+            <button
+              class="dropdown-item"
+              data-toggle="modal"
+              data-target=".bd-example-modal-lg"
+            >
+              <i class="fa fa-filter"></i>Get Accounts by Provider
+            </button>
+          </div>
         </div>
-      </div>
-      <!-- <button
+        <!-- <button
         class="btn btn-primary ml-0 ml-md-2 mt-2 mt-md-0"
         (click)="downloadData()"
       >
         <i class="fa fa-download"></i> Download Accounts
       </button> -->
+      </div>
     </div>
   </div>
-</div>
 
-<!-- for mobile -->
+  <!-- for mobile -->
 
-<div class="d-md-none">
-  <div class="row mt-4">
-    <div class="col-md-6">
-      <div class="input-group">
-        <input
-          type="text"
-          name="searchTerm"
-          [(ngModel)]="searchTerm"
-          class="form-control"
-          placeholder="Search"
-          (input)="search()"
-        />
-        <div class="input-group-append">
-          <button class="btn btn-primary" type="button">
-            <i class="fa fa-search"></i>
-          </button>
+  <div class="d-md-none">
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input
+            type="text"
+            name="searchTerm"
+            [(ngModel)]="searchTerm"
+            class="form-control"
+            placeholder="Search"
+            (input)="search()"
+          />
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="button">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-6 text-md-right">
-      <div class="dropdown mt-2">
-        <button
-          class="btn btn-secondary dropdown-toggle"
-          type="button"
-          id="filterDropdown"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          Filter Options
-        </button>
-        <div class="dropdown-menu" aria-labelledby="filterDropdown">
+      <div class="col-md-6 text-md-right">
+        <div class="dropdown mt-2">
           <button
-            class="dropdown-item"
-            data-toggle="modal"
-            data-target="#myModal"
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="filterDropdown"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
           >
-            <i class="fa fa-filter"></i> Filter by Duration
+            Filter Options
           </button>
-          <button
-            class="dropdown-item"
-            data-toggle="modal"
-            data-target=".bd-example-modal-lg"
-          >
-            <i class="fa fa-filter"></i>Get Accounts by Provider
-          </button>
+          <div class="dropdown-menu" aria-labelledby="filterDropdown">
+            <button
+              class="dropdown-item"
+              data-toggle="modal"
+              data-target="#myModal"
+            >
+              <i class="fa fa-filter"></i> Filter by Duration
+            </button>
+            <button
+              class="dropdown-item"
+              data-toggle="modal"
+              data-target=".bd-example-modal-lg"
+            >
+              <i class="fa fa-filter"></i>Get Accounts by Provider
+            </button>
+          </div>
         </div>
-      </div>
-      <!-- <button
+        <!-- <button
         class="btn btn-primary ml-0 ml-md-2 mt-2 mt-md-0"
         (click)="downloadData()"
       >
         <i class="fa fa-download"></i> Download Accounts
       </button> -->
+      </div>
     </div>
   </div>
-</div>
 
   <div class="row">
     <!-- Progress Table start -->
@@ -162,7 +164,11 @@
               <h4 class="card_title">Virtual Account Data</h4>
             </div>
             <div class="col-md-6 d-flex justify-content-end">
-              <a (click)="downloadData()" class="text-dark" style="cursor: pointer;">
+              <a
+                (click)="downloadData()"
+                class="text-dark"
+                style="cursor: pointer"
+              >
                 <span class="badge badge-dark">
                   <i class="fa fa-download"></i> Export
                 </span>
@@ -348,7 +354,7 @@
                       let i = index
                     "
                   >
-                  <td>{{ 10 * p - (9 - i) }}</td>
+                    <td>{{ 10 * p - (9 - i) }}</td>
                     <td style="font-size: 14px">
                       {{ data?.accountName || "N/A" }}
                     </td>
@@ -376,11 +382,11 @@
                 </tbody>
               </table>
               <ngb-pagination
-              [(page)]="p"
-              [pageSize]="pageSize"
-              [collectionSize]="totalItems"
-              (pageChange)="onPageChange($event)"
-            ></ngb-pagination>
+                [(page)]="p"
+                [pageSize]="pageSize"
+                [collectionSize]="totalItems"
+                (pageChange)="onPageChange($event)"
+              ></ngb-pagination>
             </div>
           </div>
         </div>
@@ -445,8 +451,12 @@
           >
             Filter
           </button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            Close
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="clearLoadData()"
+          >
+            Clear filter
           </button>
         </div>
       </div>

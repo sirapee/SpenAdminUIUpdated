@@ -26,6 +26,46 @@
     </div>
   </div>
 
+  <div class="row">
+    <div class="col-xl-6 col-md-6 col-lg-46stretched_card">
+        <div class="card mb-mob-4">
+            <!-- Card body -->
+            <div class="card-body card_icon_right">
+                <div class="row">
+                    <div class="col">
+                        <h6 class="card_title text-uppercase text-muted mb-0">Total Settled</h6>
+                        <span class="font-weight-bold mb-0">{{ getBalanceByStatus('Settled') | currency: 'NGN '}}</span>
+                    </div>
+                    <div class="col-auto">
+                        <div class="icon_rounded mb-3 icon_success">
+                            <i class="feather ft-dollar-sign" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-6 col-md-6 col-lg-6 stretched_card">
+        <div class="card mb-mob-4">
+            <!-- Card body -->
+            <div class="card-body card_icon_right">
+                <div class="row">
+                    <div class="col">
+                        <h6 class="card_title text-uppercase text-muted mb-0">Total Unsettled</h6>
+                        <span class="font-weight-bold mb-0">{{ getBalanceByStatus('Pending') | currency: 'NGN '}}</span>
+                    </div>
+                    <div class="col-auto">
+                        <div class="icon_rounded mb-3 icon_danger">
+                            <i class="feather ft-dollar-sign" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
   <!-- for desktop -->
   <div class="d-none d-md-block">
     <div class="row mt-4">
@@ -217,7 +257,7 @@
                       class="sortable-header"
                       (click)="sort('beneficiaryAccountName')"
                     >
-                    Transaction Date
+                    Transaction Amount
                       <i [ngClass]="getSortIcon('beneficiaryAccountName')"></i>
                     </th>
                     <th
@@ -236,13 +276,13 @@
                       Settlement Status
                       <i [ngClass]="getSortIcon('currency')"></i>
                     </th>
-                    <th
+                    <!-- <th
                       scope="col"
                       class="sortable-header"
                       (click)="sort('charge')"
                     >
                     Transaction Status <i [ngClass]="getSortIcon('charge')"></i>
-                    </th>
+                    </th> -->
 
                     <th scope="col" class="sortable-header">Action<i></i></th>
                   </tr>
@@ -358,11 +398,9 @@
 
                     <td style="font-size: 14px">
                         <span class="fs-4">{{
-                          (data?.transactionDate | date : "medium") || 'N/A'
+                          (data?.transactionAmount | currency : "NGN ") || 'N/A'
                         }}</span>
-                        <small class="d-block text-muted">{{
-                          (data?.transactionDate | timeago : live) || 'N/A'
-                        }}</small>
+                     
                       </td>
                     <td style="font-size: 14px">
                       {{ (data?.transactionType ) || "N/A" }}
@@ -373,16 +411,6 @@
                       </td>
                       
 
-                    <td style="font-size: 14px">
-                      {{ data?.transactionStatus || "N/A" }}
-                    </td>
-
-                  
-                    
-
-                    <!-- <td style="font-size: 14px;">{{data?.provider || 'N/A'}}</td> -->
-
-                    <!-- <td>500.00$</td> -->
                     <td>
                       <div class="dropdown">
                         <button
@@ -405,18 +433,9 @@
                             (click)="viewDetails(data.id)"
                             ><i class="fa fa-eye"></i>View details</a
                           >
-                          <!-- <hr class="dropdown-divider"/>
-                                    <a class="dropdown-item text-warning"  href="javascript:;" data-toggle="modal" data-target="#exampleModalLong2" (click)="viewDetails(data)"><i class="fa fa-edit"></i> Update</a>
-                                    <hr class="dropdown-divider" />
-                                    <a class="dropdown-item text-primary"  href="javascript:;" (click)="confirmDeleteUser(data.username)"><i class="ti-trash"></i> Delete</a>
-                                    <hr class="dropdown-divider" />
-                                    <a class="dropdown-item"  href="javascript:;"  data-toggle="modal" data-target="#myModal" *ngIf="!data?.isLocked" (click)="viewDetails(data)" ><i class="ti-lock"></i>Lock account</a>
-                                    <a class="dropdown-item"  href="javascript:;"  *ngIf="data?.isLocked" (click)="confirmUnlockUser(data.email)" ><i class="ti-unlock"></i>unlock account</a>
-                                    <hr class="dropdown-divider" />
-                                    <a class="dropdown-item text-success"  href="javascript:;" *ngIf="!data?.isEnabled" (click)="confirmEnableUser(data.username)"><i class="ti-check"></i> Enable</a>
-                                    <a class="dropdown-item text-danger"  href="javascript:;" *ngIf="data?.isEnabled" (click)="confirmDisableUser(data.username)"><i class="ti-close"></i>Disable</a>
-                                    <hr class="dropdown-divider" />
-                                    <a class="dropdown-item"  href="javascript:;" class="btn btn-primary" data-toggle="modal" data-target="#passwordModal"  (click)="viewDetails(data)"><i class="fa fa-edit"></i> Reset Password</a> -->
+                          <hr class="dropdown-divider"/>
+                                    <a class="dropdown-item text-warning"  (click)="regularizeWithSweetAlert(data.id)"><i class="fa fa-edit"></i>Regularize</a>
+
                         </div>
                       </div>
                     </td>
@@ -570,7 +589,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <!-- <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="loadData()">Filter</button> -->
+          <button type="button" class="btn btn-primary" (click)="regularizeWithSweetAlert(selectedItem.id)">Regularize</button>
           <button type="button" class="btn btn-light" data-dismiss="modal">
             Close
           </button>

@@ -11,17 +11,15 @@ import * as XLSX from 'xlsx';
 @Component({
   selector: 'app-wallet',
   templateUrl: './wallet.component.html',
-  styleUrls: ['./wallet.component.css']
+  styleUrls: ['./wallet.component.css'],
 })
 export class WalletComponent {
-
-  
   searchTerm!: string;
 
   sortTransaction!: string;
 
   selectedDateRange!: Date;
-  currentPage : number = 1;
+  currentPage: number = 1;
   size: number = 100;
   userData: any;
   p: number = 1; // Current page number
@@ -36,7 +34,6 @@ export class WalletComponent {
   sortBy: string = '';
   sortOrder: string = 'asc';
   activeSortBy: string = ''; // Initialize activeSortBy property
-
 
   selectedStartDate!: Date;
   selectedEndDate!: Date;
@@ -56,38 +53,33 @@ export class WalletComponent {
     private notification: ToastrService,
     private spinner: NgxSpinnerService,
     // private payoutService: PayoutService,
-    private walletService : walletService,
-    private merchantService : MerchantService,
+    private walletService: walletService,
+    private merchantService: MerchantService,
     config: NgbPaginationConfig
-    ) {
-  
-        config.size = 'sm';
-      
-    }
+  ) {
+    config.size = 'sm';
+  }
 
   ngOnInit(): void {
-
     this.loadData();
     this.loadMerchant();
-
-
   }
 
   getStatusColor(status: string): string {
     switch (status) {
       case 'A':
-        return 'green'; 
+        return 'green';
       case 'I':
-        return 'red';  
+        return 'red';
       case 'D':
-        return 'yellow'; 
+        return 'yellow';
       case 'C':
-        return 'red';   
+        return 'red';
       default:
-        return 'black';  
+        return 'black';
     }
   }
-  
+
   getStatusText(status: string): string {
     switch (status) {
       case 'A':
@@ -99,10 +91,9 @@ export class WalletComponent {
       case 'C':
         return 'Closed';
       default:
-        return ''; 
+        return '';
     }
   }
-  
 
   loadData() {
     this.spinner.show();
@@ -118,8 +109,7 @@ export class WalletComponent {
       createdAt?: Date;
       // EndDate?: Date;
       // TransactionReference?: string;
-   
-    } = {}
+    } = {};
 
     if (this.processedStatus) {
       filters.Status = this.processedStatus;
@@ -132,45 +122,62 @@ export class WalletComponent {
     if (this.currency) {
       filters.Currency = this.currency;
     }
- 
-  
 
-    this.walletService
-      .getAllWallets(this.p, this.pageSize, filters)
-      .subscribe( 
-        (response) => {
-          this.loading = false;
-          this.userData = response.clientWallets;
-          this.filteredUserData = this.userData;
-          // this.userData.slice();
-          this.usersService.updateUserData(this.filteredUserData);
-          this.spinner.hide();
-          this.totalItems = response.totalCount;
-        },
-        (error) => {
-          console.error('Error fetching reports:', error);
-          this.loading = false;
-          this.spinner.hide();
-        }
-      );
+    this.walletService.getAllWallets(this.p, this.pageSize, filters).subscribe(
+      (response) => {
+        this.loading = false;
+        this.userData = response.clientWallets;
+        this.filteredUserData = this.userData;
+        // this.userData.slice();
+        this.usersService.updateUserData(this.filteredUserData);
+        this.spinner.hide();
+        this.totalItems = response.totalCount;
+      },
+      (error) => {
+        console.error('Error fetching reports:', error);
+        this.loading = false;
+        this.spinner.hide();
+      }
+    );
   }
 
   onPageChange(newPage: number) {
     this.p = newPage;
 
     this.loadData();
-
-
   }
 
+  clearLoadData() {
+    this.spinner.show();
+
+    const filters: {
+      Id?: number;
+    } = {};
+
+    this.walletService.getAllWallets(this.p, this.pageSize, filters).subscribe(
+      (response) => {
+        this.loading = false;
+        this.userData = response.clientWallets;
+        this.filteredUserData = this.userData;
+        // this.userData.slice();
+        this.usersService.updateUserData(this.filteredUserData);
+        this.spinner.hide();
+        this.totalItems = response.totalCount;
+      },
+      (error) => {
+        console.error('Error fetching reports:', error);
+        this.loading = false;
+        this.spinner.hide();
+      }
+    );
+  }
 
   downloadData() {
     this.spinner.show();
-  
-  
+
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-  
+
     const filters: {
       Id?: number;
       walletName?: number;
@@ -181,20 +188,18 @@ export class WalletComponent {
       createdAt?: Date;
       // EndDate?: Date;
       // TransactionReference?: string;
-   
-    } = {}
-  
+    } = {};
+
     if (this.selectedStartDate) {
       filters.createdAt = this.selectedStartDate;
     } else {
-      
       filters.createdAt = thirtyDaysAgo;
     }
-  
+
     // if (this.selectedEndDate) {
     //   filters.EndDate = this.selectedEndDate;
     // }
-  
+
     this.walletService
       .downloadAllWallets(this.p, this.pageSize, filters)
       .subscribe(
@@ -206,7 +211,7 @@ export class WalletComponent {
           // this.usersService.updateUserData(this.filteredUserData);
           this.spinner.hide();
           this.totalItems = response.total;
-  
+
           // Export the data to Excel
           this.exportDataToExcel(this.userData);
         },
@@ -218,23 +223,26 @@ export class WalletComponent {
       );
   }
 
-
   exportDataToExcel(data: any[]) {
     if (!data || data.length === 0) {
       console.error('Data is empty or undefined.');
       return;
     }
-  
+
     const ws: XLSX.WorkSheet = XLSX.utils?.json_to_sheet(data);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-    const excelBuffer: any = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+    const excelBuffer: any = XLSX.write(wb, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
     this.saveExcelFile(excelBuffer, 'exported-data');
   }
-  
-  
+
   saveExcelFile(buffer: any, fileName: string) {
-    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const blob = new Blob([buffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -246,15 +254,12 @@ export class WalletComponent {
     document.body.removeChild(a);
   }
 
-
-
   loadMerchant() {
     this.spinner.show();
 
     const filters = {};
 
     // Log the request payload
-  
 
     this.merchantService
       .getAllUsers(this.currentPage, this.size, filters)
@@ -276,16 +281,15 @@ export class WalletComponent {
       );
   }
 
-
   viewDetails(id: string) {
-    const selectedItem = this.userData.find((item: { id: any; }) => item.id === id);
+    const selectedItem = this.userData.find(
+      (item: { id: any }) => item.id === id
+    );
     if (selectedItem) {
       this.selectedItem = selectedItem;
       console.log(this.selectedItem);
     }
   }
-  
-
 
   search(): void {
     if (this.searchTerm !== '') {
@@ -301,9 +305,17 @@ export class WalletComponent {
         return (
           // username.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
           walletName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-          walletNumber.toString().toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-          beneficiaryAccountName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-          amount.toString().toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+          walletNumber
+            .toString()
+            .toLowerCase()
+            .includes(this.searchTerm.toLowerCase()) ||
+          beneficiaryAccountName
+            .toLowerCase()
+            .includes(this.searchTerm.toLowerCase()) ||
+          amount
+            .toString()
+            .toLowerCase()
+            .includes(this.searchTerm.toLowerCase()) ||
           status.toLowerCase().includes(this.searchTerm.toLowerCase())
         );
       });
@@ -324,7 +336,6 @@ export class WalletComponent {
       }
     }
 
- 
     this.filteredUserData = _.orderBy(
       this.filteredUserData,
       [this.activeSortBy],
@@ -340,5 +351,4 @@ export class WalletComponent {
     }
     return '';
   }
-
 }

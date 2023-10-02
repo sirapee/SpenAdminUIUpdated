@@ -62,11 +62,12 @@
                     <label class="form-label" for="form2Example22"
                       >Password</label
                     >
-
+                    <div class="input-group">
                     <input
                       id="form2Example22"
                       class="form-control"
                       placeholder="password"
+                      [type]="hidePassword ? 'password' : 'text'"
                       [style.border-color]="
                         loginForm.get('password')?.errors &&
                         (loginForm.get('password')?.touched ||
@@ -74,9 +75,20 @@
                           ? '#D81616'
                           : ''
                       "
-                      type="password"
+                    
                       formControlName="password"
                     />
+                    <span class="input-group-text">
+                      <i
+                        class="fa fa-eye cursor-pointer"
+                        (click)="togglePasswordVisibility()"
+                        [ngClass]="{
+                          'fa-eye-slash': hidePassword,
+                          'fa-eye': !hidePassword
+                        }"
+                      ></i>
+                    </span>
+                  </div>
                     <span
                       class="text-danger fs-13"
                       *ngIf="

@@ -123,6 +123,37 @@ export class PayoutComponent {
 
   }
 
+  clearLoadData() {
+    this.spinner.show();
+
+    const filters: {
+      Id?: number;
+
+   
+    } = {}
+
+
+
+    this.payoutService
+      .getAllTransfer(this.p, this.pageSize, filters)
+      .subscribe( 
+        (response) => {
+          this.loading = false;
+          this.userData = response.transactions;
+          this.filteredUserData = this.userData;
+          // this.userData.slice();
+          this.usersService.updateUserData(this.filteredUserData);
+          this.spinner.hide();
+          this.totalItems = response.totalCount;
+        },
+        (error) => {
+          console.error('Error fetching reports:', error);
+          this.loading = false;
+          this.spinner.hide();
+        }
+      );
+  }
+
 
   processedData() {
     this.spinner.show();
