@@ -106,7 +106,7 @@ export class UsersService {
       },
     }).pipe(
       tap((res: any) => {
-        this.selectedDetailsSubject.next(res.data); // Emit the fetched user details
+        this.selectedDetailsSubject.next(res.data); 
       })
     );
   }

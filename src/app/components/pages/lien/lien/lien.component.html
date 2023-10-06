@@ -17,7 +17,7 @@
             <h6 class="header-pretitle">Overview</h6>
 
             <!-- Title -->
-            <h1 class="header-title">Settlement</h1>
+            <h1 class="header-title">Lien Management</h1>
           </div>
 
           <div class="col-auto"></div>
@@ -26,44 +26,7 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-xl-6 col-md-6 col-lg-46stretched_card">
-        <div class="card mb-mob-4">
-            <!-- Card body -->
-            <div class="card-body card_icon_right">
-                <div class="row">
-                    <div class="col">
-                        <h6 class="card_title text-uppercase text-muted mb-0">Total Settled</h6>
-                        <span class="font-weight-bold mb-0">{{ getBalanceByStatus('Settled') | currency: 'NGN '}}</span>
-                    </div>
-                    <div class="col-auto">
-                        <div class="icon_rounded mb-3 icon_success">
-                            <i class="feather ft-dollar-sign" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-6 col-md-6 col-lg-6 stretched_card">
-        <div class="card mb-mob-4">
-            <!-- Card body -->
-            <div class="card-body card_icon_right">
-                <div class="row">
-                    <div class="col">
-                        <h6 class="card_title text-uppercase text-muted mb-0">Total Unsettled</h6>
-                        <span class="font-weight-bold mb-0">{{ getBalanceByStatus('Pending') | currency: 'NGN '}}</span>
-                    </div>
-                    <div class="col-auto">
-                        <div class="icon_rounded mb-3 icon_danger">
-                            <i class="feather ft-dollar-sign" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 
   <!-- for desktop -->
@@ -130,7 +93,7 @@
           data-toggle="modal"
           data-target="#exampleLongModalLong"
         >
-          <i class="fa fa-plus"></i> Batch Regularization
+          <i class="fa fa-plus"></i> Add Lien
         </button>
       </div>
     </div>
@@ -199,7 +162,7 @@
           data-toggle="modal"
           data-target="#exampleLongModalLong"
         >
-          <i class="fa fa-plus"></i>Batch Regularization
+          <i class="fa fa-plus"></i> Add Lien
         </button>
       </div>
     </div>
@@ -212,7 +175,7 @@
         <div class="card-body">
           <div class="row">
             <div class="col-md-6">
-              <h4 class="card_title">Settlement Data</h4>
+              <h4 class="card_title">Lien Data</h4>
             </div>
             <div class="col-md-6 d-flex justify-content-end">
               <a (click)="downloadData()" class="text-dark" style="cursor: pointer;">
@@ -241,7 +204,7 @@
                       class="sortable-header"
                       (click)="sort('sourceWalletName')"
                     >
-                      Wallet Name
+                      Wallet Number
                       <i [ngClass]="getSortIcon('sourceWalletName')"></i>
                     </th>
                     <th
@@ -249,7 +212,7 @@
                       class="sortable-header"
                       (click)="sort('sourceWalletNumber')"
                     >
-                      Wallet Number
+                      Lien Amount
                       <i [ngClass]="getSortIcon('sourceWalletNumber')"></i>
                     </th>
                     <th
@@ -257,7 +220,7 @@
                       class="sortable-header"
                       (click)="sort('beneficiaryAccountName')"
                     >
-                    Transaction Amount
+                    Lien Currency
                       <i [ngClass]="getSortIcon('beneficiaryAccountName')"></i>
                     </th>
                     <th
@@ -265,7 +228,7 @@
                       class="sortable-header"
                       (click)="sort('amount')"
                     >
-                    Transaction Type
+                    Lien Reference
                       <i [ngClass]="getSortIcon('amount')"></i>
                     </th>
                     <th
@@ -273,7 +236,7 @@
                       class="sortable-header"
                       (click)="sort('currency')"
                     >
-                      Settlement Status
+                    Lien Status
                       <i [ngClass]="getSortIcon('currency')"></i>
                     </th>
                     <!-- <th
@@ -390,25 +353,23 @@
                   <tr *ngFor="let data of filteredUserData; let i = index">
                     <td>{{ 10 * p - (9 - i) }}</td>
                     <td style="font-size: 14px">
-                      {{ data?.walletName || "N/A" }}
-                    </td>
-                    <td style="font-size: 14px">
                       {{ data?.walletNumber || "N/A" }}
                     </td>
-
                     <td style="font-size: 14px">
-                        <span class="fs-4">{{
-                          (data?.transactionAmount | currency : "NGN ") || 'N/A'
-                        }}</span>
-                     
-                      </td>
-                    <td style="font-size: 14px">
-                      {{ (data?.transactionType ) || "N/A" }}
+                      {{ data?.lienAmount || "N/A" }}
                     </td>
-
-                    <td [ngClass]="{'text-success': data?.cleared, 'text-danger': !data?.cleared}" style="font-size: 14px">
-                        {{ data?.cleared ? 'Settled' : 'Unsettled' }}
+                    <td style="font-size: 14px">
+                        {{ data?.lienCurrency || "N/A" }}
                       </td>
+                      <td style="font-size: 14px">
+                        {{ data?.lienReference?.slice(0, 16) + '........'  || "N/A" }}
+                      </td>
+                      
+                      <td style="font-size: 14px">
+                        <span [ngClass]="{'text-success': data?.isActive, 'text-danger': !data?.isActive}" style="font-size: 14px">{{(data?.isActive  ? 'Active' : 'inActive') || "N/A" }}</span>
+                      </td>
+
+                 
                       
 
                     <td>
@@ -430,11 +391,36 @@
                             href="javascript:;"
                             data-toggle="modal"
                             data-target=".bd-example-modal-lgg"
-                            (click)="viewDetails(data.id)"
+                            (click)="viewDetails(data)"
                             ><i class="fa fa-eye"></i> View details</a
                           >
-                          <hr class="dropdown-divider"/>
-                          <a class="dropdown-item text-warning" href="javascript:;"  (click)="regularizeWithSweetAlert(data.id)"><i class="fa fa-check"></i> Regularize</a>
+                          <hr class="dropdown-divider" />
+                          <a
+                            class="dropdown-item text-warning"
+                            href="javascript:;"
+                            data-toggle="modal"
+                            data-target="#exampleModalLong2"
+                            (click)="viewDetails(data)"
+                            ><i class="fa fa-edit"></i> Update</a
+                          >
+                          <hr class="dropdown-divider" />
+                          <a
+                            class="dropdown-item text-primary"
+                            href="javascript:;"
+                          
+                            (click)="removeLien(data.lienReference, data.validUntil, data.lienAmount, data.requestedBy, data.walletId)"
+                            ><i class="fa fa-ban"></i> Remove Lien</a
+                          >
+
+                          <hr class="dropdown-divider" />
+                          <a
+                            class="dropdown-item text-secondary"
+                            href="javascript:;"
+                            data-toggle="modal"
+                            data-target="#exampleModalLong"
+                            (click)="viewDetails(data)"
+                            ><i class="fa fa-lock"></i> Unblock and Debit</a
+                          >
 
                         </div>
                       </div>
@@ -459,14 +445,14 @@
 
 
 
-<!-- view by status modal -->
+<!-- filter by status modal -->
 
 <div class="col-lg-6">
   <div class="modal fade bd-example-modal-lg">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Filter by Settlement Status</h5>
+          <h5 class="modal-title">Filter by  Status</h5>
           <button type="button" class="close" data-dismiss="modal">
             <span>&times;</span>
           </button>
@@ -483,8 +469,8 @@
                 class="form-control"
               >
                 <option value="" selected disabled>Select status</option>
-                <option value="true">Settled</option>
-                <option value="false">Unsettled</option>
+                <option value="true">Active</option>
+                <option value="false">inActive</option>
               </select>
               <div class="input-group-append">
                 <button
@@ -511,96 +497,14 @@
   </div>
 </div>
 
-<!-- view details modal -->
 
-<div class="col-lg-6">
-  <div class="modal fade bd-example-modal-lgg">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Account Settlement Details</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="form-group row">
-            <div class="container">
-              <div class="row align-items-center">
-                <div class="col coll">
-                  <p>
-                    <strong>Wallet Number:</strong>
-                    {{ selectedItem?.walletNumber || "N/A" }}
-                  </p>
-                  <p>
-                    <strong>Transaction Date:</strong>
-                    {{
-                      (selectedItem?.transactionDate | date ) || "N/A"
-                    }}
-                  </p>
-
-                  <p>
-                    <strong>Transaction Amount:</strong>
-                    {{ (selectedItem?.transactionAmount ) || "N/A" }}
-                  </p>
-
-                  <p>
-                    <strong>Wallet Name:</strong>
-                    {{ selectedItem?.walletName || "N/A" }}
-                  </p>
-                  <p>
-                    <strong>Transaction Currency:</strong>
-                    {{ (selectedItem?.transactionCurrency ) || "N/A" }}
-                  </p>
-                </div>
-                <div class="col coll">
-                  <p>
-                    <strong>Narration:</strong>
-                    {{ selectedItem?.narration || "N/A" }}
-                  </p>
-                  <p>
-                    <strong>Value Date:</strong>
-                    {{
-                      selectedItem?.valueDate
-                        | date : "short" || "N/A"
-                    }}
-                  </p>
-
-                  <p>
-                    <strong>Transaction Type:</strong>
-                    {{ selectedItem?.transactionType || "N/A" }}
-                  </p>
-
-                  <p></p>
-
-                  <p>
-                    <strong>Transaction Status:</strong>
-                    {{ selectedItem?.transactionStatus || "N/A" }}
-                  </p>
-
-                  <p >
-                    <strong >Settlement Status:</strong>
-                    <span [ngClass]="{'text-success': selectedItem?.cleared, 'text-danger': !selectedItem?.cleared}" style="font-size: 14px">{{(selectedItem?.cleared  ? 'Settled' : 'Unsettled') || "N/A" }}</span>
-                  </p>
-
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="regularizeWithSweetAlert(selectedItem.id)">Regularize</button>
-          <button type="button" class="btn btn-light" data-dismiss="modal">
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- <app-add-wallet></app-add-wallet> -->
 
 <!-- <app-add-wallet></app-add-wallet> -->
 
-<app-regularize></app-regularize>
+<app-add-lien></app-add-lien>
+
+<app-update-lien [selected]="selectedDetails"></app-update-lien>
+
+

@@ -1,0 +1,83 @@
+
+<ngx-spinner
+  bdColor="rgba(0,0,0,0.5)"
+  size="medium"
+  color="#d81616"
+  type="ball-pulse"
+  [fullScreen]="true"
+></ngx-spinner>
+
+<div class="col-lg-6 stretched_card mt-mob-4">
+    <div class="">
+      <div class="">
+        <div class="modal fade" id="exampleLongModalLong">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Add Lien</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                  <span>&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+              
+                <form [formGroup]="lienForm">
+                    <div class="form-group">
+                      <label for="walletNumber">Wallet Number<span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" id="walletNumber" formControlName="walletNumber" required>
+                    </div>
+                  
+                    <div class="form-group">
+                      <label for="lienAmount">Lien Amount</label>
+                      <input type="text" class="form-control" id="lienAmount" formControlName="lienAmount">
+                    </div>
+                  
+                    <div class="form-group">
+                      <label for="lienReference">Lien Reference</label>
+                      <input type="text" class="form-control" id="lienReference" formControlName="lienReference">
+                    </div>
+                  
+                    <div class="form-group">
+                      <label for="validUntil">Valid Until</label>
+                      <input type="date" class="form-control" id="validUntil" formControlName="validUntil">
+                    </div>
+
+<!--                         
+                    <div class="form-group">
+                        <label for="requestedBy">Requested By</label>
+                        <input type="text" class="form-control" id="requestedBy" formControlName="requestedBy">
+                      </div> -->
+                  
+                    <div class="form-group">
+                      <label for="lienRemarks">Lien Remarks</label>
+                      <textarea class="form-control" id="lienRemarks" formControlName="lienRemarks"></textarea>
+                    </div>
+              
+        
+                  </form>
+                  
+              </div>
+              <div class="modal-footer">
+                <button
+                [disabled]="lienForm.invalid"
+                  type="button"
+                 (click)=" submit()"
+                  class="btn btn-primary"
+                >
+                  Submit
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-light btn-close"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

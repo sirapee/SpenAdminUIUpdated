@@ -1,0 +1,269 @@
+<div
+  class="modal fade right"
+  id="exampleModalLong2"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-right">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel2">
+          <i class="fa fa-user-edit"></i> Update Lien
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <h5><i class="fa fa-envelope"></i>Lien Reference</h5>
+              <input
+                type="text"
+                [(ngModel)]="selectedDetails && selectedDetails.lienReference"
+                class="form-control"
+              />
+            </div>
+            <div class="col-md-6">
+              <h5><i class="fa fa-user"></i>Lien Amount</h5>
+              <input
+                type="text"
+                [(ngModel)]="selectedDetails && selectedDetails.lienAmount"
+                class="form-control"
+              />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-0">
+              <h5><i class="fa fa-user"></i>Requested By</h5>
+              <input
+              style="cursor: not-allowed;"
+                type="text"
+                [(ngModel)]="selectedDetails && selectedDetails.requestedBy"
+                [ngModelOptions]="{ standalone: true }"
+                class="form-control"
+                readonly
+              />
+            </div>
+            <div class="col-md-6">
+              <h5><i class="fa fa-user"></i>Wallet Id</h5>
+              <input
+              style="cursor: not-allowed;"
+                type="text"
+                [(ngModel)]="selectedDetails && selectedDetails.walletId"
+                [ngModelOptions]="{ standalone: true }"
+                class="form-control"
+                readonly
+              />
+            </div>
+            <div class="col-md-6">
+                <h5><i class="fa fa-user"></i>Validity Date</h5>
+                <input
+                type="date"
+                [ngModel]="transformDateForInput(selectedDetails?.validUntil)"
+                (ngModelChange)="selectedDetails.validUntil = $event"
+                [ngModelOptions]="{ standalone: true }"
+                class="form-control"
+              />
+              
+              </div>
+          </div>
+
+
+
+        </div>
+      </div>
+      <div class="modal-footer d-flex justify-content-between">
+        <button
+          type="button"
+          class="btn btn-secondary btn-close"
+          data-dismiss="modal"
+        >
+          <i class="fa fa-times"></i> Close
+        </button>
+        <button type="button" class="btn btn-primary" (click)="updateLien()">
+          <i class="fa fa-save"></i> Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- view details modal -->
+
+<div class="col-lg-6">
+    <div class="modal fade bd-example-modal-lgg">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Lien Details</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group row">
+              <div class="container">
+                <div class="row align-items-center">
+                  <div class="col coll">
+                    <p>
+                      <strong>Wallet Number:</strong>
+                      {{ selectedDetails?.walletNumber || "N/A" }}
+                    </p>
+                    <p>
+                      <strong>Start Date:</strong>
+                      {{
+                        (selectedDetails?.lienStartDate | date ) || "N/A"
+                      }}
+                    </p>
+  
+                    <p>
+                      <strong>Lien Amount:</strong>
+                      {{ (selectedDetails?.lienAmount ) || "N/A" }}
+                    </p>
+  
+             
+                    <p>
+                      <strong> Currency:</strong>
+                      {{ (selectedDetails?.lienCurrency ) || "N/A" }}
+                    </p>
+                  </div>
+                  <div class="col coll">
+                    <p>
+                      <strong>Narration:</strong>
+                      {{ selectedDetails?.lienRemarks || "N/A" }}
+                    </p>
+                    <p>
+                      <strong>Validity Date:</strong>
+                      {{
+                        selectedDetails?.validUntil
+                          | date : "short" || "N/A"
+                      }}
+                    </p>
+  
+                 
+  
+                    <p >
+                      <strong >Status:</strong>
+                      <span [ngClass]="{'text-success': selectedDetails?.isActive, 'text-danger': !selectedDetails?.isActive}" style="font-size: 14px">{{(selectedDetails?.isActive  ? 'Active' : 'inActive') || "N/A" }}</span>
+                    </p>
+  
+                    <p>
+                      <strong>Lien Reference:</strong>
+                      {{ selectedDetails?.lienReference || "N/A" }}
+                    </p>
+  
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-primary" (click)="regularizeWithSweetAlert(selectedItem.id)">Regularize</button> -->
+            <button type="button" class="btn btn-light" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- unblock and debit -->
+
+  <div
+  class="modal fade right"
+  id="exampleModalLong"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-right">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel2">
+          <i class="fa fa-user-edit"></i> Unblock and Debit
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <h5>Lien Reference</h5>
+              <input
+                type="text"
+                [(ngModel)]="selectedDetails && selectedDetails.lienReference"
+                class="form-control"
+              />
+            </div>
+            <div class="col-md-6">
+                <label for="merchantId"> Event Lien Amount<span class="text-danger">*</span></label>
+              <!-- <h5>Event Lien Amount</h5> -->
+              <input
+                type="number"
+                [(ngModel)]="selectedDetails && selectedDetails.eventLienAmount"
+                class="form-control"
+              />
+            </div>
+          </div>
+
+          <div class="row">
+       
+            <div class="col-md-6">
+              <h5> Wallet Id</h5>
+              <input
+              style="cursor: not-allowed;"
+                type="text"
+                [(ngModel)]="selectedDetails && selectedDetails.walletId"
+                [ngModelOptions]="{ standalone: true }"
+                class="form-control"
+                readonly
+              />
+            </div>
+            <div class="col-md-6">
+                <h5> Expiring Date</h5>
+                <input
+                type="date"
+                [ngModel]="transformDateForInput(selectedDetails?.validUntil)"
+                (ngModelChange)="selectedDetails.validUntil = $event"
+                [ngModelOptions]="{ standalone: true }"
+                class="form-control"
+              />
+              
+              </div>
+          </div>
+
+
+
+        </div>
+      </div>
+      <div class="modal-footer d-flex justify-content-between">
+        <button
+          type="button"
+          class="btn btn-secondary btn-close"
+          data-dismiss="modal"
+        >
+          <i class="fa fa-times"></i> Close
+        </button>
+        <button type="button" class="btn btn-primary" (click)="unblock()">
+          <i class="fa fa-save"></i> Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

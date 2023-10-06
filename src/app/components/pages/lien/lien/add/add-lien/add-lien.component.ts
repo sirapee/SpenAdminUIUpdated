@@ -3,19 +3,19 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbPaginationConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { LienService } from 'src/app/components/services/lienService/lien.service';
 import { MerchantService } from 'src/app/components/services/merchantService/merchant.service';
 import { SettlementService } from 'src/app/components/services/settlementService/settlement.service';
 import { UsersService } from 'src/app/components/services/userManagement/users.service';
-import { walletService } from 'src/app/components/services/wallet/wallet.service';
 
 @Component({
-  selector: 'app-regularize',
-  templateUrl: './regularize.component.html',
-  styleUrls: ['./regularize.component.css']
+  selector: 'app-add-lien',
+  templateUrl: './add-lien.component.html',
+  styleUrls: ['./add-lien.component.css']
 })
-export class RegularizeComponent {
+export class AddLienComponent {
 
-  addForm!: FormGroup;
+  lienForm!: FormGroup;
 
   currentPage: number = 1; // Current page number
   pageSize: number = 100;
@@ -26,10 +26,11 @@ export class RegularizeComponent {
     private notification: ToastrService,
     private spinner: NgxSpinnerService,
     // private payoutService: PayoutService,
-    private walletService : walletService,
+
     private merchantService : MerchantService,
     private settlementService : SettlementService,
     private fb: FormBuilder,
+    private lienService : LienService,
     config: NgbPaginationConfig
     ) {
   
@@ -39,14 +40,14 @@ export class RegularizeComponent {
 
   ngOnInit(): void {
 
-    this.addForm =
+    this.lienForm =
      this.fb.group({
-      id: ['',],
-      walletNumber: ['',],
-      transactionId: ['',],
-      merchantId: ['', Validators.required],
-      startDate: ['', ],
-      endDate: ['',],
+      walletNumber: ['', Validators.required],
+      lienAmount: [''],
+      lienReference: [''],
+      validUntil: [null],
+      lienRemarks: [''],
+      requestedBy: ['']
       // status: [''],
     });
 
@@ -86,16 +87,16 @@ export class RegularizeComponent {
 
 
   submit() {
-    if (this.addForm.valid) {
+    if (this.lienForm.valid) {
       this.spinner.show();
   
 
   
-      this.settlementService.regularise(this.addForm.value).subscribe(
+      this.lienService.createLien(this.lienForm.value).subscribe(
         (response: any) => {
           if (response.isSuccessful) {
             this.notification.success(response.responseMessage);
-            this.addForm.reset();
+            this.lienForm.reset();
             this.spinner.hide();
             location.reload();
           } else {

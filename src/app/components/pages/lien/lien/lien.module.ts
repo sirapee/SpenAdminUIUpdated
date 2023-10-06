@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, DecimalPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
-import { SettlementRoutingModule } from './settlement-routing.module';
-import { SettlementComponent } from './settlement.component';
+import { LienRoutingModule } from './lien-routing.module';
+import { LienComponent } from './lien.component';
+import { AddLienComponent } from './add/add-lien/add-lien.component';
+import { UpdateLienComponent } from './update/update-lien/update-lien.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
@@ -10,22 +12,17 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { TimeagoModule } from 'ngx-timeago';
-import { RegularizeComponent } from '../regularize/regularize/regularize.component';
-import { AddLienComponent } from '../../lien/lien/add/add-lien/add-lien.component';
-import { UpdateLienComponent } from '../../lien/lien/update/update-lien/update-lien.component';
-// import { AmountPipe } from '../../wallets/amount.pipe';
 
 
 @NgModule({
   declarations: [
-    SettlementComponent,
-    RegularizeComponent,
- 
-    // AmountPipe
+    LienComponent,
+    AddLienComponent,
+    UpdateLienComponent
   ],
   imports: [
     CommonModule,
-    SettlementRoutingModule,
+    LienRoutingModule,
     NgxPaginationModule,
     FormsModule,
     ReactiveFormsModule,
@@ -34,8 +31,6 @@ import { UpdateLienComponent } from '../../lien/lien/update/update-lien/update-l
     BsDatepickerModule.forRoot(),
     TimeagoModule.forRoot(),
     NgbPaginationModule
-  ],
-  providers: [DecimalPipe], 
-  
+  ]
 })
-export class SettlementModule { }
+export class LienModule { }
