@@ -67,6 +67,11 @@ const routes: Routes = [
       },
 
       {
+        path: 'lien-management',
+        loadChildren: () => import('../../pages/lien/lien/lien.module').then(m => m.LienModule)
+      },
+
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',

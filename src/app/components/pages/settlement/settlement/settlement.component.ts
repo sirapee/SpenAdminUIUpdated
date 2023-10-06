@@ -203,7 +203,7 @@ export class SettlementComponent {
       if (result.isConfirmed) {
         const requestObject = {
           id: id
-          // Add other properties if required by the API
+    
         };
   
         this.performRegularizeAction(requestObject);
@@ -227,7 +227,7 @@ export class SettlementComponent {
             text: response.responseMessage,
             confirmButtonText: 'OK'
           });
-          // Handle additional success action if needed
+        
         } else {
           Swal.fire({
             icon: 'error',
@@ -235,7 +235,7 @@ export class SettlementComponent {
             text: response.responseMessage,
             confirmButtonText: 'OK'
           });
-          // Handle additional error action if needed
+        
         }
       },
       (error) => {
@@ -246,7 +246,7 @@ export class SettlementComponent {
           text: error.error.responseMessage || error.error.message,
           confirmButtonText: 'OK'
         });
-        // Handle additional error action if needed
+  
       }
     );
   }

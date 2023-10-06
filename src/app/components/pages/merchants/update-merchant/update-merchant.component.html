@@ -690,6 +690,114 @@
                 </div>
               </div>
             </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Funding Charge</label>
+                  <input
+                    type="number"
+                    [(ngModel)]="
+                      selectedDetails &&
+                      selectedDetails?.clientConfiguration?.clientCharge
+                        .fundingCharge
+                    "
+                    [ngModelOptions]="{ standalone: true }"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Termination Charge</label>
+                  <input
+                    type="number"
+                    [(ngModel)]="
+                      selectedDetails &&
+                      selectedDetails?.clientConfiguration?.clientCharge
+                        .terminationCharge
+                    "
+                    [ngModelOptions]="{ standalone: true }"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>virtual Account CollectionCharge Is Flat</label>
+                  <select
+                    [(ngModel)]="
+                      selectedDetails &&
+                      selectedDetails?.clientConfiguration?.clientCharge
+                        .virtualAccountCollectionChargeIsFlat
+                    "
+                    [ngModelOptions]="{ standalone: true }"
+                    class="form-control"
+                  >
+                    <option value="" selected>Select</option>
+                    <option [value]="true">Yes</option>
+                    <option [value]="false">No</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Apply Rolling Reserve</label>
+                  <select
+                    [(ngModel)]="
+                      selectedDetails &&
+                      selectedDetails?.clientConfiguration?.clientCharge
+                        .applyRollingReserve
+                    "
+                    [ngModelOptions]="{ standalone: true }"
+                    class="form-control"
+                  >
+                    <option value="" selected>Select</option>
+                    <option [value]="true">Yes</option>
+                    <option [value]="false">No</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Settlement Window For Checkout</label>
+                  <input
+                    type="number"
+                    [(ngModel)]="
+                      selectedDetails &&
+                      selectedDetails?.clientConfiguration?.clientCharge
+                        .settlementWindowForCheckout
+                    "
+                    [ngModelOptions]="{ standalone: true }"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Rolling Reserve Percentage</label>
+                  <input
+                    type="number"
+                    [(ngModel)]="
+                      selectedDetails &&
+                      selectedDetails?.clientConfiguration?.clientCharge
+                        .rollingReservePercentage
+                    "
+                    [ngModelOptions]="{ standalone: true }"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+            </div>
           </form>
         </div>
       </div>
