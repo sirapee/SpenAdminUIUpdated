@@ -173,14 +173,6 @@ onPageChange(newPage: number) {
 
 
 
-
-
-
-
-  
-
-
-
 downloadData() {
   this.spinner.show();
 
@@ -285,18 +277,18 @@ search(): void {
     this.filteredUserData = this.userData.filter((result: any) => {
       // Add null checks before accessing properties for filtering
       // const username = result.username || '';
-      const walletName = result.walletName || '';
+      const lienAmount = result.lienAmount || '';
       const walletNumber = result.walletNumber || '';
       const beneficiaryAccountName = result.beneficiaryAccountName || '';
-      const amount = result.walletBalance || '';
+      const lienReference = result.lienReference || '';
       const status = result.transactionStatus || '';
 
       return (
         // username.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        walletName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        lienAmount.toString().toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         walletNumber.toString().toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         beneficiaryAccountName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        amount.toString().toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        lienReference.toString().toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         status.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     });
