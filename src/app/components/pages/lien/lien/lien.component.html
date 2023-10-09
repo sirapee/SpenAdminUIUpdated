@@ -407,13 +407,14 @@
                           <a
                             class="dropdown-item text-primary"
                             href="javascript:;"
-                          
+                            *ngIf="data.isActive === true"
                             (click)="removeLien(data.lienReference, data.validUntil, data.lienAmount, data.requestedBy, data.walletId)"
                             ><i class="fa fa-ban"></i> Remove Lien</a
                           >
 
                           <hr class="dropdown-divider" />
                           <a
+                          *ngIf="data.isActive === true"
                             class="dropdown-item text-secondary"
                             href="javascript:;"
                             data-toggle="modal"

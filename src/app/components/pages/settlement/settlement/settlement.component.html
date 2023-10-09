@@ -434,7 +434,7 @@
                             ><i class="fa fa-eye"></i> View details</a
                           >
                           <hr class="dropdown-divider"/>
-                          <a class="dropdown-item text-warning" href="javascript:;"  (click)="regularizeWithSweetAlert(data.id)"><i class="fa fa-check"></i> Regularize</a>
+                          <a *ngIf="data.cleared === false" class="dropdown-item text-warning" href="javascript:;"  (click)="regularizeWithSweetAlert(data.id)"><i class="fa fa-check"></i> Regularize</a>
 
                         </div>
                       </div>
