@@ -1,0 +1,723 @@
+<ngx-spinner
+  bdColor="rgba(0,0,0,0.5)"
+  size="medium"
+  color="#d81616"
+  type="ball-pulse"
+  [fullScreen]="true"
+></ngx-spinner>
+
+<div class="main-content-inner">
+  <div class="header">
+    <div class="">
+      <!-- Body -->
+      <div class="header-body align-items-center">
+        <div class="row align-items-end">
+          <div class="col">
+            <!-- Pretitle -->
+            <h6 class="header-pretitle">Overview</h6>
+
+            <!-- Title -->
+            <h1 class="header-title">Transactions</h1>
+          </div>
+
+          <div class="col-auto"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- for desktop -->
+  <div class="d-none d-md-block">
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input
+            type="text"
+            name="searchTerm"
+            [(ngModel)]="searchTerm"
+            class="form-control"
+            placeholder="Search"
+            (input)="search()"
+          />
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="button">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-md-6 text-md-right mt-md-0 mt-3 d-flex justify-content-end"
+      >
+   
+        <!-- <button
+          class="btn btn-primary ml-0 ml-md-2 mt-2 mt-md-0"
+          data-toggle="modal"
+          data-target="#exampleLongModalLong"
+        >
+          <i class="fa fa-plus"></i> Create transactions
+        </button> -->
+
+        <div class="dropdown mt-2">
+            <button
+              class="btn btn-dark"
+              type="button"
+              id="filterDropdown"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            ><i class="fa fa-plus"></i>
+              Create transactions
+            </button>
+            <div class="dropdown-menu" aria-labelledby="filterDropdown">
+                <button
+                class="dropdown-item"
+                data-toggle="modal"
+                data-target="#exampleLongModalLong"
+              >
+                 Cross-Currency
+              </button>
+
+              <!-- <button
+                class="dropdown-item"
+                data-toggle="modal"
+                data-target=".bd-example-modal-lgg"
+              >
+                Bulk transactions
+              </button> -->
+              <button
+                class="dropdown-item"
+                data-toggle="modal"
+                data-target="#myModal2"
+              >
+                Credit Merchant
+              </button>
+  
+               <button
+              class="dropdown-item"
+              data-toggle="modal"
+              data-target=".bd-example-modal-lg"
+            >
+            Debit merchant
+            </button> 
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- for mobile -->
+
+  <div class="d-md-none">
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input
+            type="text"
+            name="searchTerm"
+            [(ngModel)]="searchTerm"
+            class="form-control"
+            placeholder="Search"
+            (input)="search()"
+          />
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="button">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 text-md-right">
+        <!-- <div class="dropdown mt-2">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="filterDropdown"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Filter Options
+          </button>
+          <div class="dropdown-menu" aria-labelledby="filterDropdown">
+        
+            <button
+              class="dropdown-item"
+              data-toggle="modal"
+              data-target=".bd-example-modal-lggg"
+            >
+              <i class="fa fa-filter"></i> Filter by Status
+            </button>
+
+       
+          </div>
+        </div> -->
+
+        <div class="dropdown mt-2">
+          <button
+            class="btn btn-dark"
+            type="button"
+            id="filterDropdown"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          ><i class="fa fa-plus"></i>
+            Create transactions
+          </button>
+          <div class="dropdown-menu" aria-labelledby="filterDropdown">
+              <button
+              class="dropdown-item"
+              data-toggle="modal"
+              data-target="#exampleLongModalLong"
+            >
+               Cross-Currency
+            </button>
+
+            <!-- <button
+              class="dropdown-item"
+              data-toggle="modal"
+              data-target=".bd-example-modal-lgg"
+            >
+              Bulk transactions
+            </button> -->
+            <button
+              class="dropdown-item"
+              data-toggle="modal"
+              data-target="#myModal2"
+            >
+              Credit Merchant
+            </button>
+
+             <button
+            class="dropdown-item"
+            data-toggle="modal"
+            data-target=".bd-example-modal-lg"
+          >
+          Debit merchant
+          </button> 
+          </div>
+        </div>
+        <!-- <button
+          class="btn btn-primary ml-0 ml-md-2 mt-2 mt-md-0"
+          data-toggle="modal"
+          data-target="#exampleLongModalLong"
+        >
+          <i class="fa fa-plus"></i> Create transactions
+        </button> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Progress Table start -->
+    <div class="col-12 mt-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <h4 class="card_title">Transaction Data ({{totalItems}})</h4>
+            </div>
+            <div class="col-md-6 d-flex justify-content-end">
+
+              <button
+              style="height: 28px; margin-right: 5px;"
+              class="btn btn-primary ml-0 ml-md-2 mb-2 mt-md-0"
+              data-toggle="modal"
+              data-target=".bd-example-modal-lggg"
+            >
+              <i class="fa fa-filter"></i>Filter
+            </button>
+          
+              <a (click)="downloadData()" class="text-dark mb-2" style="cursor: pointer;">
+                <span class="badge badge-dark">
+                  <i class="fa fa-download"></i> Export
+                </span>
+              </a>
+
+              
+
+            </div>
+
+        
+   
+          </div>
+
+          <div class="card-body" *ngIf="!filteredUserData?.length && !loading">
+            <div class="alert alert-dark text-center">
+              No data to display at the moment
+            </div>
+          </div>
+          <div class="single-table">
+            <div class="table-responsive">
+              <!-- Table contents here -->
+
+              <table class="table table-hover progress-table text-center">
+                <thead class="text-uppercase red-table-head">
+                  <tr>
+                    <th>S/N</th>
+                    <th
+                      scope="col"
+                      class="sortable-header"
+                      (click)="sort('sourceWalletName')"
+                    >
+                      Wallet Name
+                      <i [ngClass]="getSortIcon('sourceWalletName')"></i>
+                    </th>
+                    <th
+                      scope="col"
+                      class="sortable-header"
+                      (click)="sort('sourceWalletNumber')"
+                    >
+                      Wallet Number
+                      <i [ngClass]="getSortIcon('sourceWalletNumber')"></i>
+                    </th>
+                    <th
+                      scope="col"
+                      class="sortable-header"
+                      (click)="sort('beneficiaryAccountName')"
+                    >
+                    Trans ID
+                      <i [ngClass]="getSortIcon('beneficiaryAccountName')"></i>
+                    </th>
+                    <th
+                      scope="col"
+                      class="sortable-header"
+                      (click)="sort('amount')"
+                    >
+                    Amount
+                      <i [ngClass]="getSortIcon('amount')"></i>
+                    </th>
+                    <th
+                      scope="col"
+                      class="sortable-header"
+                      (click)="sort('currency')"
+                    >
+                    Currency
+                      <i [ngClass]="getSortIcon('currency')"></i>
+                    </th>
+                    <th
+                      scope="col"
+                      class="sortable-header"
+                      (click)="sort('charge')"
+                    >
+                    Trans Type <i [ngClass]="getSortIcon('charge')"></i>
+                    </th>
+
+                    <th
+                    scope="col"
+                    class="sortable-header"
+                    (click)="sort('charge')"
+                  >
+                  Trans Date<i [ngClass]="getSortIcon('charge')"></i>
+                  </th>
+
+                    <th scope="col" class="sortable-header">Action<i></i></th>
+                  </tr>
+                </thead>
+                <tbody
+                  class="list fs-base"
+                  *ngIf="loading && filteredUserData?.length > 0"
+                >
+                  <tr *ngFor="let loop of [1, 2, 3, 4]">
+                    <td>
+                      <ngx-skeleton-loader
+                        count="1"
+                        [theme]="{ width: '25px' }"
+                        appearance="line"
+                      ></ngx-skeleton-loader>
+                    </td>
+                    <td>
+                      <ngx-skeleton-loader
+                        count="1"
+                        appearance="circle"
+                      ></ngx-skeleton-loader>
+                      <span
+                        style="
+                          display: inline-block;
+                          top: -13px;
+                          position: relative;
+                        "
+                        ><ngx-skeleton-loader
+                          count="1"
+                          [theme]="{ width: '150px' }"
+                          appearance="line"
+                        ></ngx-skeleton-loader
+                      ></span>
+                    </td>
+                    <td>
+                      <ngx-skeleton-loader
+                        count="1"
+                        [theme]="{ width: '100px' }"
+                        appearance="line"
+                      ></ngx-skeleton-loader>
+                    </td>
+                    <td>
+                      <ngx-skeleton-loader
+                        count="1"
+                        [theme]="{ width: '25px' }"
+                        appearance="line"
+                      ></ngx-skeleton-loader>
+                    </td>
+                    <td>
+                      <ngx-skeleton-loader
+                        count="1"
+                        [theme]="{ width: '50px' }"
+                        appearance="line"
+                      ></ngx-skeleton-loader>
+                      <br />
+                      <ngx-skeleton-loader
+                        count="1"
+                        [theme]="{ width: '70px' }"
+                        appearance="line"
+                      ></ngx-skeleton-loader>
+                    </td>
+                    <td>
+                      <ngx-skeleton-loader
+                        count="1"
+                        [theme]="{ width: '50px' }"
+                        appearance="line"
+                      ></ngx-skeleton-loader>
+                      <br />
+                      <ngx-skeleton-loader
+                        count="1"
+                        [theme]="{ width: '70px' }"
+                        appearance="line"
+                      ></ngx-skeleton-loader>
+                    </td>
+                    <td>
+                      <ngx-skeleton-loader
+                        count="1"
+                        [theme]="{ width: '50px' }"
+                        appearance="line"
+                      ></ngx-skeleton-loader>
+                      <br />
+                      <ngx-skeleton-loader
+                        count="1"
+                        [theme]="{ width: '70px' }"
+                        appearance="line"
+                      ></ngx-skeleton-loader>
+                    </td>
+                    <td>
+                      <div class="dropdown">
+                        <a
+                          class="dropdown-ellipses dropdown-toggle"
+                          href="#"
+                          role="button"
+                          data-bs-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        >
+                          <i class="fe fe-more-vertical"></i>
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody>
+                  <tr *ngFor="let data of filteredUserData; let i = index">
+                    <td>{{ 10 * p - (9 - i) }}</td>
+                    <td style="font-size: 14px">
+                      {{ data?.walletName || "N/A" }}
+                    </td>
+                    <td style="font-size: 14px">
+                      {{ data?.walletNumber || "N/A" }}
+                    </td>
+                    <td style="font-size: 14px">
+                        {{ data?.transactionId || "N/A" }}
+                      </td>
+                      <td style="font-size: 14px">
+                        {{ data?.formattedAmount  || "N/A" }}
+                      </td>
+
+                      <td style="font-size: 14px">
+                        {{ data?.transactionCurrency || "N/A" }}
+                      </td>
+                      <td style="font-size: 14px">
+                        {{ data?.transactionType  || "N/A" }}
+                      </td>
+
+                      <td style="font-size: 14px">
+                        <span class="fs-4">{{
+                          data?.valueDate | date : "medium"
+                        }}</span>
+                        <small class="d-block text-muted">{{
+                          data?.valueDate | timeago : live
+                        }}</small>
+                      </td>
+                 
+<!--                       
+                      <td style="font-size: 14px">
+                        <span [ngClass]="{'text-success': data?.isActive, 'text-danger': !data?.isActive}" style="font-size: 14px">{{(data?.isActive  ? 'Active' : 'inActive') || "N/A" }}</span>
+                      </td> -->
+
+                 
+                      
+
+                    <td>
+                      <div class="dropdown">
+                        <button
+                          class="dropdown-ellipsis dropdown-toggle"
+                          type="button"
+                          id="dropdownMenuButton"
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        ></button>
+                        <div
+                          class="dropdown-menu"
+                          aria-labelledby="dropdownMenuButton"
+                        >
+                          <a
+                            class="dropdown-item"
+                            href="javascript:;"
+                            data-toggle="modal"
+                            data-target=".bd-example-modal-lgggg"
+                            (click)="viewDetailss(data.id)"
+                            ><i class="fa fa-eye"></i> View details</a
+                          >
+                          <!-- <hr class="dropdown-divider" />
+                          <a
+                            class="dropdown-item text-warning"
+                            href="javascript:;"
+                            data-toggle="modal"
+                            data-target="#exampleModalLong2"
+                            (click)="viewDetails(data)"
+                            ><i class="fa fa-edit"></i> Update</a
+                          >
+                          <hr class="dropdown-divider" />
+                          <a
+                            class="dropdown-item text-primary"
+                            href="javascript:;"
+                            *ngIf="data.isActive === true"
+                            (click)="removeLien(data.lienReference, data.validUntil, data.lienAmount, data.requestedBy, data.walletId)"
+                            ><i class="fa fa-ban"></i> Remove Lien</a
+                          >
+
+                          <hr class="dropdown-divider" />
+                          <a
+                          *ngIf="data.isActive === true"
+                            class="dropdown-item text-secondary"
+                            href="javascript:;"
+                            data-toggle="modal"
+                            data-target="#exampleModalLong"
+                            (click)="viewDetails(data)"
+                            ><i class="fa fa-lock"></i> Unblock and Debit</a
+                          > -->
+
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <ngb-pagination
+                [(page)]="p"
+                [pageSize]="pageSize"
+                [collectionSize]="totalItems"
+                (pageChange)="onPageChange($event)"
+              ></ngb-pagination>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Progress Table end -->
+  </div>
+</div>
+
+
+
+
+<div class="col-lg-6">
+  <div class="modal fade bd-example-modal-lggg">
+    <div class="modal-dialog modal-ms">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Filter</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+      
+        
+              <form>
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <label for="walletNumber">Wallet Number</label>
+                    <input type="text" class="form-control" [(ngModel)]="walletNumber" [ngModelOptions]="{standalone: true}" name="walletNumber" id="walletNumber">
+                </div>
+                
+                
+                  </div>
+
+                  <div class="form-row">
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <label for="startDate">Start Date</label>
+                        <input
+                          id="startDate"
+                          type="date"
+                          class="form-control"
+                          [(ngModel)]="selectedStartDate"
+                          [ngModelOptions]="{standalone: true}"
+                          placeholder="Select Start Date"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-2 text-center align-self-center">
+                      <span class="arrow">&#8594;</span>
+                      <!-- Arrow symbol (→) -->
+                    </div>
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <label for="endDate">End Date</label>
+                        <input
+                          id="endDate"
+                          type="date"
+                          class="form-control"
+                          [(ngModel)]="selectedEndDate"
+                          [ngModelOptions]="{standalone: true}"
+                          placeholder="Select End Date"
+                        />
+                      </div>
+                    </div>
+                  </div>
+          
+              
+              </form>
+          
+            
+        
+        </div>
+        <div class="modal-footer">
+          <div class="row">
+            <div class="col-md-6 d-flex justify-content-end">
+              <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="clearLoadData()">
+                Clear filter
+              </button>
+            </div>
+
+            <div class="col-md-6 d-flex justify-content-start">
+              <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="loadData()">
+                Filter
+              </button>
+            </div>
+          </div>
+         
+        
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- view details modal -->
+
+<div class="col-lg-6">
+  <div class="modal fade bd-example-modal-lgggg">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Transaction Details</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row">
+            <div class="container">
+              <div class="row align-items-center">
+                <div class="col coll">
+                  <p>
+                    <strong>Wallet Number:</strong>
+                    {{ selectedItem?.walletNumber || "N/A" }}
+                  </p>
+
+                  <p>
+                    <strong>Wallet Name:</strong>
+                    {{ selectedItem?.walletName || "N/A" }}
+                  </p>
+                  <p>
+                    <strong>Value Date:</strong>
+                    {{
+                      (selectedItem?.valueDate | date ) || "N/A"
+                    }}
+                  </p>
+
+                  <p>
+                    <strong>Amount:</strong>
+                    {{ (selectedItem?.formattedAmount ) || "N/A" }}
+                  </p>
+
+           
+                  <p>
+                    <strong> Currency:</strong>
+                    {{ (selectedItem?.transactionCurrency ) || "N/A" }}
+                  </p>
+
+                  <p>
+                    <strong>Entered By:</strong>
+                    {{ selectedItem?.enteredBy || "N/A" }}
+                  </p>
+                </div>
+                <div class="col coll">
+                  <p>
+                    <strong>Narration:</strong>
+                    {{ selectedItem?.narration || "N/A" }}
+                  </p>
+                  <p>
+                    <strong>Transaction Date:</strong>
+                    {{
+                      selectedItem?.transactionDate
+                        | date : "short" || "N/A"
+                    }}
+                  </p>
+
+               
+
+                  <p>
+                    <strong>Transaction Reference:</strong>
+                    {{ selectedItem?.transactionReference || "N/A" }}
+                  </p>
+
+                  <p>
+                    <strong>Transaction Type:</strong>
+                    {{ selectedItem?.transactionType || "N/A" }}
+                  </p>
+
+                  <p>
+                    <strong>Transaction Id:</strong>
+                    {{ selectedItem?.transactionId || "N/A" }}
+                  </p>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-primary" (click)="regularizeWithSweetAlert(selectedItem.id)">Regularize</button> -->
+          <button type="button" class="btn btn-light" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<app-cross-currency></app-cross-currency>
+<app-debit-credit></app-debit-credit>
+
+
+

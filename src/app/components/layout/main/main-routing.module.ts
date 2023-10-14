@@ -72,6 +72,11 @@ const routes: Routes = [
       },
 
       {
+        path: 'transactions',
+        loadChildren: () => import('../../pages/transactions/transactions/transactions.module').then(m => m.TransactionsModule)
+      },
+
+      {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',

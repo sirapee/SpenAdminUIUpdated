@@ -41,7 +41,7 @@ export class AddWalletComponent {
      this.fb.group({
       walletName: ['',  Validators.required],
       merchantId: ['', Validators.required],
-      walletOwnership: [''],
+      walletOwnership: ['merchant'],
       walletCurrency: ['',  Validators.required],
       // status: [''],
     });
