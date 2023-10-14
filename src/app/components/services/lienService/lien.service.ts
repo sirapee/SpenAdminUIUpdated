@@ -17,7 +17,7 @@ export class LienService {
 
   updateUserData(data: any) {
     this.userDataSubject.next(data);
-    console.log(this.userDataSubject);
+    // console.log(this.userDataSubject);
   }
 
   constructor(private http: HttpClient, private datePipe : DatePipe) { }

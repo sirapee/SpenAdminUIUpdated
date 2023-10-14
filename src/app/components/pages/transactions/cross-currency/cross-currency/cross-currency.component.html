@@ -1,0 +1,103 @@
+
+<ngx-spinner
+  bdColor="rgba(0,0,0,0.5)"
+  size="medium"
+  color="#d81616"
+  type="ball-pulse"
+  [fullScreen]="true"
+></ngx-spinner>
+
+<div class="col-lg-6 stretched_card mt-mob-4">
+    <div class="">
+      <div class="">
+        <div class="modal fade" id="exampleLongModalLong">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Cross-Currency</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                  <span>&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="transactionForm">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>Debit Wallet Number</label>
+                          <input formControlName="debitWalletNumber" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>Credit Wallet Number</label>
+                          <input formControlName="creditWalletNumber" class="form-control" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Transaction Amount</label>
+                            <input formControlName="transactionAmount" class="form-control" />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Charge Amount</label>
+                            <input formControlName="chargeAmount" class="form-control" />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Transaction Currency</label>
+                            <input formControlName="transactionCurrency" class="form-control" />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Rate</label>
+                            <input formControlName="rate" class="form-control" />
+                          </div>
+                        </div>
+                      </div>
+                    
+                    
+                  
+                    <div class="form-group">
+                      <label>Narration</label>
+                      <textarea formControlName="narration" class="form-control"></textarea>
+                    </div>
+                  
+             
+                  </form>
+                  
+             </div>
+              <div class="modal-footer">
+                <button
+                [disabled]="transactionForm.invalid"
+                  type="button"
+                 (click)="submit()"
+                  class="btn btn-primary"       
+                >
+                  Submit transaction
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-light btn-close"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,210 @@
+
+
+<div class="modal fade" id="myModal2">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Credit Merchant</h4>
+          <button type="button" class="close" data-dismiss="modal">
+            &times;
+          </button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body">
+            <form [formGroup]="creditForm">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Debit Wallet Number</label>
+                      <input formControlName="debitWalletNumber" class="form-control" />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Credit Wallet Number</label>
+                      <input formControlName="creditWalletNumber" class="form-control" />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Transaction Amount</label>
+                        <input formControlName="transactionAmount" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Charge Amount</label>
+                        <input formControlName="chargeAmount" class="form-control" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Transaction Currency</label>
+                        <input formControlName="transactionCurrency" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Rate</label>
+                        <input formControlName="rate" class="form-control" />
+                      </div>
+                    </div>
+                  </div>
+                
+                
+              
+                <div class="form-group">
+                  <label>Narration</label>
+                  <textarea formControlName="narration" class="form-control"></textarea>
+                </div>
+              
+         
+              </form>
+              
+         </div>
+          <div class="modal-footer">
+            <button
+            [disabled]="creditForm.invalid"
+              type="button"
+             (click)="creditWallet()"
+              class="btn btn-primary"       
+            >
+            Credit Merchant
+            </button>
+            <button
+              type="button"
+              class="btn btn-light btn-close"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Debit wallet -->
+  
+  <div class="col-lg-6">
+    <div class="modal fade bd-example-modal-lg">
+      <div class="modal-dialog modal-ms">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Debit merchant</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="debitForm">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Debit Wallet Number</label>
+                      <input formControlName="debitWalletNumber" class="form-control" />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Credit Wallet Number</label>
+                      <input formControlName="creditWalletNumber" class="form-control" />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Transaction Amount</label>
+                        <input formControlName="transactionAmount" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Charge Amount</label>
+                        <input formControlName="chargeAmount" class="form-control" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Transaction Currency</label>
+                        <input formControlName="transactionCurrency" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Rate</label>
+                        <input formControlName="rate" class="form-control" />
+                      </div>
+                    </div>
+                  </div>
+                
+                
+              
+                <div class="form-group">
+                  <label>Narration</label>
+                  <textarea formControlName="narration" class="form-control"></textarea>
+                </div>
+              
+         
+              </form>
+              
+         </div>
+          <div class="modal-footer">
+            <button
+            [disabled]="debitForm.invalid"
+              type="button"
+             (click)="debitWallet()"
+              class="btn btn-primary"       
+            >
+              Debit Merchant
+            </button>
+            <button
+              type="button"
+              class="btn btn-light btn-close"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Bulk Payment modal -->
+  
+  <div class="col-lg-6">
+    <div class="modal fade bd-example-modal-lgg">
+      <div class="modal-dialog modal-ms">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Bulk Payment</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+        
+          </div>
+          <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="loadData()">Filter</button> -->
+            <button type="button" class="btn btn-light" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
