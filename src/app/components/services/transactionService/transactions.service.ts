@@ -189,5 +189,43 @@ export class TransactionsService {
       },
     })
   }
+
+
+
+  downloadStatement(
+      walletNumber: number,
+    filters: {
+      StartDate?: Date;
+      EndDate?: Date;
+    }
+  ): Observable<any> {
+    let queryParams = new HttpParams()
+      .set('walletNumber', walletNumber.toString())
+     
+
+
+    if (filters.StartDate) {
+      queryParams = queryParams.set('startDate', this.dateToString(filters.StartDate));
+    }
+
+    if (filters.EndDate) {
+      queryParams = queryParams.set('endDate', this.dateToString(filters.EndDate));
+    }
+
+    return this.http.get(`${environment.baseUrl}/transactions/view-download`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+      params: queryParams,
+    });
+  }
+
+  bulkPosting(payload:any){
+    return this.http.post(`${environment.baseUrl}/bulk-processing/bulk-posting/file-upload`, payload , {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    })
+  }
 }
 
