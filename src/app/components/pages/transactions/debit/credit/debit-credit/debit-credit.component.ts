@@ -298,8 +298,8 @@ export class DebitCreditComponent {
       if (response) {
         this.spinner.hide();
         this.allWallets = response.data;
-        this.walletName = this.allWallets.walletName;
-        this.debitCurrency = this.allWallets.walletCurrency;
+        this.walletName = this.allWallets?.walletName;
+        this.debitCurrency = this.allWallets?.walletCurrency;
         this.isFormValid = true;
       
       } else {
@@ -403,7 +403,7 @@ export class DebitCreditComponent {
    
     this.spinner.show();
     const debit = this.debitCurrencies;
-    const credit = this.walletCurrencies;
+    const credit = this.walletCurrency;
   
     this.walletService.getCurrencyPair(debit, credit).subscribe(
       (response: any) => {
