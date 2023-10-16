@@ -131,7 +131,7 @@ export class TransDebitComponent {
       (error) => {
         console.error('API Error:', error);
         this.spinner.hide();
-        this.notification.error('An error occurred while fetching currency rates.');
+        this.notification.error('Failed to retrieve currency rates.');
       }
     );
     
