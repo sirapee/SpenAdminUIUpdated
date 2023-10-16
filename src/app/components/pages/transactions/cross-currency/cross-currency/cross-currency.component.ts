@@ -151,6 +151,8 @@ export class CrossCurrencyComponent {
         this.notification.error('Failed to retrieve currency rates.');
       }
     );
+
+    // ,,,
     
   }
   
