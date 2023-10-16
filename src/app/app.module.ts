@@ -17,12 +17,14 @@ import { SharedModule } from './components/pages/sharedmodule/shared.module';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { TimeagoModule } from 'ngx-timeago';
 import { NgxPaginationModule } from 'ngx-pagination';
+// import { TransDebitComponent } from './components/pages/transactions/transDebit/trans-debit/trans-debit.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     PageNotFoundComponent,
+   
 
 
   ],

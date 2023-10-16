@@ -25,24 +25,50 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label>Debit Wallet Number</label>
-                          <input formControlName="debitWalletNumber" class="form-control" />
+                          <input [(ngModel)]="walletNumber" formControlName="debitWalletNumber" class="form-control" (blur)="getWallet()"/>
+                          <p style="font-weight: bold;">{{walletName}}</p>
+                          <!-- <div *ngIf="transactionForm.get('debitWalletNumber')?.hasError('required') && transactionForm.get('debitWalletNumber')?.touched">
+                            <div class="text-danger">Debit Wallet Number is required.</div>
+                          </div>
+                          <div *ngIf="transactionForm.get('debitWalletNumber')?.hasError('pattern') && transactionForm.get('debitWalletNumber')?.touched">
+                            <div class="text-danger">Invalid input. Please enter only digits.</div>
+                          </div>
+                          <div *ngIf="transactionForm.get('debitWalletNumber')?.hasError('maxlength') && transactionForm.get('debitWalletNumber')?.touched">
+                            <div class="text-danger">Maximum length allowed is 11 digits.</div>
+                          </div> -->
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label>Credit Wallet Number</label>
-                          <input formControlName="creditWalletNumber" class="form-control" />
+                          <input [(ngModel)]="creditWallet" formControlName="creditWalletNumber" class="form-control" (blur)="getCreditWallet()"/>
+                          <p style="font-weight: bold;">{{creditWalletName}}</p>
+                          <!-- <div *ngIf="transactionForm.get('creditWalletNumber')?.hasError('required') && transactionForm.get('creditWalletNumber')?.touched">
+                            <div class="text-danger">Credit Wallet Number is required.</div>
+                          </div>
+                          <div *ngIf="transactionForm.get('creditWalletNumber')?.hasError('pattern') && transactionForm.get('creditWalletNumber')?.touched">
+                            <div class="text-danger">Invalid input. Please enter only digits.</div>
+                          </div>
+                          <div *ngIf="transactionForm.get('creditWalletNumber')?.hasError('maxlength') && transactionForm.get('creditWalletNumber')?.touched">
+                            <div class="text-danger">Maximum length allowed is 11 digits.</div>
+                          </div> -->
                         </div>
                       </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label>Transaction Amount</label>
-                            <input formControlName="transactionAmount" class="form-control" />
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>Transaction Amount</label>
+                          <input formControlName="transactionAmount" class="form-control" />
+                          <!-- <div *ngIf="transactionForm.get('transactionAmount')?.hasError('required') && transactionForm.get('transactionAmount')?.touched">
+                            <div class="text-danger">Transaction Amount is required.</div>
                           </div>
+                          <div *ngIf="transactionForm.get('transactionAmount')?.hasError('pattern') && transactionForm.get('transactionAmount')?.touched">
+                            <div class="text-danger">Invalid input. Please enter only digits.</div>
+                          </div> -->
                         </div>
+                      </div>
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Charge Amount</label>
@@ -55,13 +81,13 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Transaction Currency</label>
-                            <input formControlName="transactionCurrency" class="form-control" />
+                            <input [(ngModel)]="walletCurrency" formControlName="transactionCurrency" class="form-control" readonly/>
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Rate</label>
-                            <input formControlName="rate" class="form-control" />
+                            <input [(ngModel)]="rate" formControlName="rate" class="form-control" readonly/>
                           </div>
                         </div>
                       </div>
@@ -71,6 +97,12 @@
                     <div class="form-group">
                       <label>Narration</label>
                       <textarea formControlName="narration" class="form-control"></textarea>
+                      <!-- <div *ngIf="transactionForm.get('narration')?.hasError('required') && transactionForm.get('narration')?.touched">
+                        <div class="text-danger">Narration is required.</div>
+                      </div>
+                      <div *ngIf="transactionForm.get('narration')?.hasError('pattern') && transactionForm.get('narration')?.touched">
+                        <div class="text-danger">Invalid input. Please enter only letters and spaces.</div>
+                      </div> -->
                     </div>
                   
              
@@ -79,7 +111,7 @@
              </div>
               <div class="modal-footer">
                 <button
-                [disabled]="transactionForm.invalid"
+                [disabled]="transactionForm.invalid || !isFormValid"
                   type="button"
                  (click)="submit()"
                   class="btn btn-primary"       

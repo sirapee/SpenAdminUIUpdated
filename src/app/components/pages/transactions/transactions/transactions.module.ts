@@ -12,6 +12,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { TimeagoModule } from 'ngx-timeago';
 import { CrossCurrencyComponent } from '../cross-currency/cross-currency/cross-currency.component';
 import { DebitCreditComponent } from '../debit/credit/debit-credit/debit-credit.component';
+import { TransDebitComponent } from '../transDebit/trans-debit/trans-debit.component';
 
 
 
@@ -20,7 +21,8 @@ import { DebitCreditComponent } from '../debit/credit/debit-credit/debit-credit.
   declarations: [
     TransactionsComponent,
     CrossCurrencyComponent,
-    DebitCreditComponent
+    DebitCreditComponent,
+    TransDebitComponent
 
   ],
   imports: [

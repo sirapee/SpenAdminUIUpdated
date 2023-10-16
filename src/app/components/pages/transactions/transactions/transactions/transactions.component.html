@@ -26,9 +26,6 @@
     </div>
   </div>
 
-
-
-
   <!-- for desktop -->
   <div class="d-none d-md-block">
     <div class="row mt-4">
@@ -52,7 +49,6 @@
       <div
         class="col-md-6 text-md-right mt-md-0 mt-3 d-flex justify-content-end"
       >
-   
         <!-- <button
           class="btn btn-primary ml-0 ml-md-2 mt-2 mt-md-0"
           data-toggle="modal"
@@ -62,49 +58,61 @@
         </button> -->
 
         <div class="dropdown mt-2">
+          <button
+            class="btn btn-dark"
+            type="button"
+            id="filterDropdown"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <i class="fa fa-plus"></i>
+            Create transactions
+          </button>
+          <div class="dropdown-menu" aria-labelledby="filterDropdown">
             <button
-              class="btn btn-dark"
-              type="button"
-              id="filterDropdown"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            ><i class="fa fa-plus"></i>
-              Create transactions
+              class="dropdown-item"
+              data-toggle="modal"
+              data-target="#exampleLongModalLong"
+            >
+              <i class="fa fa-dollar"></i> Cross Currency
             </button>
-            <div class="dropdown-menu" aria-labelledby="filterDropdown">
-                <button
-                class="dropdown-item"
-                data-toggle="modal"
-                data-target="#exampleLongModalLong"
-              >
-                 Cross-Currency
-              </button>
 
-              <!-- <button
-                class="dropdown-item"
-                data-toggle="modal"
-                data-target=".bd-example-modal-lgg"
-              >
-                Bulk transactions
-              </button> -->
-              <button
-                class="dropdown-item"
-                data-toggle="modal"
-                data-target="#myModal2"
-              >
-                Credit Merchant
-              </button>
-  
-               <button
+            <button
+              class="dropdown-item"
+              data-toggle="modal"
+              data-target="#yourModal1"
+            >
+              <i class="fa fa-cloud-upload"></i> Bulk posting
+            </button>
+            <button
+              class="dropdown-item"
+              data-toggle="modal"
+              data-target="#myModal2"
+            >
+              <i class="fa fa-money"></i>
+              Credit Merchant
+            </button>
+
+            <button
               class="dropdown-item"
               data-toggle="modal"
               data-target=".bd-example-modal-lg"
             >
-            Debit merchant
-            </button> 
-            </div>
+              <i class="fa fa-credit-card"></i>
+              Debit merchant
+            </button>
+
+            <button
+              class="dropdown-item"
+              data-toggle="modal"
+              data-target=".bd-example-modal-lgg"
+            >
+              <i class="fa fa-download"></i>
+              Download Account Statement
+            </button>
           </div>
+        </div>
       </div>
     </div>
   </div>
@@ -164,40 +172,52 @@
             data-toggle="dropdown"
             aria-haspopup="true"
             aria-expanded="false"
-          ><i class="fa fa-plus"></i>
+          >
+            <i class="fa fa-plus"></i>
             Create transactions
           </button>
           <div class="dropdown-menu" aria-labelledby="filterDropdown">
-              <button
+            <button
               class="dropdown-item"
               data-toggle="modal"
               data-target="#exampleLongModalLong"
             >
-               Cross-Currency
+              <i class="fa fa-dollar"></i> Cross Currency
             </button>
 
-            <!-- <button
+            <button
               class="dropdown-item"
               data-toggle="modal"
-              data-target=".bd-example-modal-lgg"
+              data-target="#yourModal1"
             >
-              Bulk transactions
-            </button> -->
+              <i class="fa fa-cloud-upload"></i> Bulk posting
+            </button>
             <button
               class="dropdown-item"
               data-toggle="modal"
               data-target="#myModal2"
             >
+              <i class="fa fa-money"></i>
               Credit Merchant
             </button>
 
-             <button
-            class="dropdown-item"
-            data-toggle="modal"
-            data-target=".bd-example-modal-lg"
-          >
-          Debit merchant
-          </button> 
+            <button
+              class="dropdown-item"
+              data-toggle="modal"
+              data-target=".bd-example-modal-lg"
+            >
+              <i class="fa fa-credit-card"></i>
+              Debit merchant
+            </button>
+
+            <button
+              class="dropdown-item"
+              data-toggle="modal"
+              data-target=".bd-example-modal-lgg"
+            >
+              <i class="fa fa-download"></i>
+              Download Account Statement
+            </button>
           </div>
         </div>
         <!-- <button
@@ -218,31 +238,28 @@
         <div class="card-body">
           <div class="row">
             <div class="col-md-6">
-              <h4 class="card_title">Transaction Data ({{totalItems}})</h4>
+              <h4 class="card_title">Transaction Data ({{ totalItems }})</h4>
             </div>
             <div class="col-md-6 d-flex justify-content-end">
-
               <button
-              style="height: 28px; margin-right: 5px;"
-              class="btn btn-primary ml-0 ml-md-2 mb-2 mt-md-0"
-              data-toggle="modal"
-              data-target=".bd-example-modal-lggg"
-            >
-              <i class="fa fa-filter"></i>Filter
-            </button>
-          
-              <a (click)="downloadData()" class="text-dark mb-2" style="cursor: pointer;">
+                style="height: 28px; margin-right: 5px"
+                class="btn btn-primary ml-0 ml-md-2 mb-2 mt-md-0"
+                data-toggle="modal"
+                data-target=".bd-example-modal-lggg"
+              >
+                <i class="fa fa-filter"></i>Filter
+              </button>
+
+              <a
+                (click)="downloadData()"
+                class="text-dark mb-2"
+                style="cursor: pointer"
+              >
                 <span class="badge badge-dark">
                   <i class="fa fa-download"></i> Export
                 </span>
               </a>
-
-              
-
             </div>
-
-        
-   
           </div>
 
           <div class="card-body" *ngIf="!filteredUserData?.length && !loading">
@@ -279,7 +296,7 @@
                       class="sortable-header"
                       (click)="sort('beneficiaryAccountName')"
                     >
-                    Trans ID
+                      Trans ID
                       <i [ngClass]="getSortIcon('beneficiaryAccountName')"></i>
                     </th>
                     <th
@@ -287,7 +304,7 @@
                       class="sortable-header"
                       (click)="sort('amount')"
                     >
-                    Amount
+                      Amount
                       <i [ngClass]="getSortIcon('amount')"></i>
                     </th>
                     <th
@@ -295,7 +312,7 @@
                       class="sortable-header"
                       (click)="sort('currency')"
                     >
-                    Currency
+                      Currency
                       <i [ngClass]="getSortIcon('currency')"></i>
                     </th>
                     <th
@@ -303,16 +320,16 @@
                       class="sortable-header"
                       (click)="sort('charge')"
                     >
-                    Trans Type <i [ngClass]="getSortIcon('charge')"></i>
+                      Trans Type <i [ngClass]="getSortIcon('charge')"></i>
                     </th>
 
                     <th
-                    scope="col"
-                    class="sortable-header"
-                    (click)="sort('charge')"
-                  >
-                  Trans Date<i [ngClass]="getSortIcon('charge')"></i>
-                  </th>
+                      scope="col"
+                      class="sortable-header"
+                      (click)="sort('charge')"
+                    >
+                      Trans Date<i [ngClass]="getSortIcon('charge')"></i>
+                    </th>
 
                     <th scope="col" class="sortable-header">Action<i></i></th>
                   </tr>
@@ -426,35 +443,32 @@
                       {{ data?.walletNumber || "N/A" }}
                     </td>
                     <td style="font-size: 14px">
-                        {{ data?.transactionId || "N/A" }}
-                      </td>
-                      <td style="font-size: 14px">
-                        {{ data?.formattedAmount  || "N/A" }}
-                      </td>
+                      {{ data?.transactionId || "N/A" }}
+                    </td>
+                    <td style="font-size: 14px">
+                      {{ data?.formattedAmount || "N/A" }}
+                    </td>
 
-                      <td style="font-size: 14px">
-                        {{ data?.transactionCurrency || "N/A" }}
-                      </td>
-                      <td style="font-size: 14px">
-                        {{ data?.transactionType  || "N/A" }}
-                      </td>
+                    <td style="font-size: 14px">
+                      {{ data?.transactionCurrency || "N/A" }}
+                    </td>
+                    <td style="font-size: 14px">
+                      {{ data?.transactionType || "N/A" }}
+                    </td>
 
-                      <td style="font-size: 14px">
-                        <span class="fs-4">{{
-                          data?.valueDate | date : "medium"
-                        }}</span>
-                        <small class="d-block text-muted">{{
-                          data?.valueDate | timeago : live
-                        }}</small>
-                      </td>
-                 
-<!--                       
+                    <td style="font-size: 14px">
+                      <span class="fs-4">{{
+                        data?.valueDate | date : "medium"
+                      }}</span>
+                      <small class="d-block text-muted">{{
+                        data?.valueDate | timeago : live
+                      }}</small>
+                    </td>
+
+                    <!--                       
                       <td style="font-size: 14px">
                         <span [ngClass]="{'text-success': data?.isActive, 'text-danger': !data?.isActive}" style="font-size: 14px">{{(data?.isActive  ? 'Active' : 'inActive') || "N/A" }}</span>
                       </td> -->
-
-                 
-                      
 
                     <td>
                       <div class="dropdown">
@@ -506,7 +520,6 @@
                             (click)="viewDetails(data)"
                             ><i class="fa fa-lock"></i> Unblock and Debit</a
                           > -->
-
                         </div>
                       </div>
                     </td>
@@ -528,9 +541,6 @@
   </div>
 </div>
 
-
-
-
 <div class="col-lg-6">
   <div class="modal fade bd-example-modal-lggg">
     <div class="modal-dialog modal-ms">
@@ -542,80 +552,84 @@
           </button>
         </div>
         <div class="modal-body">
-      
-        
-              <form>
-                <div class="form-row">
-                  <div class="form-group col-md-12">
-                    <label for="walletNumber">Wallet Number</label>
-                    <input type="text" class="form-control" [(ngModel)]="walletNumber" [ngModelOptions]="{standalone: true}" name="walletNumber" id="walletNumber">
-                </div>
-                
-                
-                  </div>
+          <form>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="walletNumber">Wallet Number</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="walletNumber"
+                  [ngModelOptions]="{ standalone: true }"
+                  name="walletNumber"
+                  id="walletNumber"
+                />
+              </div>
+            </div>
 
-                  <div class="form-row">
-                    <div class="col-md-5">
-                      <div class="form-group">
-                        <label for="startDate">Start Date</label>
-                        <input
-                          id="startDate"
-                          type="date"
-                          class="form-control"
-                          [(ngModel)]="selectedStartDate"
-                          [ngModelOptions]="{standalone: true}"
-                          placeholder="Select Start Date"
-                        />
-                      </div>
-                    </div>
-                    <div class="col-md-2 text-center align-self-center">
-                      <span class="arrow">&#8594;</span>
-                      <!-- Arrow symbol (→) -->
-                    </div>
-                    <div class="col-md-5">
-                      <div class="form-group">
-                        <label for="endDate">End Date</label>
-                        <input
-                          id="endDate"
-                          type="date"
-                          class="form-control"
-                          [(ngModel)]="selectedEndDate"
-                          [ngModelOptions]="{standalone: true}"
-                          placeholder="Select End Date"
-                        />
-                      </div>
-                    </div>
-                  </div>
-          
-              
-              </form>
-          
-            
-        
+            <div class="form-row">
+              <div class="col-md-5">
+                <div class="form-group">
+                  <label for="startDate">Start Date</label>
+                  <input
+                    id="startDate"
+                    type="date"
+                    class="form-control"
+                    [(ngModel)]="selectedStartDate"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Select Start Date"
+                  />
+                </div>
+              </div>
+              <div class="col-md-2 text-center align-self-center">
+                <span class="arrow">&#8594;</span>
+                <!-- Arrow symbol (→) -->
+              </div>
+              <div class="col-md-5">
+                <div class="form-group">
+                  <label for="endDate">End Date</label>
+                  <input
+                    id="endDate"
+                    type="date"
+                    class="form-control"
+                    [(ngModel)]="selectedEndDate"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Select End Date"
+                  />
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
         <div class="modal-footer">
           <div class="row">
             <div class="col-md-6 d-flex justify-content-end">
-              <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="clearLoadData()">
+              <button
+                type="button"
+                class="btn btn-dark"
+                data-dismiss="modal"
+                (click)="clearLoadData()"
+              >
                 Clear filter
               </button>
             </div>
 
             <div class="col-md-6 d-flex justify-content-start">
-              <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="loadData()">
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-dismiss="modal"
+                (click)="loadData()"
+              >
                 Filter
               </button>
             </div>
           </div>
-         
-        
         </div>
       </div>
     </div>
   </div>
 </div>
-
-
 
 <!-- view details modal -->
 
@@ -645,20 +659,17 @@
                   </p>
                   <p>
                     <strong>Value Date:</strong>
-                    {{
-                      (selectedItem?.valueDate | date ) || "N/A"
-                    }}
+                    {{ (selectedItem?.valueDate | date) || "N/A" }}
                   </p>
 
                   <p>
                     <strong>Amount:</strong>
-                    {{ (selectedItem?.formattedAmount ) || "N/A" }}
+                    {{ selectedItem?.formattedAmount || "N/A" }}
                   </p>
 
-           
                   <p>
                     <strong> Currency:</strong>
-                    {{ (selectedItem?.transactionCurrency ) || "N/A" }}
+                    {{ selectedItem?.transactionCurrency || "N/A" }}
                   </p>
 
                   <p>
@@ -674,12 +685,9 @@
                   <p>
                     <strong>Transaction Date:</strong>
                     {{
-                      selectedItem?.transactionDate
-                        | date : "short" || "N/A"
+                      selectedItem?.transactionDate | date : "short" || "N/A"
                     }}
                   </p>
-
-               
 
                   <p>
                     <strong>Transaction Reference:</strong>
@@ -695,7 +703,6 @@
                     <strong>Transaction Id:</strong>
                     {{ selectedItem?.transactionId || "N/A" }}
                   </p>
-
                 </div>
               </div>
             </div>
@@ -712,12 +719,6 @@
   </div>
 </div>
 
-
-
-
-
 <app-cross-currency></app-cross-currency>
 <app-debit-credit></app-debit-credit>
-
-
-
+<app-trans-debit></app-trans-debit>

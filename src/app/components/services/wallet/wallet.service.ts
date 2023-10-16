@@ -135,7 +135,21 @@ export class walletService {
     })
   }
 
+  getWallets(walletNumber: number) {
+    return this.http.get(`${environment.baseUrl}/wallet/${walletNumber}` , {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    })
+  }
 
+  getCurrencyPair(sourceCurrency: string, destinationCurrency: string) {
+    return this.http.get(`${environment.baseUrl}/currency-pair?sourceCurrency=${sourceCurrency}&destinationCurrency=${destinationCurrency}` , {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    })
+  }
   
   getAllInternalWallets(
     // PageNumber: number,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
@@ -6,16 +6,15 @@ import { TransactionsService } from 'src/app/components/services/transactionServ
 import { walletService } from 'src/app/components/services/wallet/wallet.service';
 
 @Component({
-  selector: 'app-cross-currency',
-  templateUrl: './cross-currency.component.html',
-  styleUrls: ['./cross-currency.component.css']
+  selector: 'app-trans-debit',
+  templateUrl: './trans-debit.component.html',
+  styleUrls: ['./trans-debit.component.css']
 })
-export class CrossCurrencyComponent {
+export class TransDebitComponent {
 
-  transactionForm!: FormGroup;
   allWallets: any;
-  walletNumber!: number;
-  creditWallet: any;
+  // walletNumber!: number;
+  // creditWallet: any;
   creditWallets: any;
   walletName: any;
   creditWalletName: any;
@@ -24,6 +23,10 @@ export class CrossCurrencyComponent {
   debitCurrency: any;
   currencyPair: any;
   rate: any;
+  credwallets: any;
+  walletNumber: any;
+
+  debitForm!: FormGroup;
 
 
   constructor(private fb: FormBuilder,
@@ -33,56 +36,41 @@ export class CrossCurrencyComponent {
     private walletService: walletService) {}
 
   ngOnInit() {
-    this.transactionForm = this.fb.group({
-      debitWalletNumber: ['', Validators.required,  ],
-      creditWalletNumber: ['', Validators.required, ],
-      transactionAmount: ['', Validators.required,],
+
+
+ 
+    
+    this.debitForm = this.fb.group({
+      debitWalletNumber: ['', Validators.required],
+      creditWalletNumber: ['', Validators.required],
+      transactionAmount: ['', Validators.required],
       rate: ['', Validators.required],
       transactionCurrency: ['', Validators.required],
-      chargeAmount: ['', Validators.required,],
-      narration: ['', Validators.required,]
+      chargeAmount: ['', Validators.required],
+      narration: ['', Validators.required]
     });
+  
 
-    this.subscribeToTransactionCurrencyChanges();
+    this?.subscribeToTransactionCurrencyChangesDebit();
   }
 
-  subscribeToTransactionCurrencyChanges() {
-    this.transactionForm.get('transactionCurrency')?.valueChanges.subscribe(currency => {
+
+
+  
+
+
+  subscribeToTransactionCurrencyChangesDebit() {
+    this.debitForm.get('transactionCurrency')?.valueChanges.subscribe(currency => {
       if (currency) {
         this.getCurrencyPair();
       }
     });
+    
   }
 
 
-  submit() {
-    if (this.transactionForm.valid) {
-      this.spinner.show();
 
-      this.transactionService.crossCurrency(this.transactionForm.value).subscribe(
-        (response: any) => {
-          if (response.isSuccessful) {
-            this.notification.success(response.responseMessage);
-            this.transactionForm.reset();
-            this.spinner.hide();
-            location.reload();
-          } else {
-            this.notification.error(response.responseMessage);
-            this.spinner.hide();
-          }
-        },
-        (error) => {
-          this.notification.error(error.error.responseMessage || error.error.message);
-        
-          this.spinner.hide();
-        }
-      );
-    } else {
-      this.notification.error('Please fill in all required fields.');
-      this.spinner.hide();
-    }
-  }
-
+  // for debit modal
   getWallet(){
     this.spinner.show();
     const wallet = this.walletNumber;
@@ -91,8 +79,8 @@ export class CrossCurrencyComponent {
       if (response) {
         this.spinner.hide();
         this.allWallets = response.data;
-        this.walletName = this.allWallets.walletName;
-        this.debitCurrency = this.allWallets.walletCurrency;
+        this.walletName = this.allWallets?.walletName;
+        this.debitCurrency = this.allWallets?.walletCurrency;
         this.isFormValid = true;
       
       } else {
@@ -106,8 +94,8 @@ export class CrossCurrencyComponent {
 
   getCreditWallet(){
     this.spinner.show();
-    const wallet = this.creditWallet;
-    this.walletService.getWallets(wallet).subscribe((response: any) => {
+    const cred = this.credwallets;
+    this.walletService.getWallets(cred).subscribe((response: any) => {
       if (response){
         this.spinner.hide();
         this.creditWallets = response.data;
@@ -148,7 +136,37 @@ export class CrossCurrencyComponent {
     );
     
   }
+
+
+  debitWallet() {
+    if (this.debitForm.valid) {
+      this.spinner.show();
   
+
   
+      this.transactionService.debitWallet(this.debitForm.value).subscribe(
+        (response: any) => {
+          if (response.isSuccessful) {
+            this.notification.success(response.responseMessage);
+            this.debitForm.reset();
+            this.spinner.hide();
+            location.reload();
+          } else {
+            this.notification.error(response.responseMessage);
+            this.spinner.hide();
+          }
+        },
+        (error) => {
+          this.notification.error(error.error.responseMessage || error.error.message);
+          // console.error('Organization creation error:', error);
+          this.spinner.hide();
+        }
+      );
+    } else {
+      this.notification.error('Please fill in all required fields.');
+      this.spinner.hide();
+    }
+  }
+
 
 }
