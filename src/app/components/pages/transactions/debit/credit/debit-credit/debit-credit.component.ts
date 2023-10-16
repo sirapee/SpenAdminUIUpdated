@@ -103,9 +103,6 @@ export class DebitCreditComponent {
     debitWallet() {
     if (this.debitForm.valid) {
       this.spinner.show();
-  
-
-  
       this.transactionService.debitWallet(this.debitForm.value).subscribe(
         (response: any) => {
           if (response.isSuccessful) {
@@ -135,32 +132,30 @@ export class DebitCreditComponent {
   creditWallet() {
     if (this.creditForm.valid) {
       this.spinner.show();
-  
-
-  
       this.transactionService.creditWallet(this.creditForm.value).subscribe(
         (response: any) => {
           if (response.isSuccessful) {
             this.notification.success(response.responseMessage);
-            this.transactionForm.reset();
-            this.spinner.hide();
+            this.creditForm.reset();
+            this.spinner.hide(); 
             location.reload();
           } else {
             this.notification.error(response.responseMessage);
-            this.spinner.hide();
           }
         },
         (error) => {
           this.notification.error(error.error.responseMessage || error.error.message);
-          // console.error('Organization creation error:', error);
-          this.spinner.hide();
+        
+        },
+        () => {
+          this.spinner.hide(); 
         }
       );
     } else {
       this.notification.error('Please fill in all required fields.');
-      this.spinner.hide();
     }
   }
+  
 
 
   downloadData() {
