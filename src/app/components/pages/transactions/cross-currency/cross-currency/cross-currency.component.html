@@ -10,8 +10,8 @@
 <div class="col-lg-6 stretched_card mt-mob-4">
     <div class="">
       <div class="">
-        <div class="modal fade" id="exampleLongModalLong">
-          <div class="modal-dialog">
+        <div class="modal fade bd-example-modal-lggggg">
+          <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title">Cross-Currency</h5>
@@ -26,7 +26,7 @@
                         <div class="form-group">
                           <label>Debit Wallet Number</label>
                           <input [(ngModel)]="walletNumber" formControlName="debitWalletNumber" class="form-control" (blur)="getWallet()"/>
-                          <p style="font-weight: bold;">{{walletName}}</p>
+                          <p *ngIf="walletBalances" style="font-weight: bold;">{{walletName}}<span style="margin-left: 20%;"> Balance: {{walletBalance}}</span></p> 
                           <!-- <div *ngIf="transactionForm.get('debitWalletNumber')?.hasError('required') && transactionForm.get('debitWalletNumber')?.touched">
                             <div class="text-danger">Debit Wallet Number is required.</div>
                           </div>

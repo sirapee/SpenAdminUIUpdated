@@ -24,6 +24,9 @@ export class CrossCurrencyComponent {
   debitCurrency: any;
   currencyPair: any;
   rate: any;
+  walletBalance: any;
+
+  walletBalances = false;
 
 
   constructor(private fb: FormBuilder,
@@ -92,6 +95,8 @@ export class CrossCurrencyComponent {
         this.spinner.hide();
         this.allWallets = response.data;
         this.walletName = this.allWallets.walletName;
+        this.walletBalance = this.allWallets.walletBalance;
+        this.walletBalances = true;
         this.debitCurrency = this.allWallets.walletCurrency;
         this.isFormValid = true;
       
@@ -143,7 +148,7 @@ export class CrossCurrencyComponent {
       (error) => {
         console.error('API Error:', error);
         this.spinner.hide();
-        this.notification.error('An error occurred while fetching currency rates.');
+        this.notification.error('Failed to retrieve currency rates.');
       }
     );
     
