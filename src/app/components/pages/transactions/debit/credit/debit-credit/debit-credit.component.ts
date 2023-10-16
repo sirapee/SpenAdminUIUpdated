@@ -222,7 +222,7 @@ export class DebitCreditComponent {
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
     const excelBuffer: any = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-    this.saveExcelFile(excelBuffer, 'exported-data');
+    this.saveExcelFile(excelBuffer, 'Account Statement');
   }
   
   
@@ -350,7 +350,7 @@ export class DebitCreditComponent {
       (error) => {
         console.error('API Error:', error);
         this.spinner.hide();
-        this.notification.error('An error occurred while fetching currency rates.');
+        this.notification.error('Failed to retrieve currency rates.');
       }
     );
     
