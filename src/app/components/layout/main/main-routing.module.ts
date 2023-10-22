@@ -21,6 +21,7 @@ const routes: Routes = [
         loadChildren: () => import('../../pages/user-management/users.module').then(m => m.UsersModule)
       },
 
+      
       {
         path: 'roles',
         loadChildren: () => import('../../pages/userRoles/user-role.module').then(m => m.UserRoleModule)
@@ -32,8 +33,19 @@ const routes: Routes = [
       },
 
       {
+        path: 'all-merchants',
+        loadChildren: () => import('../../pages/merchants/merchants/merchants.module').then(m => m.MerchantsModule)
+      },
+   
+
+      {
         path: 'virtual-accounts',
         loadChildren: () => import('../../pages/virtual-accounts/virtual-accounts/virtual-accounts.module').then(m => m.VirtualAccountsModule)
+      },
+
+      {
+        path: 'provider-management',
+        loadChildren: () => import('../../pages/provider/provider-management/provider-management.module').then(m => m.ProviderManagementModule)
       },
 
       {
@@ -42,15 +54,26 @@ const routes: Routes = [
       },
 
       {
+        path: 'settlement',
+        loadChildren: () => import('../../pages/settlement/settlement/settlement.module').then(m => m.SettlementModule)
+      },
+
+      {
+        path: 'transactions',
+        loadChildren: () => import('../../pages/transactions/transactions/transactions.module').then(m => m.TransactionsModule)
+      },
+
+      {
+        path: 'lien-management',
+        loadChildren: () => import('../../pages/lien/lien/lien.module').then(m => m.LienModule)
+      },
+
+      {
         path: 'payout',
         loadChildren: () => import('../../pages/payout/payout/payout.module').then(m => m.PayoutModule)
       },
 
-      {
-        path: 'all-merchants',
-        loadChildren: () => import('../../pages/merchants/merchants/merchants.module').then(m => m.MerchantsModule)
-      },
-
+   
       {
         path: 'wallets',
         loadChildren: () => import('../../pages/wallets/wallet/wallet.module').then(m => m.WalletModule)
@@ -61,20 +84,9 @@ const routes: Routes = [
         loadChildren: () => import('../../pages/internal-wallets/internal-wallets/internal-wallets.module').then(m => m.InternalWalletsModule)
       },
 
-      {
-        path: 'settlement',
-        loadChildren: () => import('../../pages/settlement/settlement/settlement.module').then(m => m.SettlementModule)
-      },
+   
 
-      {
-        path: 'lien-management',
-        loadChildren: () => import('../../pages/lien/lien/lien.module').then(m => m.LienModule)
-      },
-
-      {
-        path: 'transactions',
-        loadChildren: () => import('../../pages/transactions/transactions/transactions.module').then(m => m.TransactionsModule)
-      },
+   
 
       {
         path: '',
