@@ -17,7 +17,7 @@
             <h6 class="header-pretitle">Overview</h6>
 
             <!-- Title -->
-            <h1 class="header-title">Role-management</h1>
+            <h1 class="header-title">Provider-management</h1>
           </div>
 
           <div class="col-auto">
@@ -50,7 +50,7 @@
         data-toggle="modal"
         data-target="#exampleLongModalLong3"
       >
-        <i class="fa fa-user"></i> Create Role
+        <i class="fa fa-user"></i> Add Provider
       </button>
     </div>
   </div>
@@ -60,10 +60,10 @@
     <div class="col-12 mt-4">
       <div class="card">
         <div class="card-body">
-          <h4 class="card_title">Roles</h4>
+          <h4 class="card_title">All Providers</h4>
           <div
             class="card-body"
-            *ngIf="!filteredUserData?.roles?.length && !loading"
+            *ngIf="!filteredUserData?.length && !loading"
           >
             <div class="alert alert-dark text-center">
               No data to display at the moment
@@ -82,14 +82,14 @@
                       class="sortable-header"
                       (click)="sort('name')"
                     >
-                      Role Name <i [ngClass]="getSortIcon('name')"></i>
+                      Provider Name <i [ngClass]="getSortIcon('name')"></i>
                     </th>
                     <th
                       scope="col"
                       class="sortable-header"
                       (click)="sort('roleCategory')"
                     >
-                      Role Category
+                    Provider Type
                       <i [ngClass]="getSortIcon('roleCategory')"></i>
                     </th>
                     <th
@@ -97,9 +97,28 @@
                       class="sortable-header"
                       (click)="sort('roleDescription')"
                     >
-                      Role Description
+                    Provider Channel
                       <i [ngClass]="getSortIcon('roleDescription')"></i>
                     </th>
+
+                    <th
+                    scope="col"
+                    class="sortable-header"
+                    (click)="sort('roleDescription')"
+                  >
+                  Provider Code
+                    <i [ngClass]="getSortIcon('roleDescription')"></i>
+                  </th>
+
+                  
+                  <th
+                  scope="col"
+                  class="sortable-header"
+                  (click)="sort('roleDescription')"
+                >
+                Default
+                  <i [ngClass]="getSortIcon('roleDescription')"></i>
+                </th>
                     <!-- <th scope="col" class="sortable-header" (click)="sort('merchantName')">Merchant <i [ngClass]="getSortIcon('merchantName')"></i></th>
                           <th scope="col" class="sortable-header" (click)="sort('roles')">Roles <i [ngClass]="getSortIcon('roles')"></i></th> -->
                     <th scope="col">Action</th>
@@ -107,7 +126,7 @@
                 </thead>
                 <tbody
                   class="list fs-base"
-                  *ngIf="loading && filteredUserData?.roles?.length > 0"
+                  *ngIf="loading && filteredUserData?.length > 0"
                 >
                   <tr *ngFor="let loop of [1, 2, 3, 4]">
                     <td>
@@ -182,15 +201,18 @@
                 <tbody>
                   <tr
                     *ngFor="
-                      let data of filteredUserData?.roles
+                      let data of filteredUserData
                         
                       let i = index
                     "
                   >
                   <td>{{ 10 * currentPage - (9 - i) }}</td>
                     <td style="font-size: 14px">{{ data?.name || 'N/A' }}</td>
-                    <td style="font-size: 14px">{{ data?.roleCategory || 'N/A' }}</td>
-                    <td style="font-size: 14px;">{{ data?.roleDescription || 'N/A'}}</td>
+                    <td style="font-size: 14px">{{ data?.type || 'N/A' }}</td>
+                    <td style="font-size: 14px;">{{ data?.channel || 'N/A'}}</td>
+                    <td style="font-size: 14px">{{ data?.code || 'N/A' }}</td>
+                    <td style="font-size: 14px; ">{{ data?.isDefault ? 'true' : 'false' }}</td>
+
 
 
                     <!-- <td>500.00$</td> -->
@@ -209,10 +231,18 @@
                           aria-labelledby="dropdownMenuButton"
 
                         >
+                        <a *ngIf="data.isDefault === false"
+                        class="dropdown-item text-info"
+                        (click)="confirmMakeDefault(data.id)"
+                        href="javascript:;"
+                        ><i class="ti-check"></i> Set default</a
+                      >
+
+                 
                           <hr class="dropdown-divider" />
                           <a
                             class="dropdown-item text-primary"
-                            (click)="confirmDeleteUser(data.name)"
+                            (click)="confirmDeleteUser(data.id)"
                             href="javascript:;"
                             ><i class="ti-trash"></i> Delete</a
                           >
@@ -237,9 +267,49 @@
   </div>
 </div>
 
-<!-- <app-view-users [selected]="selectedDetails"></app-view-users>
-<app-create-users></app-create-users>
-<app-create-organization></app-create-organization>
-<app-change-password [selected]="selectedDetails"></app-change-password> -->
+<!-- creating provider -->
 
-<app-create-role></app-create-role>
+<div class="col-lg-6 stretched_card mt-mob-4">
+    <div class="">
+        <div class="">
+            <div class="modal fade" id="exampleLongModalLong3">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add new provider</h5>
+                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            
+                            <form [formGroup]="providerForm" class="custom-form">
+                                <div class="form-group">
+                                  <label>Provider Name</label>
+                                  <input type="text" class="form-control" formControlName="name">
+                                </div>
+                                <div class="form-group">
+                                  <label>Type</label>
+                                  <input type="text" class="form-control" formControlName="type">
+                                </div>
+                                <div class="form-group">
+                                  <label>Channel</label>
+                                  <input type="text" class="form-control" formControlName="channel">
+                                </div>
+                                <div class="form-group">
+                                    <label>Code</label>
+                                    <input type="text" class="form-control" formControlName="code">
+                                  </div>
+                                <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+                              </form>  
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" (click)="submit()" class="btn btn-primary">Add Provider</button>
+                            <button type="button" class="btn btn-light btn-close" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
