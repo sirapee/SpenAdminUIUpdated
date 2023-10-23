@@ -233,7 +233,7 @@ export class ProviderManagementComponent {
           this.notification.success(res.responseMessage);
           this.spinner.hide();
      
-          // location.reload();
+          location.reload();
         } else {
          
           this.notification.error(res.responseMessage);
