@@ -78,8 +78,8 @@ export class VirtualAccountsComponent {
       filters.EndDate = this.selectedEndDate;
     }
 
-    if (this.Provider) {
-      filters.Provider = this.selectedItem.provider;
+    if (this.selectedProvider) {
+      filters.Provider = this.selectedProvider;
     }
 
     this.virtualAccountService

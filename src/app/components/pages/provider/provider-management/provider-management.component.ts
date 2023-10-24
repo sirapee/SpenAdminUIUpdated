@@ -34,6 +34,7 @@ export class ProviderManagementComponent {
   role: any;
 
   providerForm! : FormGroup
+  providerType: any;
 
   constructor(
     private providerService: ProviderService,
@@ -47,6 +48,7 @@ export class ProviderManagementComponent {
 
   ngOnInit(): void {
     this.getProvider();
+    this.getProviderType();
 
     this.providerForm = this.fb.group({
       name: ['', Validators.required],
@@ -63,6 +65,23 @@ export class ProviderManagementComponent {
         this.loading = false;
         this.role = res.providers;
         this.filteredUserData = this.role;
+        this.spinner.hide();
+      },
+      (error) => {
+        // console.error('Error fetching roles:', error);
+        this.loading = false;
+        this.spinner.hide();
+      }
+    );
+  }
+
+  getProviderType() {
+    // this.spinner.show();
+    this.providerService.getProviderType().subscribe(
+      (res:any) => {
+        this.loading = false;
+        this.providerType = res.channels;
+        // this.filteredUserData = this.providerType;
         this.spinner.hide();
       },
       (error) => {
