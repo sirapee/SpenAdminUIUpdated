@@ -48,4 +48,12 @@ export class ProviderService {
       },
     })
   }
+
+  getProviderType() {
+    return this.http.get(`${environment.baseUrl}/provider-types`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+    })
+  }
 }
