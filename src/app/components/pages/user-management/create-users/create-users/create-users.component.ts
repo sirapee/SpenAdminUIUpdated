@@ -64,7 +64,7 @@ export class CreateUsersComponent {
      
     });
 
-    // this.loadData();
+    this.loadData();
     this.getRole();
     // this.loadAllData();
 
