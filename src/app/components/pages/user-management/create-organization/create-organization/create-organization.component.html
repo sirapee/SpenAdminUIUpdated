@@ -101,9 +101,9 @@
                     <option value="">Select a role</option>
                     <option
                       *ngFor="let role of role?.roles"
-                      [value]="role.name"
+                      [value]="role.roleCategory"
                     >
-                      {{ role.roleDescription }}
+                      {{ role.roleCategory }}
                     </option>
                   </select>
                 </div>
