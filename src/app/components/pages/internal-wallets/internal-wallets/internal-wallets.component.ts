@@ -138,10 +138,18 @@ export class InternalWalletsComponent {
     this.spinner.show();
 
     const filters: {
-      Id?: number;
+      // Id?: number;
+      // walletName?: number;
+      Currency?: string;
+      // ProviderReference?: string;
+      // status?: boolean;
+      // MerchantId?: number;
+      // createdAt?: Date;
+      // EndDate?: Date;
+      // TransactionReference?: string;
     } = {};
 
-    this.walletService.getAllWallets(this.p, this.pageSize, filters).subscribe(
+    this.walletService.getAllInternalWallets(filters).subscribe(
       (response) => {
         this.loading = false;
         this.userData = response.wallets;
