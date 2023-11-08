@@ -152,8 +152,8 @@ export class walletService {
   }
   
   getAllInternalWallets(
-    // PageNumber: number,
-    // PageSize: number,
+    PageNumber: number,
+    PageSize: number,
     filters: {
       // Id?: number;
       Currency?: string;
@@ -163,8 +163,8 @@ export class walletService {
     }
   ): Observable<any> {
     let queryParams = new HttpParams()
-      // .set('pageNumber', PageNumber.toString())
-      // .set('pageSize', PageSize.toString());
+      .set('PageNumber', PageNumber.toString())
+      .set('PageSize', PageSize.toString());
   
     // if (filters.Id !== undefined) {
     //   queryParams = queryParams.set('Id', filters.Id.toString());

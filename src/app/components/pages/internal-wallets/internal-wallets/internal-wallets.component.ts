@@ -83,7 +83,7 @@ export class InternalWalletsComponent {
       filters.Currency = this.currency;
     }
 
-    this.walletService.getAllInternalWallets(filters).subscribe(
+    this.walletService.getAllInternalWallets(this.p, this.pageSize,filters).subscribe(
       (response) => {
         this.loading = false;
         this.userData = response.wallets;
@@ -149,7 +149,7 @@ export class InternalWalletsComponent {
       // TransactionReference?: string;
     } = {};
 
-    this.walletService.getAllInternalWallets(filters).subscribe(
+    this.walletService.getAllInternalWallets(this.p, this.pageSize,filters).subscribe(
       (response) => {
         this.loading = false;
         this.userData = response.wallets;
