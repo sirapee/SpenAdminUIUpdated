@@ -18,14 +18,14 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Debit Wallet Number</label>
-                    <input [(ngModel)]="walletNumber" formControlName="debitWalletNumber" class="form-control" (blur)="getWallet()"/>
+                    <input [(ngModel)]="walletNumber" formControlName="debitWalletNumber" class="form-control" (blur)="walletNumber && getWallet()"/>
                     <p style="font-weight: bold;">{{walletName}}</p>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Credit Wallet Number</label>
-                    <input [(ngModel)]="credwallets" formControlName="creditWalletNumber" class="form-control" (blur)="getCreditWallet()"/>
+                    <input [(ngModel)]="credwallets" formControlName="creditWalletNumber" class="form-control" (blur)="credwallets && getCreditWallet()"/>
                     <p style="font-weight: bold;">{{creditWalletName}}</p>
                   </div>
                 </div>

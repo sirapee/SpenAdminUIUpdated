@@ -446,7 +446,7 @@
                       {{ data?.transactionId || "N/A" }}
                     </td>
                     <td style="font-size: 14px">
-                      {{ data?.formattedAmount || "N/A" }}
+                      {{ data?.transactionAmount | number:'1.2-2' || "N/A" }}
                     </td>
 
                     <td style="font-size: 14px">
