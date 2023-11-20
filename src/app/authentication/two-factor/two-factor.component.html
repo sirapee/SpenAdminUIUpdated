@@ -26,62 +26,125 @@
                   </p>
                   <div class="otp-inputs justify-content-center">
                     <input
+                      [style.border-color]="
+                        factorForm.get('digit1')?.errors &&
+                        (factorForm.get('digit1')?.touched ||
+                          factorForm.get('digit1')?.dirty)
+                          ? '#6F4183'
+                          : ''
+                      "
                       class="otp-input"
                       type="text"
                       formControlName="digit1"
                       maxlength="1"
-                      placeholder=" _ "
                       #input1
-                      (keyup)="input1.value.length == 1 ? input2.focus() : ''"
+                      (keyup)="
+                        input1.value.length == 1
+                          ? input2.focus()
+                          : input1.focus()
+                      "
                       pattern="[0-9]*"
                     />
                     <input
+                      [style.border-color]="
+                        factorForm.get('digit2')?.errors &&
+                        (factorForm.get('digit2')?.touched ||
+                          factorForm.get('digit2')?.dirty)
+                          ? '#6F4183'
+                          : ''
+                      "
                       class="otp-input"
                       type="text"
                       formControlName="digit2"
                       maxlength="1"
-                      placeholder=" _ "
                       #input2
-                      (keyup)="input2.value.length == 1 ? input3.focus() : ''"
+                      (keyup)="
+                        input2.value.length == 1
+                          ? input3.focus()
+                          : input1.focus()
+                      "
                       pattern="[0-9]*"
                     />
                     <input
+                      [style.border-color]="
+                        factorForm.get('digit3')?.errors &&
+                        (factorForm.get('digit3')?.touched ||
+                          factorForm.get('digit3')?.dirty)
+                          ? '#6F4183'
+                          : ''
+                      "
                       class="otp-input"
                       type="text"
                       formControlName="digit3"
                       maxlength="1"
-                      placeholder=" _ "
                       #input3
-                      (keyup)="input3.value.length == 1 ? input4.focus() : ''"
+                    
+                      (keyup)="
+                      input3.value.length == 1
+                        ? input4.focus()
+                        : input2.focus()
+                    "
                       pattern="[0-9]*"
                     />
                     <input
+                    [style.border-color]="
+                    factorForm.get('digit4')?.errors &&
+                    (factorForm.get('digit4')?.touched ||
+                      factorForm.get('digit4')?.dirty)
+                      ? '#6F4183'
+                      : ''
+                  "
                       class="otp-input"
                       type="text"
                       formControlName="digit4"
                       maxlength="1"
-                      placeholder=" _ "
                       #input4
-                      (keyup)="input4.value.length == 1 ? input5.focus() : ''"
+                    
+                      (keyup)="
+                      input4.value.length == 1
+                        ? input5.focus()
+                        : input3.focus()
+                    "
                       pattern="[0-9]*"
                     />
                     <input
+                    [style.border-color]="
+                    factorForm.get('digit5')?.errors &&
+                    (factorForm.get('digit5')?.touched ||
+                      factorForm.get('digit5')?.dirty)
+                      ? '#6F4183'
+                      : ''
+                  "
                       class="otp-input"
                       type="text"
                       formControlName="digit5"
                       maxlength="1"
-                      placeholder=" _ "
                       #input5
-                      (keyup)="input5.value.length == 1 ? input6.focus() : ''"
+                      (keyup)="
+                      input5.value.length == 1
+                        ? input6.focus()
+                        : input4.focus()
+                    "
                       pattern="[0-9]*"
                     />
                     <input
+                    [style.border-color]="
+                    factorForm.get('digit6')?.errors &&
+                    (factorForm.get('digit6')?.touched ||
+                      factorForm.get('digit6')?.dirty)
+                      ? '#6F4183'
+                      : ''
+                  "
                       class="otp-input"
                       type="text"
                       formControlName="digit6"
                       maxlength="1"
-                      placeholder=" _ "
                       #input6
+                      (keyup)="
+                      input6.value.length == 1
+                        ? input6.focus()
+                        : input5.focus()
+                    "
                       pattern="[0-9]*"
                     />
                   </div>

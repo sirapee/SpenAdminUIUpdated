@@ -42,12 +42,12 @@ export class EnableTwoFactorComponent {
 
   ngOnInit(): void {
     this.otpForm = this.formBuilder.group({
-      digit1: ['', Validators.required],
-      digit2: ['', Validators.required],
-      digit3: ['', Validators.required],
-      digit4: ['', Validators.required],
-      digit5: ['', Validators.required],
-      digit6: ['', Validators.required]
+      digit1: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      digit2: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      digit3: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      digit4: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      digit5: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      digit6: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]]
     
     });
    
