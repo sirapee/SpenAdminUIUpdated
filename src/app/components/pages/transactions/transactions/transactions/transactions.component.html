@@ -446,7 +446,7 @@
                       {{ data?.transactionId || "N/A" }}
                     </td>
                     <td style="font-size: 14px">
-                      {{ data?.formattedAmount || "N/A" }}
+                      {{ data?.transactionAmount | number:'1.2-2' || "N/A" }}
                     </td>
 
                     <td style="font-size: 14px">
@@ -458,10 +458,10 @@
 
                     <td style="font-size: 14px">
                       <span class="fs-4">{{
-                        data?.valueDate | date : "medium"
+                        data?.createdAt | date : "medium"
                       }}</span>
                       <small class="d-block text-muted">{{
-                        data?.valueDate | timeago : live
+                        data?.createdAt | timeago : live
                       }}</small>
                     </td>
 

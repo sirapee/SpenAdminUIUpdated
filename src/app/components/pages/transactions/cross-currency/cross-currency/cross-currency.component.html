@@ -25,7 +25,7 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label>Debit Wallet Number</label>
-                          <input [(ngModel)]="walletNumber" formControlName="debitWalletNumber" class="form-control" (blur)="getWallet()"/>
+                          <input [(ngModel)]="walletNumber" formControlName="debitWalletNumber" class="form-control" (blur)="walletNumber && getWallet()"/>
                           <p *ngIf="walletBalances" style="font-weight: bold;">{{walletName}}<span style="margin-left: 20%;"> Balance: {{walletBalance}}</span></p> 
                           <!-- <div *ngIf="transactionForm.get('debitWalletNumber')?.hasError('required') && transactionForm.get('debitWalletNumber')?.touched">
                             <div class="text-danger">Debit Wallet Number is required.</div>
@@ -41,7 +41,7 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label>Credit Wallet Number</label>
-                          <input [(ngModel)]="creditWallet" formControlName="creditWalletNumber" class="form-control" (blur)="getCreditWallet()"/>
+                          <input [(ngModel)]="creditWallet" formControlName="creditWalletNumber" class="form-control" (blur)="creditWallet && getCreditWallet()"/>
                           <p style="font-weight: bold;">{{creditWalletName}}</p>
                           <!-- <div *ngIf="transactionForm.get('creditWalletNumber')?.hasError('required') && transactionForm.get('creditWalletNumber')?.touched">
                             <div class="text-danger">Credit Wallet Number is required.</div>
