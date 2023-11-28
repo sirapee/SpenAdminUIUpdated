@@ -458,10 +458,10 @@
 
                     <td style="font-size: 14px">
                       <span class="fs-4">{{
-                        data?.valueDate | date : "medium"
+                        data?.createdAt | date : "medium"
                       }}</span>
                       <small class="d-block text-muted">{{
-                        data?.valueDate | timeago : live
+                        data?.createdAt | timeago : live
                       }}</small>
                     </td>
 
