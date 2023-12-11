@@ -53,7 +53,7 @@ export class ProviderManagementComponent {
     this.providerForm = this.fb.group({
       name: ['', Validators.required],
       type: ['', Validators.required],
-      channel: ['', Validators.required],
+      channel: [''],
       code: ['', Validators.required],
     });
   }
