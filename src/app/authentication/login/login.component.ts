@@ -149,7 +149,7 @@ async submit(): Promise<void> {
       }
     } 
   } catch (error: any) {
-    this.notification.error(error.error.responseMessage || error.error.message);
+    this.notification.error(error.error?.responseMessage || error.error?.message);
   } finally {
     this.spinner.hide();
   }

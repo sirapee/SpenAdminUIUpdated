@@ -57,37 +57,37 @@ export class DebitCreditComponent {
 
 
     this.creditForm = this.fb.group({
-      debitWalletNumber: ['', Validators.required],
+      debitWalletNumber: ['',],
       creditWalletNumber: ['', Validators.required],
       transactionAmount: ['', Validators.required],
-      rate: ['', Validators.required],
+      rate: ['',],
       transactionCurrency: ['', Validators.required],
       chargeAmount: ['', Validators.required],
       narration: ['', Validators.required]
     });  
     
     this.debitForm = this.fb.group({
-      debitWalletNumber: ['', Validators.required],
+      debitWalletNumber: ['',],
       creditWalletNumber: ['', Validators.required],
       transactionAmount: ['', Validators.required],
-      rate: ['', Validators.required],
+      rate: ['',],
       transactionCurrency: ['', Validators.required],
       chargeAmount: ['', Validators.required],
       narration: ['', Validators.required]
     });
-    this?.subscribeToTransactionCurrencyChanges();
+    // this?.subscribeToTransactionCurrencyChanges();
 
     this?.subscribeToTransactionCurrencyChangesDebit();
   }
 
-  subscribeToTransactionCurrencyChanges() {
-    this.creditForm.get('transactionCurrency')?.valueChanges.subscribe(currency => {
-      if (currency) {
-        this.getCurrencyPair();
-      }
-    });
+  // subscribeToTransactionCurrencyChanges() {
+  //   this.creditForm.get('transactionCurrency')?.valueChanges.subscribe(currency => {
+  //     if (currency) {
+  //       this.getCurrencyPair();
+  //     }
+  //   });
 
-  }
+  // }
 
 
   subscribeToTransactionCurrencyChangesDebit() {
@@ -130,6 +130,7 @@ export class DebitCreditComponent {
 
   
   creditWallet() {
+    console.log('it got here')
     if (this.creditForm.valid) {
       this.spinner.show();
       this.transactionService.creditWallet(this.creditForm.value).subscribe(
