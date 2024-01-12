@@ -12,6 +12,8 @@ import { walletService } from 'src/app/components/services/wallet/wallet.service
 })
 export class TransDebitComponent {
 
+  walletBalance: any;
+  walletBalances = false;
   allWallets: any;
   // walletNumber!: number;
   // creditWallet: any;
@@ -42,16 +44,16 @@ export class TransDebitComponent {
     
     this.debitForm = this.fb.group({
       debitWalletNumber: ['', Validators.required],
-      creditWalletNumber: ['', Validators.required],
+      creditWalletNumber: ['',],
       transactionAmount: ['', Validators.required],
-      rate: ['', Validators.required],
+      rate: ['',],
       transactionCurrency: ['', Validators.required],
       chargeAmount: ['', Validators.required],
       narration: ['', Validators.required]
     });
   
 
-    this?.subscribeToTransactionCurrencyChangesDebit();
+    // this?.subscribeToTransactionCurrencyChangesDebit();
   }
 
 
@@ -59,14 +61,14 @@ export class TransDebitComponent {
   
 
 
-  subscribeToTransactionCurrencyChangesDebit() {
-    this.debitForm.get('transactionCurrency')?.valueChanges.subscribe(currency => {
-      if (currency) {
-        this.getCurrencyPair();
-      }
-    });
+  // subscribeToTransactionCurrencyChangesDebit() {
+  //   this.debitForm.get('transactionCurrency')?.valueChanges.subscribe(currency => {
+  //     if (currency) {
+  //       this.getCurrencyPair();
+  //     }
+  //   });
     
-  }
+  // }
 
 
 
